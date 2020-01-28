@@ -1,13 +1,13 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
-jest.mock('../../../src/app/Schemas/UserSchema');
+jest.mock('../../../src/app/Models/User');
 jest.mock('../../../src/Config/auth');
 
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import { factory } from '../../utils';
 
-import User from '../../../src/app/Schemas/UserSchema';
+import User from '../../../src/app/Models/User';
 import authConfig from '../../../src/Config/auth';
 
 import CreateSessionService from '../../../src/app/Services/CreateSessionService';

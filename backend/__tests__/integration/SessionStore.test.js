@@ -10,15 +10,18 @@ describe('Session Store', () => {
   });
 
   it('Should be authenticate with valid credentials', async () => {
-    const user = await factory.create('User', { password: 123456 });
+    const password = '123456';
+    const { name, email } = await factory.create('User', {
+      password,
+    });
 
     const res = await request(app)
       .post('/sessions')
-      .send({ email: user.email, password: '123456' });
+      .send({ email, password });
 
     expect(res.status).toBe(200);
-    expect(res.body.user).toHaveProperty('name');
-    expect(res.body.user).toHaveProperty('email');
+    expect(res.body.user).toHaveProperty('name', name);
+    expect(res.body.user).toHaveProperty('email', email);
     expect(res.body).toHaveProperty('token');
   });
 
@@ -43,7 +46,7 @@ describe('Session Store', () => {
       .post('/sessions')
       .send({ email, password });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toBe('User not found.');
   });

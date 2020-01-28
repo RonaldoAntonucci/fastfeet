@@ -35,6 +35,12 @@ class App {
   exceptionHandler() {
     // eslint-disable-next-line no-unused-vars
     this.server.use(async (err, req, res, next) => {
+      if (err.name === 'ServiceException') {
+        return res
+          .status(err.status)
+          .json({ error: err.error, message: err.message });
+      }
+
       if (process.env.NODE_ENV === 'production') {
         const errors = await new Youch(err, req).toJSON();
 

@@ -1,3 +1,12 @@
-import User from '../../src/app/Schemas/UserSchema';
+import database from '../../src/Database';
 
-export default () => Promise.all([User.deleteMany({})]);
+export default function truncate() {
+  return Promise.all(
+    Object.keys(database.connection.models).map(key => {
+      return database.connection.models[key].destroy({
+        truncate: true,
+        force: true,
+      });
+    })
+  );
+}

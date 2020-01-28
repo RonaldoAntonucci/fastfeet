@@ -1,9 +1,7 @@
-import { factory, MongooseAdapter } from 'factory-girl';
 import faker from 'faker';
+import { factory } from 'factory-girl';
 
-import User from '../../src/app/Schemas/UserSchema';
-
-factory.setAdapter(new MongooseAdapter());
+import User from '../../src/app/Models/User';
 
 factory.define('User', User, {
   name: faker.name.findName(),

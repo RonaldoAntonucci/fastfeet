@@ -1,8 +1,8 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
-jest.mock('../../../src/app/Schemas/UserSchema');
+jest.mock('../../../src/app/Models/User');
 import CreateUserService from '../../../src/app/Services/CreateUserService';
-import User from '../../../src/app/Schemas/UserSchema';
+import User from '../../../src/app/Models/User';
 import { factory } from '../../utils';
 
 describe('Create User Service', () => {

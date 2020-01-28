@@ -1,8 +1,8 @@
-export default DataTypes => ({
-  street: DataTypes.STRING,
-  number: DataTypes.INTEGER,
-  complement: DataTypes.STRING,
-  state: DataTypes.STRING,
-  city: DataTypes.STRING,
-  zipCode: DataTypes.STRING,
+export default Sequelize => ({
+  street: Sequelize.STRING,
+  number: Sequelize.INTEGER,
+  complement: Sequelize.STRING,
+  state: Sequelize.STRING,
+  city: Sequelize.STRING,
+  zip: Sequelize.STRING,
 });

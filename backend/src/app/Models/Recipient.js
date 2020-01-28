@@ -6,10 +6,11 @@ class Recipient extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        ...adress,
+        ...adress(Sequelize),
       },
       {
         sequelize,
+        tableName: 'recipients',
       }
     );
 

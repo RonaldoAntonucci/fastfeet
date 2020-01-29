@@ -2,7 +2,7 @@
 import request from 'supertest';
 import app from '../../src/app';
 
-import { factory, truncate, getAdminToken } from '../utils';
+import { factory, truncate, getToken } from '../utils';
 
 describe('Recipient Store', () => {
   afterEach(async () => {
@@ -11,7 +11,7 @@ describe('Recipient Store', () => {
 
   it('Should be able to store an User', async () => {
     const recipient = await factory.attrs('Recipient');
-    const token = await getAdminToken(request(app));
+    const token = await getToken(request(app), { isAdmin: true });
     const { status, body } = await request(app)
       .post('/recipients')
       .set('authorization', `Bearer ${token}`)
@@ -31,7 +31,7 @@ describe('Recipient Store', () => {
 
   it('Should be not able to store an Recipient with invalid data', async () => {
     const recipient = {};
-    const token = await getAdminToken(request(app));
+    const token = await getToken(request(app), { isAdmin: true });
     const { status, body } = await request(app)
       .post('/recipients')
       .set('authorization', `Bearer ${token}`)

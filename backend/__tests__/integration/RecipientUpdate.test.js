@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import request from 'supertest';
-import { factory, truncate, getAdminToken } from '../utils';
+import { factory, truncate, getToken } from '../utils';
 import app from '../../src/app';
 
 describe('Recipient Update', () => {
@@ -12,7 +12,7 @@ describe('Recipient Update', () => {
     const [recipient, newAttrs, token] = await Promise.all([
       factory.create('Recipient'),
       factory.attrs('Recipient'),
-      getAdminToken(request(app)),
+      getToken(request(app), { isAdmin: true }),
     ]);
 
     const { status, body } = await request(app)
@@ -33,7 +33,7 @@ describe('Recipient Update', () => {
   });
 
   it('Should can not update user without valid data', async () => {
-    const token = await getAdminToken(request(app));
+    const token = await getToken(request(app), { isAdmin: true });
     const { status, body } = await request(app)
       .put(`/recipients/naoImporta`)
       .set('Authorization', `Bearer ${token}`)

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import authMiddleware from './app/Middlewares/auth';
+import isAdminMiddleware from './app/Middlewares/isAdmin';
 import parseEmptyBodyToNull from './app/Middlewares/parseEmptyBodyToNull';
 
 import UserStoreValidator from './app/Validators/UserStoreValidator';
@@ -22,9 +23,15 @@ routes.post('/sessions', SessionStoreValidator, SessionController.store);
 
 routes.use(authMiddleware);
 
-routes.post('/recipients', RecipientStoreValidator, RecipientsController.store);
+routes.post(
+  '/recipients',
+  isAdminMiddleware,
+  RecipientStoreValidator,
+  RecipientsController.store
+);
 routes.put(
   '/recipients/:recipientId',
+  isAdminMiddleware,
   RecipientUpdateValidator,
   RecipientsController.update
 );

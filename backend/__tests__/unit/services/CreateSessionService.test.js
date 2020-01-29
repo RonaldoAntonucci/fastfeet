@@ -8,7 +8,6 @@ import jwt from 'jsonwebtoken';
 import { factory } from '../../utils';
 
 import User from '../../../src/app/Models/User';
-import authConfig from '../../../src/Config/auth';
 
 import CreateSessionService from '../../../src/app/Services/CreateSessionService';
 
@@ -22,9 +21,6 @@ describe('Create Session Service', () => {
       name,
       checkPassword: () => true,
     });
-
-    authConfig.secret = 'f979ac3c421ea71d4a94cbac15ef5eb2';
-    authConfig.expiresIn = '7d';
 
     const newSession = await CreateSessionService.run({
       email,

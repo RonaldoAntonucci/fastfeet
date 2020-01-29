@@ -3,29 +3,13 @@
 jest.mock('../../../src/app/Models/User');
 import CreateUserService from '../../../src/app/Services/CreateUserService';
 import User from '../../../src/app/Models/User';
-import { factory } from '../../utils';
 
 describe('Create User Service', () => {
   it('Should be create an User', async () => {
-    const { name, email, password } = await factory.attrs('User');
-    User.create.mockResolvedValue({
-      name,
-      email,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    User.create.mockResolvedValue(true);
     User.findOne.mockResolvedValue(false);
 
-    const newUser = await CreateUserService.run({
-      name,
-      email,
-      password,
-    });
-
-    expect(newUser).toHaveProperty('name', name);
-    expect(newUser).toHaveProperty('email', email);
-    expect(newUser).toHaveProperty('createdAt');
-    expect(newUser).toHaveProperty('updatedAt');
+    expect(await CreateUserService.run({})).toBe(true);
   });
 
   it('Should not be create an User with used email', async () => {

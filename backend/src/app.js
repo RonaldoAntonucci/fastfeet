@@ -6,7 +6,7 @@ import cors from 'cors';
 import * as Sentry from '@sentry/node';
 import routes from './routes';
 import sentryConfig from './Config/sentry';
-import ExceptionHandler from './ExceptionsHandler';
+import ExceptionHandler from './exceptionsHandler';
 
 import './Database';
 

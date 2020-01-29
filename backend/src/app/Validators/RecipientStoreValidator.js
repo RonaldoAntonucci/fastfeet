@@ -7,7 +7,9 @@ export default async (req, res, next) => {
         .required()
         .min(3),
       street: Yup.string().required(),
-      number: Yup.string().required(),
+      number: Yup.number()
+        .positive()
+        .required(),
       complement: Yup.string().required(),
       state: Yup.string().required(),
       city: Yup.string().required(),

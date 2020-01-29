@@ -3,3 +3,4 @@ tmp/uploads
 .env
 __tests__/coverage
 __tests__/database.sqlite
+.vscode

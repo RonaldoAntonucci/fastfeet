@@ -9,6 +9,12 @@ class User extends Model {
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        isAdmin: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return !!this.Admin;
+          },
+        },
       },
       {
         sequelize,
@@ -21,7 +27,22 @@ class User extends Model {
       }
     });
 
+    // eslint-disable-next-line func-names
+    this.prototype.toJSON = function() {
+      const values = { ...this.dataValues };
+      values.isAdmin = !!values.Admin;
+
+      delete values.password_hash;
+      delete values.password;
+      delete values.Admin;
+      return values;
+    };
+
     return this;
+  }
+
+  static associate(models) {
+    this.hasOne(models.Admin, { foreignKey: 'user_id', through: 'is_admin' });
   }
 
   checkPassword(password) {

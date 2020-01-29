@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 import authConfig from '../../../src/Config/auth';
 import authMiddleware from '../../../src/app/Middlewares/auth';
 
+import User from '../../../src/app/Models/User';
+
 describe('Create Session Service', () => {
   it('must tokenize the token', async () => {
     const id = '1';
@@ -22,8 +24,10 @@ describe('Create Session Service', () => {
     const res = {};
     const next = () => true;
 
+    User.findByPk.mockResolvedValue({ toJSON: () => true });
+
     expect(await authMiddleware(req, res, next)).toBe(true);
-    expect(req.userId).toBe(id);
+    expect(req).toHaveProperty('auth');
   });
 
   it('Should return an error without token', async () => {

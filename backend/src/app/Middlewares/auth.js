@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
 import authConfig from '../../Config/auth';
 
+import User from '../Models/User';
+
 export default async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
@@ -14,7 +16,9 @@ export default async (req, res, next) => {
   try {
     const { id } = await promisify(jwt.verify)(token, authConfig.secret);
 
-    req.userId = id;
+    req.auth = await User.findByPk(id, {
+      include: 'Admin',
+    });
 
     return next();
   } catch (err) {

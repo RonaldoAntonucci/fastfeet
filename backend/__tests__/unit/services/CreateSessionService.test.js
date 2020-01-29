@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
 jest.mock('../../../src/app/Models/User');
+jest.mock('../../../src/app/Models/Admin');
 jest.mock('../../../src/Config/auth');
 
 import { promisify } from 'util';
@@ -13,18 +14,18 @@ import CreateSessionService from '../../../src/app/Services/CreateSessionService
 
 describe('Create Session Service', () => {
   it('Should be create a Session', async () => {
-    const { name, email, password } = await factory.attrs('User');
+    const email = 'teste email';
+    const name = 'test name';
     const id = '5e2cc2e12db45420819c438c';
 
     User.findOne.mockResolvedValue({
-      id,
       name,
+      id,
       checkPassword: () => true,
     });
 
     const newSession = await CreateSessionService.run({
       email,
-      password,
     });
 
     expect(newSession).toHaveProperty('user', { email, name });

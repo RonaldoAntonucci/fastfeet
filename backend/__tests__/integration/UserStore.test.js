@@ -20,6 +20,7 @@ describe('User Store', () => {
     expect(body).toHaveProperty('name', user.name);
     expect(body).toHaveProperty('email', user.email);
     expect(body).not.toHaveProperty('password');
+    expect(body).not.toHaveProperty('password_hash');
   });
 
   it('Should be not able to store an User with existent email', async () => {

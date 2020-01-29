@@ -17,7 +17,7 @@ export default async (req, res, next) => {
     const { id } = await promisify(jwt.verify)(token, authConfig.secret);
 
     req.auth = await User.findByPk(id, {
-      include: 'Admin',
+      include: ['Admin', 'Deliveryman'],
     });
 
     return next();

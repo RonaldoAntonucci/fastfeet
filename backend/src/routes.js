@@ -11,6 +11,7 @@ import RecipientStoreValidator from './app/Validators/RecipientStoreValidator';
 import RecipientUpdateValidator from './app/Validators/RecipientUpdateValidator';
 
 import UserController from './app/Controllers/UserController';
+import DeliverymanController from './app/Controllers/DeliverymanController';
 import SessionController from './app/Controllers/SessionController';
 import RecipientsController from './app/Controllers/RecipientsController';
 
@@ -29,11 +30,14 @@ routes.post(
   RecipientStoreValidator,
   RecipientsController.store
 );
+
 routes.put(
   '/recipients/:recipientId',
   isAdminMiddleware,
   RecipientUpdateValidator,
   RecipientsController.update
 );
+
+routes.post('/deliveryman', DeliverymanController.store);
 
 export default routes;

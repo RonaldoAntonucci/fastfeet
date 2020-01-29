@@ -2,11 +2,11 @@
 /* eslint-disable no-undef */
 jest.mock('../../../src/app/Models/User');
 jest.mock('../../../src/app/Models/Admin');
+jest.mock('../../../src/app/Models/Deliveryman');
 jest.mock('../../../src/Config/auth');
 
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
-import { factory } from '../../utils';
 
 import User from '../../../src/app/Models/User';
 

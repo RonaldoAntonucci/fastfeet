@@ -2,6 +2,7 @@ import { factory } from 'factory-girl';
 import Chance from 'chance';
 
 import User from '../../src/app/Models/User';
+import Deliveryman from '../../src/app/Models/Deliveryman';
 import Recipient from '../../src/app/Models/Recipient';
 import Admin from '../../src/app/Models/Admin';
 
@@ -39,5 +40,15 @@ factory.define('Recipient', Recipient, () => ({
   state: faker.state(),
   zip: '36520-000',
 }));
+
+factory.deliveryman = {
+  create: async (data = {}) =>
+    Deliveryman.create(
+      { ...data, user: { ...(await factory.attrs('User')), ...data.user } },
+      {
+        include: 'user',
+      }
+    ),
+};
 
 export default factory;

@@ -29,12 +29,20 @@ class User extends Model {
 
     // eslint-disable-next-line func-names
     this.prototype.toJSON = function() {
-      const values = { ...this.dataValues };
+      let values = {
+        ...this.dataValues,
+      };
       values.isAdmin = !!values.Admin;
 
       delete values.password_hash;
       delete values.password;
-      delete values.Admin;
+
+      if (values.Admin) delete values.Admin;
+      if (values.Deliveryman) {
+        values = { ...values, ...values.Deliveryman.dataValues };
+        delete values.Deliveryman;
+      }
+
       return values;
     };
 
@@ -42,7 +50,8 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Admin, { foreignKey: 'user_id', through: 'is_admin' });
+    this.hasOne(models.Admin, { foreignKey: 'user_id' });
+    this.hasOne(models.Deliveryman, { foreignKey: 'user_id' });
   }
 
   checkPassword(password) {

@@ -13,7 +13,7 @@
     "dev:debug": "nodemon --inspect src/server.js",
     "queue": "nodemon src/queue.js",
     "pretest": "NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test jest --detectOpenHandles --watchAll",
+    "test": "NODE_ENV=test jest --detectOpenHandles --watchman",
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "dependencies": {

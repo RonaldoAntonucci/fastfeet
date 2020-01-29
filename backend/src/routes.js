@@ -13,6 +13,8 @@ import RecipientsController from './app/Controllers/RecipientsController';
 
 const routes = new Router();
 
+routes.use(parseEmptyBodyToNull);
+
 routes.post('/users', UserStoreValidator, UserController.store);
 routes.post('/sessions', SessionStoreValidator, SessionController.store);
 

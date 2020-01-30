@@ -1,12 +1,13 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
+import userAttrs from './Traits/userAttrs';
+
 class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
-        email: Sequelize.STRING,
+        ...userAttrs(Sequelize),
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         isAdmin: {
@@ -29,19 +30,14 @@ class User extends Model {
 
     // eslint-disable-next-line func-names
     this.prototype.toJSON = function() {
-      let values = {
+      const values = {
         ...this.dataValues,
       };
-      values.isAdmin = !!values.Admin;
 
       delete values.password_hash;
       delete values.password;
 
       if (values.Admin) delete values.Admin;
-      if (values.Deliveryman) {
-        values = { ...values, ...values.Deliveryman.dataValues };
-        delete values.Deliveryman;
-      }
 
       return values;
     };
@@ -51,7 +47,6 @@ class User extends Model {
 
   static associate(models) {
     this.hasOne(models.Admin, { foreignKey: 'user_id' });
-    this.hasOne(models.Deliveryman, { foreignKey: 'user_id' });
   }
 
   checkPassword(password) {

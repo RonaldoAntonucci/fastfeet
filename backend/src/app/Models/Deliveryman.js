@@ -1,10 +1,12 @@
 import Sequelize, { Model } from 'sequelize';
+import userAttrs from './Traits/userAttrs';
 
 class Deliveryman extends Model {
   static init(sequelize) {
     super.init(
       {
         avatar_id: Sequelize.STRING,
+        ...userAttrs(Sequelize),
       },
       {
         sequelize,
@@ -12,16 +14,6 @@ class Deliveryman extends Model {
     );
 
     return this;
-  }
-
-  static associate(models) {
-    this.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user',
-      source: 'id',
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
   }
 }
 

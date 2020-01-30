@@ -7,20 +7,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       avatar_id: {
         type: Sequelize.STRING,
-      },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'users',
-          },
-          key: 'id',
-        },
-        allowNull: false,
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
       },
       created_at: {
         allowNull: false,

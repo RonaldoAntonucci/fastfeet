@@ -5,6 +5,7 @@ import isAdminMiddleware from './app/Middlewares/isAdmin';
 import parseEmptyBodyToNull from './app/Middlewares/parseEmptyBodyToNull';
 
 import UserStoreValidator from './app/Validators/UserStoreValidator';
+import DeliverymanStoreValidator from './app/Validators/DeliverymanStoreValidator';
 // import UserUpdateValidator from './app/Validators/UserUpdateValidator';
 import SessionStoreValidator from './app/Validators/SessionStoreValidator';
 import RecipientStoreValidator from './app/Validators/RecipientStoreValidator';
@@ -38,6 +39,11 @@ routes.put(
   RecipientsController.update
 );
 
-routes.post('/deliveryman', DeliverymanController.store);
+routes.post(
+  '/deliverymans',
+  isAdminMiddleware,
+  DeliverymanStoreValidator,
+  DeliverymanController.store
+);
 
 export default routes;

@@ -14,7 +14,7 @@ factory.define(
   () => ({
     name: faker.name(),
     email: faker.email(),
-    password: faker.string(),
+    password: faker.string({ length: 50 }),
   }),
   {
     afterCreate: async (model, attrs) => {
@@ -41,14 +41,9 @@ factory.define('Recipient', Recipient, () => ({
   zip: '36520-000',
 }));
 
-factory.deliveryman = {
-  create: async (data = {}) =>
-    Deliveryman.create(
-      { ...data, user: { ...(await factory.attrs('User')), ...data.user } },
-      {
-        include: 'user',
-      }
-    ),
-};
+factory.define('Deliveryman', Deliveryman, () => ({
+  name: faker.name(),
+  email: faker.email(),
+}));
 
 export default factory;

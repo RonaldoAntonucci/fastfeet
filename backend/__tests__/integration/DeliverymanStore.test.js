@@ -4,9 +4,6 @@ import app from '../../src/app';
 
 import { factory, truncate, getToken } from '../utils';
 
-import Deliveryman from '../../src/app/Models/Deliveryman';
-import User from '../../src/app/Models/User';
-
 describe('Deliveryman Store', () => {
   afterEach(async () => {
     await truncate();
@@ -14,16 +11,47 @@ describe('Deliveryman Store', () => {
 
   it('Should can be Store a Deliveryman', async () => {
     const token = await getToken(request(app), { isAdmin: true });
-    const user = await factory.attrs('User');
+    const deliveryman = await factory.attrs('Deliveryman');
 
-    const deliveryman = await factory.deliveryman.create();
-    console.log(deliveryman.toJSON());
-
-    const { status } = await request(app)
-      .post('/deliveryman')
+    const { status, body } = await request(app)
+      .post('/deliverymans')
       .set('Authorization', `Bearer ${token}`)
-      .send();
+      .send(deliveryman);
 
     expect(status).toBe(200);
+    expect(body).toHaveProperty('name');
+    expect(body).toHaveProperty('email');
+    expect(body).toHaveProperty('createdAt');
+    expect(body).toHaveProperty('updatedAt');
+  });
+
+  it('Should be not able to store an Deliveryman with existent email', async () => {
+    const deliveryman = await factory.create('Deliveryman');
+    const token = await getToken(request(app), { isAdmin: true });
+    const { status, body } = await request(app)
+      .post('/deliverymans')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'batata',
+        email: deliveryman.email,
+      });
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty('message');
+  });
+
+  it('Should be not able to store an Deliveryman with invalid data', async () => {
+    const token = await getToken(request(app), { isAdmin: true });
+    const { status, body } = await request(app)
+      .post('/deliverymans')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: '',
+        email: 8784514545,
+      });
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty('error');
+    expect(body).toHaveProperty('messages');
   });
 });

@@ -32,7 +32,7 @@ describe('Recipient Update', () => {
     expect(body).toHaveProperty('createdAt');
   });
 
-  it('Should can not update user without valid data', async () => {
+  it('Should can not update recipient without valid data', async () => {
     const token = await getToken(request(app), { isAdmin: true });
     const { status, body } = await request(app)
       .put(`/recipients/naoImporta`)

@@ -24,13 +24,13 @@ describe('Create Session Service', () => {
     const res = {};
     const next = () => true;
 
-    User.findByPk.mockResolvedValue({ toJSON: () => true });
+    User.findByPk.mockResolvedValue(true);
 
     expect(await authMiddleware(req, res, next)).toBe(true);
     expect(req).toHaveProperty('auth');
   });
 
-  it('Should return an error without token', async () => {
+  it('Should return an error with invalid token', async () => {
     const req = { headers: { authorization: 'Bearer InvalidToken' } };
     const res = {
       status: status => ({
@@ -48,7 +48,7 @@ describe('Create Session Service', () => {
     expect(result.body).toHaveProperty('error', 'Token invalid');
   });
 
-  it('Should return an error with invalid token', async () => {
+  it('Should return an error with without token', async () => {
     const req = { headers: {} };
     const res = {
       status: status => ({
@@ -64,5 +64,31 @@ describe('Create Session Service', () => {
     const result = await authMiddleware(req, res, next);
     expect(result.status).toBe(401);
     expect(result.body).toHaveProperty('error', 'Token not provided');
+  });
+
+  it('Should return an error with valid token but, invalid user', async () => {
+    const id = '1';
+
+    const token = jwt.sign({ id }, authConfig.secret, {
+      expiresIn: authConfig.expiresIn,
+    });
+
+    const req = { headers: { authorization: `Berar ${token}` } };
+    const res = {
+      status: status => ({
+        status,
+        json: body => ({
+          status,
+          body,
+        }),
+      }),
+    };
+    const next = () => true;
+
+    User.findByPk.mockResolvedValue(false);
+
+    const { status, body } = await authMiddleware(req, res, next);
+    expect(status).toBe(401);
+    expect(body).toHaveProperty('error', 'Token invalid');
   });
 });

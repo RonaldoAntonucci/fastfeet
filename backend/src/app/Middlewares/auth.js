@@ -16,9 +16,15 @@ export default async (req, res, next) => {
   try {
     const { id } = await promisify(jwt.verify)(token, authConfig.secret);
 
-    req.auth = await User.findByPk(id, {
-      include: ['Admin', 'Deliveryman'],
+    const user = await User.findByPk(id, {
+      include: ['Admin'],
     });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Token invalid' });
+    }
+
+    req.auth = user;
 
     return next();
   } catch (err) {

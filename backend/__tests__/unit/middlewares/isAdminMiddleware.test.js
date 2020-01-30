@@ -29,4 +29,22 @@ describe('is Admin', () => {
     expect(status).toBe(401);
     expect(body).toHaveProperty('error', 'Not permited, only for admins.');
   });
+
+  it('return error for not authenticated users', () => {
+    const req = {};
+    const res = {
+      status: status => ({
+        status,
+        json: body => ({
+          status,
+          body,
+        }),
+      }),
+    };
+    const next = () => true;
+
+    const { status, body } = isAdminMiddleware(req, res, next);
+    expect(status).toBe(401);
+    expect(body).toHaveProperty('error', 'Not permited, only for admins.');
+  });
 });

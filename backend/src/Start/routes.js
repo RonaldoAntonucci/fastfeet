@@ -16,6 +16,7 @@ import UserController from '../App/Controllers/UserController';
 import DeliverymanController from '../App/Controllers/DeliverymanController';
 import SessionController from '../App/Controllers/SessionController';
 import RecipientsController from '../App/Controllers/RecipientsController';
+import DeliveryController from '../App/Controllers/DeliveryController';
 
 const routes = new Router();
 
@@ -66,6 +67,12 @@ routes.delete(
   '/deliverymans/:deliverymanId',
   isAdminMiddleware,
   DeliverymanController.destroy
+);
+
+routes.post(
+  '/deliverymans/:deliverymanId/deliveries',
+  isAdminMiddleware,
+  DeliveryController.store
 );
 
 export default routes;

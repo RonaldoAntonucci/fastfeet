@@ -4,6 +4,7 @@ import User from '../../src/App/Models/User';
 import Deliveryman from '../../src/App/Models/Deliveryman';
 import Recipient from '../../src/App/Models/Recipient';
 import Admin from '../../src/App/Models/Admin';
+import Delivery from '../../src/App/Models/Delivery';
 
 import faker from './faker';
 
@@ -44,6 +45,16 @@ factory.define('Deliveryman', Deliveryman, () => ({
   name: faker.name(),
   email: faker.email(),
   avatar_id: faker.string(),
+}));
+
+factory.define('Delivery', Delivery, () => ({
+  deliveryman_id: factory.assoc('Deliveryman', 'id'),
+  recipient_id: factory.assoc('Recipient', 'id'),
+  signature_id: null,
+  product: faker.string(),
+  start_date: null,
+  end_date: null,
+  canceled_at: null,
 }));
 
 factory.randomIteger = faker.integer;

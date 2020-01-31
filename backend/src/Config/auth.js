@@ -1,4 +1,4 @@
-require('../App/Models/bootstrap');
+require('../Start/bootstrap');
 
 export default {
   secret: process.env.APP_SECRET,

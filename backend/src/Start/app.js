@@ -1,4 +1,4 @@
-import '../App/Models/bootstrap';
+import './bootstrap';
 
 import express from 'express';
 import 'express-async-errors';

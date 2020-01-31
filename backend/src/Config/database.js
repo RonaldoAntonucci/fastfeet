@@ -1,4 +1,4 @@
-require('../App/Models/bootstrap');
+require('../Start/bootstrap');
 
 module.exports = {
   dialect: process.env.DB_DIALECT || 'postgres',

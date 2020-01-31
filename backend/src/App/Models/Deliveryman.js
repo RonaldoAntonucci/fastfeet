@@ -15,6 +15,12 @@ class Deliveryman extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Delivery, {
+      foreignKey: 'deliveryman_id',
+    });
+  }
 }
 
 export default Deliveryman;

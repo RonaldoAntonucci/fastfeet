@@ -2,12 +2,16 @@
 import request from 'supertest';
 import app from '../../src/Start/app';
 
-import { factory, truncate, getToken } from '../utils';
+import { factory, truncate, getToken, onlyAuth, onlyAdmin } from '../utils';
 
 describe('Deliveryman Store', () => {
   afterEach(async () => {
     await truncate();
   });
+
+  onlyAuth({ path: '/deliverymans', method: 'post' });
+
+  onlyAdmin({ path: '/deliverymans', method: 'post' });
 
   it('Should can be Store a Deliveryman', async () => {
     const token = await getToken(request(app), { isAdmin: true });

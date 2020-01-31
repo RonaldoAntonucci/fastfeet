@@ -2,12 +2,23 @@
 import request from 'supertest';
 import app from '../../src/Start/app';
 
-import { factory, truncate, getToken, faker } from '../utils';
+import {
+  factory,
+  truncate,
+  getToken,
+  faker,
+  onlyAdmin,
+  onlyAuth,
+} from '../utils';
 
 describe('Deliveryman Store', () => {
   afterEach(async () => {
     await truncate();
   });
+
+  onlyAuth({ path: '/deliverymans', method: 'get' });
+
+  onlyAdmin({ path: '/deliverymans', method: 'get' });
 
   it('Should can be list deliverymans with pagination.', async () => {
     const total = faker.integer({ min: 1, max: 50 });
@@ -62,32 +73,5 @@ describe('Deliveryman Store', () => {
     );
     expect(Number(totalPages)).toBe(Math.ceil(total / quantity));
     expect(Number(count)).toBe(total);
-  });
-
-  it('should be return a error, with no admin user token', async () => {
-    const token = await getToken(request(app));
-
-    const {
-      status,
-      body: { error },
-    } = await request(app)
-      .get('/deliverymans')
-      .set('Authorization', `Bearer ${token}`)
-      .send();
-
-    expect(status).toBe(401);
-    expect(error).toBe('Not permited, only for admins.');
-  });
-
-  it('should be return a error, without auth', async () => {
-    const {
-      status,
-      body: { error },
-    } = await request(app)
-      .get('/deliverymans')
-      .send();
-
-    expect(status).toBe(401);
-    expect(error).toBe('Token not provided.');
   });
 });

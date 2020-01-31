@@ -11,7 +11,7 @@ import {
   onlyAuth,
 } from '../utils';
 
-describe('Deliveryman Store', () => {
+describe('Deliveryman List', () => {
   afterEach(async () => {
     await truncate();
   });

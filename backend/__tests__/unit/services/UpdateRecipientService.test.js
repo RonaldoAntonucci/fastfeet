@@ -8,7 +8,7 @@ import Recipient from '../../../src/App/Models/Recipient';
 
 describe('Update Recipient Service', () => {
   it('Should be able to update Recipient (not postgres)', async () => {
-    Recipient.update.mockResolvedValue([null, 1]);
+    Recipient.update.mockResolvedValue([1]);
 
     Recipient.findByPk.mockResolvedValue(true);
 
@@ -17,7 +17,7 @@ describe('Update Recipient Service', () => {
 
   it('Should not be update a Recipient with invalid id (not postgres)', async () => {
     try {
-      Recipient.update.mockResolvedValue([null, 0]);
+      Recipient.update.mockResolvedValue([0]);
       await UpdateRecipientService.run(-1, {});
       expect(false).toBe(true);
     } catch (err) {

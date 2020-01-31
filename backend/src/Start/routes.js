@@ -42,6 +42,12 @@ routes.put(
 
 routes.get('/deliverymans', isAdminMiddleware, DeliverymanController.index);
 
+routes.get(
+  '/deliverymans/:deliverymanId',
+  isAdminMiddleware,
+  DeliverymanController.show
+);
+
 routes.post(
   '/deliverymans',
   isAdminMiddleware,

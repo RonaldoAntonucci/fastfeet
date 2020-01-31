@@ -21,7 +21,7 @@ export default {
     );
 
     if (!dialectIsProtgres) {
-      if (result[1] < 1) {
+      if (result[0] < 1) {
         throw new Exception('Invalid Recipient id.');
       }
       return Recipient.findByPk(id);

@@ -3,7 +3,7 @@ import factory from './factories';
 
 import app from '../../src/Start/app';
 
-export default async ({ isAdmin = false } = {}) => {
+export default async ({ isAdmin = false } = { isAdmin: false }) => {
   const password = '123456';
   const { email } = await factory.create('User', { password, isAdmin });
 

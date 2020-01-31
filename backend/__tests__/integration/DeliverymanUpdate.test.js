@@ -42,4 +42,20 @@ describe('Deliveryman Update', () => {
     expect(body).toHaveProperty('error');
     expect(body).toHaveProperty('messages');
   });
+
+  it('Should can not be Update a Deliveryman with invalid id', async () => {
+    const [token, attrs] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.attrs('Deliveryman'),
+    ]);
+
+    const { status, body } = await request(app)
+      .put(`/deliverymans/invalidId`)
+      .set('Authorization', `Berar ${token}`)
+      .send(attrs);
+
+    expect(status).toBe(400);
+    expect(body.message).toBe('Invalid Deliveryman id.');
+    expect(body).not.toHaveProperty('error');
+  });
 });

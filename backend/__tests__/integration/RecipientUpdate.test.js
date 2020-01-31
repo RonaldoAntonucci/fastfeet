@@ -47,4 +47,20 @@ describe('Recipient Update', () => {
     expect(body).toHaveProperty('error');
     expect(body).toHaveProperty('messages');
   });
+
+  it('Should can not be Update a Recipient with invalid id', async () => {
+    const [token, attrs] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.attrs('Recipient'),
+    ]);
+
+    const { status, body } = await request(app)
+      .put(`/recipients/invalidId`)
+      .set('Authorization', `Berar ${token}`)
+      .send(attrs);
+
+    expect(status).toBe(400);
+    expect(body.message).toBe('Invalid Recipient id.');
+    expect(body).not.toHaveProperty('error');
+  });
 });

@@ -5,7 +5,7 @@ import app from '../../../src/Start/app';
 
 export default ({ path, method }) =>
   it(`should be return a error, without admin user (${path})`, async () => {
-    const token = await getToken(request(app));
+    const token = await getToken();
 
     const {
       status,

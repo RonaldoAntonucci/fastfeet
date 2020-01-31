@@ -1,12 +1,11 @@
 import { factory } from 'factory-girl';
-import Chance from 'chance';
 
 import User from '../../src/app/Models/User';
 import Deliveryman from '../../src/app/Models/Deliveryman';
 import Recipient from '../../src/app/Models/Recipient';
 import Admin from '../../src/app/Models/Admin';
 
-const faker = new Chance();
+import faker from './faker';
 
 factory.define(
   'User',
@@ -45,5 +44,7 @@ factory.define('Deliveryman', Deliveryman, () => ({
   name: faker.name(),
   email: faker.email(),
 }));
+
+factory.randomIteger = faker.integer;
 
 export default factory;

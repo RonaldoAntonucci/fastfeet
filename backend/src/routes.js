@@ -39,6 +39,8 @@ routes.put(
   RecipientsController.update
 );
 
+routes.get('/deliverymans', isAdminMiddleware, DeliverymanController.index);
+
 routes.post(
   '/deliverymans',
   isAdminMiddleware,

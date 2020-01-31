@@ -45,7 +45,7 @@ describe('Create Session Service', () => {
 
     const result = await authMiddleware(req, res, next);
     expect(result.status).toBe(401);
-    expect(result.body).toHaveProperty('error', 'Token invalid');
+    expect(result.body).toHaveProperty('error', 'Token invalid.');
   });
 
   it('Should return an error with without token', async () => {
@@ -63,7 +63,7 @@ describe('Create Session Service', () => {
 
     const result = await authMiddleware(req, res, next);
     expect(result.status).toBe(401);
-    expect(result.body).toHaveProperty('error', 'Token not provided');
+    expect(result.body).toHaveProperty('error', 'Token not provided.');
   });
 
   it('Should return an error with valid token but, invalid user', async () => {
@@ -89,6 +89,6 @@ describe('Create Session Service', () => {
 
     const { status, body } = await authMiddleware(req, res, next);
     expect(status).toBe(401);
-    expect(body).toHaveProperty('error', 'Token invalid');
+    expect(body).toHaveProperty('error', 'Token invalid.');
   });
 });

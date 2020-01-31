@@ -16,7 +16,7 @@ describe('Deliveryman Update', () => {
     const [deliveryman, newAttrs, token] = await Promise.all([
       factory.create('Deliveryman'),
       factory.attrs('Deliveryman'),
-      getToken(request(app), { isAdmin: true }),
+      getToken({ isAdmin: true }),
     ]);
 
     const { status, body } = await request(app)
@@ -32,7 +32,7 @@ describe('Deliveryman Update', () => {
   });
 
   it('Should can not update Deliveryman without valid data', async () => {
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
       .put(`/deliverymans/naoImporta`)
       .set('Authorization', `Bearer ${token}`)

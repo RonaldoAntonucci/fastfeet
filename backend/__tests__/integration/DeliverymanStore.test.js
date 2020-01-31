@@ -14,7 +14,7 @@ describe('Deliveryman Store', () => {
   onlyAdmin({ path: '/deliverymans', method: 'post' });
 
   it('Should can be Store a Deliveryman', async () => {
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
     const deliveryman = await factory.attrs('Deliveryman');
 
     const { status, body } = await request(app)
@@ -31,7 +31,7 @@ describe('Deliveryman Store', () => {
 
   it('Should be not able to store an Deliveryman with existent email', async () => {
     const deliveryman = await factory.create('Deliveryman');
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
       .post('/deliverymans')
       .set('Authorization', `Bearer ${token}`)
@@ -45,7 +45,7 @@ describe('Deliveryman Store', () => {
   });
 
   it('Should be not able to store an Deliveryman with invalid data', async () => {
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
       .post('/deliverymans')
       .set('Authorization', `Bearer ${token}`)

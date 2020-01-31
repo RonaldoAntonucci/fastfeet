@@ -26,7 +26,7 @@ describe('Deliveryman Store', () => {
     const page = Math.ceil(total / quantity);
 
     const [token] = await Promise.all([
-      getToken(request(app), { isAdmin: true }),
+      getToken({ isAdmin: true }),
       factory.createMany('Deliveryman', total),
     ]);
 
@@ -53,7 +53,7 @@ describe('Deliveryman Store', () => {
     const page = Math.ceil(total / quantity);
 
     const [token] = await Promise.all([
-      getToken(request(app), { isAdmin: true }),
+      getToken({ isAdmin: true }),
       factory.createMany('Deliveryman', total, { name: 'João' }),
       factory.createMany('Deliveryman', total),
     ]);

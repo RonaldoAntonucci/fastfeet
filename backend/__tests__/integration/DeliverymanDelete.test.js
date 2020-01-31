@@ -15,7 +15,7 @@ describe('Deliveryman Update', () => {
   it('Should can be destroy an Deliveryman', async () => {
     const { id } = await factory.create('Deliveryman');
 
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
 
     const { status } = await request(app)
       .delete(`/deliverymans/${id}`)
@@ -26,7 +26,7 @@ describe('Deliveryman Update', () => {
   });
 
   it('Should can not be destroy an Deliveryman withou valid id', async () => {
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
 
     const { status, body } = await request(app)
       .delete(`/deliverymans/invalidId`)

@@ -15,7 +15,7 @@ describe('Recipient Store', () => {
 
   it('Should be able to store an User', async () => {
     const recipient = await factory.attrs('Recipient');
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
       .post('/recipients')
       .set('authorization', `Bearer ${token}`)
@@ -35,7 +35,7 @@ describe('Recipient Store', () => {
 
   it('Should be not able to store an Recipient with invalid data', async () => {
     const recipient = {};
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
       .post('/recipients')
       .set('authorization', `Bearer ${token}`)

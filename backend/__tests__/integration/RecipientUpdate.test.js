@@ -16,7 +16,7 @@ describe('Recipient Update', () => {
     const [recipient, newAttrs, token] = await Promise.all([
       factory.create('Recipient'),
       factory.attrs('Recipient'),
-      getToken(request(app), { isAdmin: true }),
+      getToken({ isAdmin: true }),
     ]);
 
     const { status, body } = await request(app)
@@ -37,7 +37,7 @@ describe('Recipient Update', () => {
   });
 
   it('Should can not update recipient without valid data', async () => {
-    const token = await getToken(request(app), { isAdmin: true });
+    const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
       .put(`/recipients/naoImporta`)
       .set('Authorization', `Bearer ${token}`)

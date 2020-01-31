@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import SessionStoreValidator from '../../../src/app/Validators/SessionStoreValidator';
+import SessionStoreValidator from '../../../src/App/Validators/SessionStoreValidator';
 
 describe('User Store Validator', () => {
   it('Happy Way', async () => {

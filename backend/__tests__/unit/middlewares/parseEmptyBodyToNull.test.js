@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import parseMiddleware from '../../../src/app/Middlewares/parseEmptyBodyToNull';
+import parseMiddleware from '../../../src/App/Middlewares/parseEmptyBodyToNull';
 
 describe('Parse Empty Body To Null Middleware', () => {
   it('Should be parse empty body to null', () => {

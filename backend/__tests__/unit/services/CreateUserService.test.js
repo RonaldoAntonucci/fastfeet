@@ -1,8 +1,8 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
-jest.mock('../../../src/app/Models/User');
-import CreateUserService from '../../../src/app/Services/CreateUserService';
-import User from '../../../src/app/Models/User';
+jest.mock('../../../src/App/Models/User');
+import CreateUserService from '../../../src/App/Services/CreateUserService';
+import User from '../../../src/App/Models/User';
 
 describe('Create User Service', () => {
   it('Should be create an User', async () => {

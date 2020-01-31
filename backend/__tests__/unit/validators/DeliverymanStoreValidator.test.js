@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import DeliverymanStoreValidator from '../../../src/app/Validators/DeliverymanStoreValidator';
+import DeliverymanStoreValidator from '../../../src/App/Validators/DeliverymanStoreValidator';
 
 describe('Deliveryman Store Validator', () => {
   it('Happy Way', async () => {

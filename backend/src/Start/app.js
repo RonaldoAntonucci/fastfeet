@@ -1,14 +1,14 @@
-import './bootstrap';
+import '../App/Models/bootstrap';
 
 import express from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import * as Sentry from '@sentry/node';
 import routes from './routes';
-import sentryConfig from './Config/sentry';
-import ExceptionHandler from './exceptionsHandler';
+import sentryConfig from '../Config/sentry';
+import ExceptionHandler from '../App/Exceptions/Handler';
 
-import './Database';
+import '../Database';
 
 class App {
   constructor() {

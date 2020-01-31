@@ -14,7 +14,10 @@
     "queue": "nodemon src/queue.js",
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest --detectOpenHandles --watch -o",
-    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "pretestAll": "NODE_ENV=test sequelize db:migrate",
+    "testAll": "NODE_ENV=test jest --detectOpenHandles",
+    "posttestAll": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "@sentry/node": "^5.11.1",

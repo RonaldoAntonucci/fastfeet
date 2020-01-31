@@ -1,8 +1,8 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
-jest.mock('../../../src/app/Models/Deliveryman');
-import CreateDeliverymanService from '../../../src/app/Services/CreateDeliverymanService';
-import Deliveryman from '../../../src/app/Models/Deliveryman';
+jest.mock('../../../src/App/Models/Deliveryman');
+import CreateDeliverymanService from '../../../src/App/Services/CreateDeliverymanService';
+import Deliveryman from '../../../src/App/Models/Deliveryman';
 
 describe('Create Deliveryman Service', () => {
   it('Should be create an Deliveryman', async () => {

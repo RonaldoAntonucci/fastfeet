@@ -1,9 +1,9 @@
 import { factory } from 'factory-girl';
 
-import User from '../../src/app/Models/User';
-import Deliveryman from '../../src/app/Models/Deliveryman';
-import Recipient from '../../src/app/Models/Recipient';
-import Admin from '../../src/app/Models/Admin';
+import User from '../../src/App/Models/User';
+import Deliveryman from '../../src/App/Models/Deliveryman';
+import Recipient from '../../src/App/Models/Recipient';
+import Admin from '../../src/App/Models/Admin';
 
 import faker from './faker';
 

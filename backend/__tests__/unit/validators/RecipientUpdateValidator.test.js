@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import RecipientUpdateValidator from '../../../src/app/Validators/RecipientUpdateValidator';
+import RecipientUpdateValidator from '../../../src/App/Validators/RecipientUpdateValidator';
 import { factory } from '../../utils';
 
 describe('Recipient Update Validator', () => {

@@ -1,16 +1,16 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
-jest.mock('../../../src/app/Models/User');
-jest.mock('../../../src/app/Models/Admin');
-jest.mock('../../../src/app/Models/Deliveryman');
+jest.mock('../../../src/App/Models/User');
+jest.mock('../../../src/App/Models/Admin');
+jest.mock('../../../src/App/Models/Deliveryman');
 jest.mock('../../../src/Config/auth');
 
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 
-import User from '../../../src/app/Models/User';
+import User from '../../../src/App/Models/User';
 
-import CreateSessionService from '../../../src/app/Services/CreateSessionService';
+import CreateSessionService from '../../../src/App/Services/CreateSessionService';
 
 describe('Create Session Service', () => {
   it('Should be create a Session', async () => {

@@ -1,12 +1,12 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
 jest.mock('../../../src/Config/auth');
-jest.mock('../../../src/app/Models/User');
+jest.mock('../../../src/App/Models/User');
 import jwt from 'jsonwebtoken';
 import authConfig from '../../../src/Config/auth';
-import authMiddleware from '../../../src/app/Middlewares/auth';
+import authMiddleware from '../../../src/App/Middlewares/auth';
 
-import User from '../../../src/app/Models/User';
+import User from '../../../src/App/Models/User';
 
 describe('Create Session Service', () => {
   it('must tokenize the token', async () => {

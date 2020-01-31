@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import request from 'supertest';
 import { factory, truncate, getToken } from '../utils';
-import app from '../../src/app';
+import app from '../../src/Start/app';
 
 describe('Recipient Update', () => {
   afterEach(async () => {

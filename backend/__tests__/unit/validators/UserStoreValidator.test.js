@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import UserStoreValidator from '../../../src/app/Validators/UserStoreValidator';
+import UserStoreValidator from '../../../src/App/Validators/UserStoreValidator';
 
 describe('User Store Validator', () => {
   it('Happy Way', async () => {

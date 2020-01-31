@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
 
-import User from '../app/Models/User';
-import Admin from '../app/Models/Admin';
-import Deliveryman from '../app/Models/Deliveryman';
-import Recipient from '../app/Models/Recipient';
+import User from '../App/Models/User';
+import Admin from '../App/Models/Admin';
+import Deliveryman from '../App/Models/Deliveryman';
+import Recipient from '../App/Models/Recipient';
 
 import databaseConfig from '../Config/database';
 

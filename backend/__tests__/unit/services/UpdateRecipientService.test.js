@@ -1,10 +1,10 @@
 /* eslint-disable import/first */
 /* eslint-disable no-undef */
-jest.mock('../../../src/app/Models/Recipient');
+jest.mock('../../../src/App/Models/Recipient');
 
-import UpdateRecipientService from '../../../src/app/Services/UpdateRecipientService';
+import UpdateRecipientService from '../../../src/App/Services/UpdateRecipientService';
 
-import Recipient from '../../../src/app/Models/Recipient';
+import Recipient from '../../../src/App/Models/Recipient';
 
 describe('Update Recipient Service', () => {
   it('Should be able to update Recipient (not postgres)', async () => {

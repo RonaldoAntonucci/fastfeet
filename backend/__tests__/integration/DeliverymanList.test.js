@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../src/Start/app';
 
 import { factory, truncate, getToken, faker } from '../utils';
 

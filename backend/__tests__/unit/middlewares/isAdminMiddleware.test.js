@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import isAdminMiddleware from '../../../src/app/Middlewares/isAdmin';
+import isAdminMiddleware from '../../../src/App/Middlewares/isAdmin';
 
 describe('is Admin', () => {
   it('Only for Admin Users', () => {

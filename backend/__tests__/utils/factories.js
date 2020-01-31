@@ -43,6 +43,7 @@ factory.define('Recipient', Recipient, () => ({
 factory.define('Deliveryman', Deliveryman, () => ({
   name: faker.name(),
   email: faker.email(),
+  avatar_id: faker.string(),
 }));
 
 factory.randomIteger = faker.integer;

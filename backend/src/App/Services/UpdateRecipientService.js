@@ -2,7 +2,10 @@ import Recipient from '../Models/Recipient';
 import Exception from '../Exceptions/ServiceException';
 
 export default {
-  async run(id, { name, street, number, complement, state, city, zip }) {
+  async run(
+    { recipientId: id },
+    { name, street, number, complement, state, city, zip }
+  ) {
     const dialectIsProtgres = process.env.DB_DIALECT === 'postgres';
     const result = await Recipient.update(
       {

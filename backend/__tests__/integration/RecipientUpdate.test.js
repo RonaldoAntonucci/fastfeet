@@ -1,12 +1,16 @@
 /* eslint-disable no-undef */
 import request from 'supertest';
-import { factory, truncate, getToken } from '../utils';
+import { factory, truncate, getToken, onlyAuth, onlyAdmin } from '../utils';
 import app from '../../src/Start/app';
 
 describe('Recipient Update', () => {
   afterEach(async () => {
     await truncate();
   });
+
+  onlyAuth({ path: '/recipients/naoImporta', method: 'put' });
+
+  onlyAdmin({ path: '/recipients/naoImporta', method: 'put' });
 
   it('Should can be update a Recipient', async () => {
     const [recipient, newAttrs, token] = await Promise.all([

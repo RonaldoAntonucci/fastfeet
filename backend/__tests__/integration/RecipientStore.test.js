@@ -2,12 +2,16 @@
 import request from 'supertest';
 import app from '../../src/Start/app';
 
-import { factory, truncate, getToken } from '../utils';
+import { factory, truncate, getToken, onlyAdmin, onlyAuth } from '../utils';
 
 describe('Recipient Store', () => {
   afterEach(async () => {
     await truncate();
   });
+
+  onlyAuth({ path: '/recipients', method: 'post' });
+
+  onlyAdmin({ path: '/recipients', method: 'post' });
 
   it('Should be able to store an User', async () => {
     const recipient = await factory.attrs('Recipient');

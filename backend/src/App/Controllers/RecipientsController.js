@@ -6,7 +6,7 @@ export default {
     return res.json(await CreateRecipiment.run(body));
   },
 
-  async update({ body, params: { recipientId } }, res) {
-    return res.json(await UpdateRecipiment.run(recipientId, body));
+  async update({ body, params }, res) {
+    return res.json(await UpdateRecipiment.run(params, body));
   },
 };

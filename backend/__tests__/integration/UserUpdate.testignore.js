@@ -2,12 +2,14 @@
 import request from 'supertest';
 import app from '../../src/Start/app';
 
-import { factory, truncate } from '../utils';
+import { factory, truncate, onlyAuth } from '../utils';
 
 describe('User Store', () => {
   afterEach(async () => {
     await truncate();
   });
+
+  onlyAuth({ path: '/users/naoImporta', method: 'put' });
 
   it('should be possible to update a User (name, password)', async () => {
     const password = '123456';

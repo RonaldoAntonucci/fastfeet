@@ -9,7 +9,7 @@ describe('Delivery Store Validator', () => {
     };
 
     const res = await DeliveryStoreValidator(
-      { body: delivery, params: { deliverymanId: 1 } },
+      { body: delivery },
       {
         status: status => ({
           status,
@@ -24,7 +24,7 @@ describe('Delivery Store Validator', () => {
 
   it('Should be return errors (required)', async () => {
     const res = await DeliveryStoreValidator(
-      { body: {}, params: {} },
+      { body: {} },
       {
         status: status => ({
           status,
@@ -36,7 +36,7 @@ describe('Delivery Store Validator', () => {
 
     expect(res.status).toBe(400);
     expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(3);
+    expect(res.messages.length).toBe(2);
   });
 
   it('Should be return errors (invalid)', async () => {
@@ -46,7 +46,6 @@ describe('Delivery Store Validator', () => {
           product: null,
           recipient_id: null,
         },
-        params: { deliverymanId: 'invalid' },
       },
       {
         status: status => ({
@@ -59,6 +58,6 @@ describe('Delivery Store Validator', () => {
 
     expect(res.status).toBe(400);
     expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(3);
+    expect(res.messages.length).toBe(2);
   });
 });

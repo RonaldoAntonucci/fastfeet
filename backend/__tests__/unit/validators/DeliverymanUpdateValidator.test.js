@@ -7,7 +7,7 @@ describe('Deliveryman Update Validator', () => {
     const recipient = await factory.attrs('Deliveryman');
 
     const res = await DeliverymanUpdateValidator(
-      { body: recipient, params: { deliverymanId: 1 } },
+      { body: recipient },
       {
         status: status => ({
           status,
@@ -22,24 +22,7 @@ describe('Deliveryman Update Validator', () => {
 
   it('Should be return errors (required body)', async () => {
     const res = await DeliverymanUpdateValidator(
-      { body: null, params: {} },
-      {
-        status: status => ({
-          status,
-          json: v => ({ ...v, status }),
-        }),
-      },
-      () => true
-    );
-
-    expect(res.status).toBe(400);
-    expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(1);
-  });
-
-  it('Should be return errors (required deliverymanId)', async () => {
-    const res = await DeliverymanUpdateValidator(
-      { body: {}, params: {} },
+      { body: null },
       {
         status: status => ({
           status,
@@ -61,7 +44,6 @@ describe('Deliveryman Update Validator', () => {
           name: '1',
           avatar_id: null,
         },
-        params: { deliverymanId: 'invalid' },
       },
       {
         status: status => ({
@@ -74,6 +56,6 @@ describe('Deliveryman Update Validator', () => {
 
     expect(res.status).toBe(400);
     expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(3);
+    expect(res.messages.length).toBe(2);
   });
 });

@@ -4,7 +4,7 @@ import app from '../../src/Start/app';
 
 import { factory, truncate, getToken, onlyAdmin, onlyAuth } from '../utils';
 
-describe('Deliveryman Store', () => {
+describe('Deliveryman Show', () => {
   afterEach(async () => {
     await truncate();
   });
@@ -33,10 +33,15 @@ describe('Deliveryman Store', () => {
   });
 
   it('Should can not be Show a Deliveryman with invalid id', async () => {
-    const token = await getToken({ isAdmin: true });
+    const [token, deliveryman] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.create('Deliveryman'),
+    ]);
+
+    await deliveryman.destroy();
 
     const { status, body } = await request(app)
-      .get(`/deliverymans/invalidId`)
+      .get(`/deliverymans/${deliveryman.id}`)
       .set('Authorization', `Berar ${token}`)
       .send();
 

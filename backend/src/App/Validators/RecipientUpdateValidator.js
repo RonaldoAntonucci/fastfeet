@@ -11,16 +11,8 @@ export default async (req, res, next) => {
         state: Yup.string(),
         city: Yup.string(),
         zip: Yup.string().matches(new RegExp(/^[0-9]{5}-[0-9]{3}$/)),
-        recipient_id: Yup.number()
-          .integer()
-          .positive()
-          .required(),
       })
       .required();
-
-    if (req.body && req.params) {
-      req.body.recipient_id = Number(req.params.recipientId);
-    }
 
     await schema.validate(req.body, { abortEarly: false });
 

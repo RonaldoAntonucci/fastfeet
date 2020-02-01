@@ -3,6 +3,8 @@ import request from 'supertest';
 import { factory, truncate, getToken, onlyAuth, onlyAdmin } from '../utils';
 import app from '../../src/Start/app';
 
+import Deliveryman from '../../src/App/Models/Deliveryman';
+
 describe('Deliveryman Update', () => {
   afterEach(async () => {
     await truncate();
@@ -44,13 +46,18 @@ describe('Deliveryman Update', () => {
   });
 
   it('Should can not be Update a Deliveryman with invalid id', async () => {
-    const [token, attrs] = await Promise.all([
+    const [token, attrs, deliveryman] = await Promise.all([
       getToken({ isAdmin: true }),
       factory.attrs('Deliveryman'),
+      factory.create('Deliveryman'),
     ]);
 
+    const { id } = deliveryman;
+
+    await deliveryman.destroy({ force: true });
+
     const { status, body } = await request(app)
-      .put(`/deliverymans/1`)
+      .put(`/deliverymans/${id}`)
       .set('Authorization', `Berar ${token}`)
       .send(attrs);
 

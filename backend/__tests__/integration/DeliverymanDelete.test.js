@@ -3,7 +3,7 @@ import request from 'supertest';
 import { factory, truncate, getToken, onlyAuth, onlyAdmin } from '../utils';
 import app from '../../src/Start/app';
 
-describe('Deliveryman Update', () => {
+describe('Deliveryman Delete', () => {
   afterEach(async () => {
     await truncate();
   });
@@ -26,10 +26,16 @@ describe('Deliveryman Update', () => {
   });
 
   it('Should can not be destroy an Deliveryman withou valid id', async () => {
-    const token = await getToken({ isAdmin: true });
+    const [token, deliveryman] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.create('Deliveryman'),
+    ]);
+    const { id } = deliveryman;
+
+    await deliveryman.destroy();
 
     const { status, body } = await request(app)
-      .delete(`/deliverymans/invalidId`)
+      .delete(`/deliverymans/${id}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

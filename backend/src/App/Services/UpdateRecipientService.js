@@ -20,10 +20,11 @@ export default {
       { where: { id }, returning: dialectIsProtgres }
     );
 
+    if (result[0] < 1) {
+      throw new Exception('Invalid Recipient id.');
+    }
+
     if (!dialectIsProtgres) {
-      if (result[0] < 1) {
-        throw new Exception('Invalid Recipient id.');
-      }
       return Recipient.findByPk(id);
     }
 

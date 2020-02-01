@@ -7,7 +7,7 @@ import DeleteDeliverymanService from '../../../src/App/Services/DeleteDeliveryma
 import Deliveryman from '../../../src/App/Models/Deliveryman';
 
 describe('Delete Deliveryman Service', () => {
-  it('Should be able to update Deliveryman (not postgres)', async () => {
+  it('Should be able to delete Deliveryman (not postgres)', async () => {
     try {
       Deliveryman.destroy.mockResolvedValue(true);
       await DeleteDeliverymanService.run({});
@@ -17,7 +17,7 @@ describe('Delete Deliveryman Service', () => {
     }
   });
 
-  it('Should not be update a Deliveryman with invalid id (not postgres)', async () => {
+  it('Should not be delete a Deliveryman with invalid id (not postgres)', async () => {
     try {
       Deliveryman.destroy.mockResolvedValue(false);
       await DeleteDeliverymanService.run({});

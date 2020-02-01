@@ -10,10 +10,11 @@ export default {
       { where: { id }, returning: dialectIsProtgres }
     );
 
+    if (result[0] < 1) {
+      throw new Exception('Invalid Deliveryman id.');
+    }
+
     if (!dialectIsProtgres) {
-      if (result[0] < 1) {
-        throw new Exception('Invalid Deliveryman id.');
-      }
       return Deliveryman.findByPk(id);
     }
 

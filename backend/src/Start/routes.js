@@ -4,6 +4,7 @@ import authMiddleware from '../App/Middlewares/auth';
 import isAdminMiddleware from '../App/Middlewares/isAdmin';
 import parseEmptyBodyToNull from '../App/Middlewares/parseEmptyBodyToNull';
 
+import RouteParamsIdValidator from '../App/Validators/RouteParamsIdValidator';
 import UserStoreValidator from '../App/Validators/UserStoreValidator';
 import DeliverymanStoreValidator from '../App/Validators/DeliverymanStoreValidator';
 import DeliverymanUpdateValidator from '../App/Validators/DeliverymanUpdateValidator';
@@ -38,6 +39,7 @@ routes.post(
 routes.put(
   '/recipients/:recipientId',
   isAdminMiddleware,
+  RouteParamsIdValidator(['recipientId']),
   RecipientUpdateValidator,
   RecipientsController.update
 );
@@ -47,6 +49,7 @@ routes.get('/deliverymans', isAdminMiddleware, DeliverymanController.index);
 routes.get(
   '/deliverymans/:deliverymanId',
   isAdminMiddleware,
+  RouteParamsIdValidator(['deliverymanId']),
   DeliverymanController.show
 );
 
@@ -60,6 +63,7 @@ routes.post(
 routes.put(
   '/deliverymans/:deliverymanId',
   isAdminMiddleware,
+  RouteParamsIdValidator(['deliverymanId']),
   DeliverymanUpdateValidator,
   DeliverymanController.update
 );
@@ -67,12 +71,14 @@ routes.put(
 routes.delete(
   '/deliverymans/:deliverymanId',
   isAdminMiddleware,
+  RouteParamsIdValidator(['deliverymanId']),
   DeliverymanController.destroy
 );
 
 routes.post(
   '/deliverymans/:deliverymanId/deliveries',
   isAdminMiddleware,
+  RouteParamsIdValidator(['deliverymanId']),
   DeliveryStoreValidator,
   DeliveryController.store
 );

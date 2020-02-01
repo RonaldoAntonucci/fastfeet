@@ -3,7 +3,6 @@ import Exception from '../Exceptions/ServiceException';
 
 export default {
   async run({ name, email, password }) {
-    User.findOne();
     if (await User.findOne({ where: { email } })) {
       throw new Exception('User Email already in use.');
     }

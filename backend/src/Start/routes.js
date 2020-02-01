@@ -11,6 +11,7 @@ import DeliverymanUpdateValidator from '../App/Validators/DeliverymanUpdateValid
 import SessionStoreValidator from '../App/Validators/SessionStoreValidator';
 import RecipientStoreValidator from '../App/Validators/RecipientStoreValidator';
 import RecipientUpdateValidator from '../App/Validators/RecipientUpdateValidator';
+import DeliveryStoreValidator from '../App/Validators/DeliveryStoreValidator';
 
 import UserController from '../App/Controllers/UserController';
 import DeliverymanController from '../App/Controllers/DeliverymanController';
@@ -72,6 +73,7 @@ routes.delete(
 routes.post(
   '/deliverymans/:deliverymanId/deliveries',
   isAdminMiddleware,
+  DeliveryStoreValidator,
   DeliveryController.store
 );
 

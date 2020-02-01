@@ -7,7 +7,7 @@ import Exception from '../Exceptions/ServiceException';
 
 export default {
   async run({ email, password }) {
-    const user = await User.findOne();
+    const user = await User.findOne({ where: { email } });
 
     if (!user) {
       throw new Exception('User not found.');

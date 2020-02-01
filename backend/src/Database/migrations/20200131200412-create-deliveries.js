@@ -15,8 +15,7 @@ module.exports = {
           },
           key: 'id',
         },
-        allowNull: false,
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       },
       deliveryman_id: {
@@ -27,8 +26,7 @@ module.exports = {
           },
           key: 'id',
         },
-        allowNull: false,
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       },
       signature_id: {

@@ -8,16 +8,17 @@ export default async (req, res, next) => {
         .integer()
         .positive()
         .required(),
-      deliverymanId: Yup.number()
+      deliveryman_id: Yup.number()
         .integer()
         .positive()
         .required(),
     });
 
-    await schema.validate(
-      { ...req.body, deliverymanId: req.params.deliverymanId },
-      { abortEarly: false }
-    );
+    if (req.body && req.params) {
+      req.body.deliveryman_id = Number(req.params.deliverymanId);
+    }
+
+    await schema.validate(req.body, { abortEarly: false });
 
     return next();
   } catch (err) {

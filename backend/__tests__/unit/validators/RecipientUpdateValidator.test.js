@@ -7,7 +7,7 @@ describe('Recipient Update Validator', () => {
     const recipient = await factory.attrs('Recipient');
 
     const res = await RecipientUpdateValidator(
-      { body: recipient },
+      { body: recipient, params: { recipientId: 1 } },
       {
         status: status => ({
           status,
@@ -20,9 +20,26 @@ describe('Recipient Update Validator', () => {
     expect(res).toBe(true);
   });
 
-  it('Should be return errors (required)', async () => {
+  it('Should be return errors (required body)', async () => {
     const res = await RecipientUpdateValidator(
       { body: null },
+      {
+        status: status => ({
+          status,
+          json: v => ({ ...v, status }),
+        }),
+      },
+      () => true
+    );
+
+    expect(res.status).toBe(400);
+    expect(res.error).toBe('Validation fails');
+    expect(res.messages.length).toBe(1);
+  });
+
+  it('Should be return errors (required recipientId)', async () => {
+    const res = await RecipientUpdateValidator(
+      { body: {}, params: null },
       {
         status: status => ({
           status,
@@ -61,6 +78,6 @@ describe('Recipient Update Validator', () => {
 
     expect(res.status).toBe(400);
     expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(7);
+    expect(res.messages.length).toBe(8);
   });
 });

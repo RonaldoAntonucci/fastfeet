@@ -39,7 +39,7 @@ describe('Recipient Update', () => {
   it('Should can not update recipient without valid data', async () => {
     const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
-      .put(`/recipients/naoImporta`)
+      .put(`/recipients/1`)
       .set('Authorization', `Bearer ${token}`)
       .send({});
 
@@ -55,7 +55,7 @@ describe('Recipient Update', () => {
     ]);
 
     const { status, body } = await request(app)
-      .put(`/recipients/invalidId`)
+      .put(`/recipients/1`)
       .set('Authorization', `Berar ${token}`)
       .send(attrs);
 

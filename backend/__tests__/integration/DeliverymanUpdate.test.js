@@ -50,7 +50,7 @@ describe('Deliveryman Update', () => {
     ]);
 
     const { status, body } = await request(app)
-      .put(`/deliverymans/invalidId`)
+      .put(`/deliverymans/1`)
       .set('Authorization', `Berar ${token}`)
       .send(attrs);
 

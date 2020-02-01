@@ -3,10 +3,10 @@
 jest.mock('../../../src/App/Models/User');
 jest.mock('../../../src/App/Models/Admin');
 jest.mock('../../../src/App/Models/Deliveryman');
-jest.mock('../../../src/Config/auth');
 
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
+import authConfig from '../../../src/Config/auth';
 
 import User from '../../../src/App/Models/User';
 
@@ -32,10 +32,7 @@ describe('Create Session Service', () => {
     expect(newSession).toHaveProperty('token');
 
     const { token } = newSession;
-    const decoded = await promisify(jwt.verify)(
-      token,
-      'f979ac3c421ea71d4a94cbac15ef5eb2'
-    );
+    const decoded = await promisify(jwt.verify)(token, authConfig.secret);
 
     expect(id).toBe(decoded.id);
   });

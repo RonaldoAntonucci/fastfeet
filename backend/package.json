@@ -17,7 +17,10 @@
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
     "pretestAll": "NODE_ENV=test sequelize db:migrate",
     "testAll": "NODE_ENV=test jest --detectOpenHandles",
-    "posttestAll": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "posttestAll": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "pretestpg": "NODE_ENV=development  sequelize db:migrate",
+    "testpg": "NODE_ENV=development  jest --detectOpenHandles",
+    "posttestpg": "NODE_ENV=development  sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "@sentry/node": "^5.11.1",

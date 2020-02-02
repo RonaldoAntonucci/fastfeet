@@ -75,6 +75,14 @@ routes.delete(
   DeliverymanController.destroy
 );
 
+routes.get('/deliveries', isAdminMiddleware, DeliveryController.index);
+routes.get(
+  '/deliveries/:deliveryId',
+  isAdminMiddleware,
+  RouteParamsIdValidator(['deliveryId']),
+  DeliveryController.show
+);
+
 routes.post(
   '/deliveries',
   isAdminMiddleware,

@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
+import _ from 'lodash';
 
 import userAttrs from './Traits/userAttrs';
 
@@ -19,6 +20,7 @@ class User extends Model {
       },
       {
         sequelize,
+        defaultScope: { include: ['Admin'] },
       }
     );
 
@@ -28,21 +30,20 @@ class User extends Model {
       }
     });
 
-    // eslint-disable-next-line func-names
-    this.prototype.toJSON = function() {
-      const values = {
-        ...this.dataValues,
-      };
-
-      delete values.password_hash;
-      delete values.password;
-
-      if (values.Admin) delete values.Admin;
-
-      return values;
-    };
-
     return this;
+  }
+
+  toJSON() {
+    const values = _.cloneDeep(
+      this.get({
+        plain: true,
+      })
+    );
+
+    delete values.password_hash;
+    delete values.password;
+
+    return values;
   }
 
   static associate(models) {

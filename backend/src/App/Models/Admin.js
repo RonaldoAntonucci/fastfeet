@@ -16,6 +16,7 @@ class Admin extends Model {
     this.belongsTo(models.User, {
       foreignKey: 'user_id',
       onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
   }
 }

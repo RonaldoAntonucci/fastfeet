@@ -9,9 +9,9 @@ describe('Delivery Create', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliverymans/1/deliveries', method: 'post' });
+  onlyAuth({ path: '/deliveries', method: 'post' });
 
-  onlyAdmin({ path: '/deliverymans/1/deliveries', method: 'post' });
+  onlyAdmin({ path: '/deliveries', method: 'post' });
 
   it('Should can be Create a Delivery', async () => {
     const [token, attrs] = await Promise.all([
@@ -22,7 +22,7 @@ describe('Delivery Create', () => {
     const { deliveryman_id, recipient_id, product } = attrs;
 
     const { status, body } = await request(app)
-      .post(`/deliverymans/${deliveryman_id}/deliveries`)
+      .post(`/deliveries`)
       .set('Authorization', `Bearer ${token}`)
       .send(attrs);
 
@@ -38,11 +38,12 @@ describe('Delivery Create', () => {
   it('Should be not able to store an Delivery with invalid data', async () => {
     const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
-      .post(`/deliverymans/deliveryman_id/deliveries`)
+      .post(`/deliveries`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         product: null,
         recipient_id: null,
+        deliveryman_id: null,
       });
 
     expect(status).toBe(400);
@@ -57,7 +58,7 @@ describe('Delivery Create', () => {
     ]);
 
     const { status, body } = await request(app)
-      .post(`/deliverymans/1/deliveries`)
+      .post(`/deliveries`)
       .set('Authorization', `Bearer ${token}`)
       .send(attrs);
 
@@ -71,10 +72,8 @@ describe('Delivery Create', () => {
       factory.attrs('Delivery', { recipient_id: 1 }),
     ]);
 
-    const { deliveryman_id } = attrs;
-
     const { status, body } = await request(app)
-      .post(`/deliverymans/${deliveryman_id}/deliveries`)
+      .post(`/deliveries`)
       .set('Authorization', `Bearer ${token}`)
       .send(attrs);
 

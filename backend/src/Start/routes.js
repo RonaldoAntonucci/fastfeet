@@ -76,9 +76,8 @@ routes.delete(
 );
 
 routes.post(
-  '/deliverymans/:deliverymanId/deliveries',
+  '/deliveries',
   isAdminMiddleware,
-  RouteParamsIdValidator(['deliverymanId']),
   DeliveryStoreValidator,
   DeliveryController.store
 );

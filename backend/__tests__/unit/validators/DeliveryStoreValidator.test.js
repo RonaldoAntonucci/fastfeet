@@ -5,6 +5,7 @@ describe('Delivery Store Validator', () => {
   it('Happy Way', async () => {
     const delivery = {
       recipient_id: 1,
+      deliveryman_id: 1,
       product: 'productName',
     };
 
@@ -36,7 +37,7 @@ describe('Delivery Store Validator', () => {
 
     expect(res.status).toBe(400);
     expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(2);
+    expect(res.messages.length).toBe(3);
   });
 
   it('Should be return errors (invalid)', async () => {
@@ -44,7 +45,8 @@ describe('Delivery Store Validator', () => {
       {
         body: {
           product: null,
-          recipient_id: null,
+          recipient_id: 'invalid',
+          deliveryman_id: 'invalid',
         },
       },
       {
@@ -58,6 +60,6 @@ describe('Delivery Store Validator', () => {
 
     expect(res.status).toBe(400);
     expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(2);
+    expect(res.messages.length).toBe(3);
   });
 });

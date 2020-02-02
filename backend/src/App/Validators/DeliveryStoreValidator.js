@@ -8,6 +8,10 @@ export default async (req, res, next) => {
         .integer()
         .positive()
         .required(),
+      deliveryman_id: Yup.number()
+        .integer()
+        .positive()
+        .required(),
     });
 
     await schema.validate(req.body, { abortEarly: false });

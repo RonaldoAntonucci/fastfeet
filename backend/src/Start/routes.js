@@ -16,6 +16,7 @@ import RecipientStoreValidator from '../App/Validators/RecipientStoreValidator';
 import RecipientUpdateValidator from '../App/Validators/RecipientUpdateValidator';
 import DeliveryStoreValidator from '../App/Validators/DeliveryStoreValidator';
 import DeliveryUpdateValidator from '../App/Validators/DeliveryUpdateValidator';
+import DeliveryWithdrawValidator from '../App/Validators/DeliveryWithdrawValidator';
 
 import UserController from '../App/Controllers/UserController';
 import DeliverymanController from '../App/Controllers/DeliverymanController';
@@ -36,6 +37,13 @@ routes.get(
   '/deliverymen/:deliverymanId/deliveries',
   RouteParamsIdValidator(['deliverymanId']),
   DeliveryController.index
+);
+
+routes.put(
+  '/deliverymen/:deliverymanId/deliveries/:deliveryId',
+  RouteParamsIdValidator(['deliverymanId', 'deliveryId']),
+  DeliveryWithdrawValidator,
+  DeliveryController.update
 );
 
 routes.use(authMiddleware);

@@ -19,12 +19,17 @@ export default {
     return res.json(deliveryman).send();
   },
 
-  async store({ body }, res) {
-    return res.json(await CreateDeliveryman.run(body));
+  async store(req, res, next) {
+    return res.json(await CreateDeliveryman.run(req.body));
   },
 
-  async update({ body, params }, res) {
-    return res.json(await UpdateDeliveryman.run(params, body));
+  async update({ params, body, fileId }, res) {
+    return res.json(
+      await UpdateDeliveryman.run(params, {
+        ...body,
+        avatar_id: fileId,
+      })
+    );
   },
 
   async destroy({ params }, res) {

@@ -5,3 +5,4 @@ __tests__/coverage
 __tests__/database.sqlite
 .vscode
 report.*
+temp/uploads/*

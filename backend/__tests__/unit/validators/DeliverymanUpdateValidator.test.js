@@ -42,7 +42,6 @@ describe('Deliveryman Update Validator', () => {
       {
         body: {
           name: '1',
-          avatar_id: null,
         },
       },
       {
@@ -56,6 +55,6 @@ describe('Deliveryman Update Validator', () => {
 
     expect(res.status).toBe(400);
     expect(res.error).toBe('Validation fails');
-    expect(res.messages.length).toBe(2);
+    expect(res.messages.length).toBe(1);
   });
 });

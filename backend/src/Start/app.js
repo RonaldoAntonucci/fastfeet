@@ -4,6 +4,7 @@ import express from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import * as Sentry from '@sentry/node';
+import path from 'path';
 import routes from './routes';
 import sentryConfig from '../Config/sentry';
 import ExceptionHandler from '../App/Exceptions/Handler';
@@ -25,6 +26,14 @@ class App {
     this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(cors());
     this.server.use(express.json());
+    this.server.use(
+      '/files',
+      process.env.NODE_ENV !== 'test'
+        ? express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+        : express.static(
+            path.resolve(__dirname, '..', '__tests__', 'utils', 'files')
+          )
+    );
   }
 
   routes() {

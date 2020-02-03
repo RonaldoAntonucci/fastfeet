@@ -10,6 +10,8 @@ export default {
       { where: { id }, returning: dialectIsProtgres }
     );
 
+    // console.log(avatar_id);
+
     if (result[0] < 1) {
       throw new Exception('Invalid Deliveryman id.');
     }

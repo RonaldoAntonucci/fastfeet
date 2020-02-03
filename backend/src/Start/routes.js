@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from '../Config/multer';
 
 import authMiddleware from '../App/Middlewares/auth';
 import isAdminMiddleware from '../App/Middlewares/isAdmin';
@@ -19,8 +21,10 @@ import DeliverymanController from '../App/Controllers/DeliverymanController';
 import SessionController from '../App/Controllers/SessionController';
 import RecipientsController from '../App/Controllers/RecipientsController';
 import DeliveryController from '../App/Controllers/DeliveryController';
+import FileController from '../App/Controllers/FileController';
 
 const routes = new Router();
+const upload = multer(multerConfig);
 
 routes.use(parseEmptyBodyToNull);
 
@@ -65,6 +69,14 @@ routes.put(
   isAdminMiddleware,
   RouteParamsIdValidator(['deliverymanId']),
   DeliverymanUpdateValidator,
+  DeliverymanController.update
+);
+
+routes.post(
+  '/deliverymans/:deliverymanId/avatar',
+  isAdminMiddleware,
+  upload.single('file'),
+  FileController.store,
   DeliverymanController.update
 );
 

@@ -5,7 +5,6 @@ export default async (req, res, next) => {
     const schema = Yup.object()
       .shape({
         name: Yup.string().min(3),
-        avatar_id: Yup.string(),
       })
       .required();
 

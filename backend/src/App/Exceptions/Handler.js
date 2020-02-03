@@ -11,7 +11,10 @@ export default async (err, req, res, next) => {
     return res.status(500).json(errors);
   }
 
-  if (process.env.NODE_ENV === 'test') {
+  if (
+    process.env.NODE_ENV === 'test' ||
+    process.env.NODE_ENV === 'development'
+  ) {
     // eslint-disable-next-line no-console
     console.log(err);
   }

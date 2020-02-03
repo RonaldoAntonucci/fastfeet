@@ -1,9 +1,8 @@
 /* eslint-disable no-undef */
 import request from 'supertest';
+import path from 'path';
 import { factory, truncate, getToken, onlyAuth, onlyAdmin } from '../utils';
 import app from '../../src/Start/app';
-
-import Deliveryman from '../../src/App/Models/Deliveryman';
 
 describe('Deliveryman Update', () => {
   afterEach(async () => {
@@ -16,8 +15,8 @@ describe('Deliveryman Update', () => {
 
   it('Should can be update a Deliveryman', async () => {
     const [deliveryman, newAttrs, token] = await Promise.all([
-      factory.create('Deliveryman'),
-      factory.attrs('Deliveryman'),
+      factory.create('Deliveryman', { avatar_id: null }),
+      factory.attrs('Deliveryman', { avatar_id: null }),
       getToken({ isAdmin: true }),
     ]);
 
@@ -29,8 +28,31 @@ describe('Deliveryman Update', () => {
     expect(status).toBe(200);
     expect(body).toHaveProperty('name', newAttrs.name);
     expect(body).toHaveProperty('email', deliveryman.email);
-    expect(body).toHaveProperty('avatar_id', newAttrs.avatar_id);
     expect(body).toHaveProperty('id', deliveryman.id);
+  });
+
+  it('Should can be add a Deliveryman avatar img', async () => {
+    const [deliveryman, token] = await Promise.all([
+      factory.create('Deliveryman', { avatar_id: null }),
+      getToken({ isAdmin: true }),
+    ]);
+
+    const { status, body } = await request(app)
+      .post(`/deliverymans/${deliveryman.id}/avatar`)
+      .set('Authorization', `Bearer ${token}`)
+      .attach(
+        'file',
+        path.resolve(__dirname, '..', 'utils', 'files', 'img.png'),
+        'profile'
+      );
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('id', deliveryman.id);
+    expect(body).toHaveProperty('avatar_url');
+    expect(body).toHaveProperty('avatar_id');
+    expect(body).toHaveProperty('email', deliveryman.email);
+    expect(body).toHaveProperty('createdAt');
+    expect(body).toHaveProperty('updatedAt');
   });
 
   it('Should can not update Deliveryman without valid data', async () => {

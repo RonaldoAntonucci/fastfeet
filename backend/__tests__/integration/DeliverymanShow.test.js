@@ -29,7 +29,9 @@ describe('Deliveryman Show', () => {
       ...body,
       createdAt: new Date(body.createdAt),
       updatedAt: new Date(body.updatedAt),
+      avatar_url: null,
     }).toStrictEqual(deliveryman.toJSON());
+    expect(body).toHaveProperty('avatar_url');
   });
 
   it('Should can not be Show a Deliveryman with invalid id', async () => {

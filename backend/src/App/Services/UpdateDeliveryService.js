@@ -31,12 +31,22 @@ export default {
 
     const startDate = parseISO(start_date);
 
+    if (
+      (await Delivery.scope('withdrawToday').count({
+        where: {
+          deliveryman_id: deliverymanId,
+        },
+      })) >= 5
+    ) {
+      throw new Exception('Maximum withdrawals exceeded.');
+    }
+
     if (isBefore(startDate, new Date().setHours(8, 0, 0))) {
-      throw new Exception('Horário não permitido.');
+      throw new Exception('Time not allowed.');
     }
 
     if (isAfter(startDate, new Date().setHours(18, 0, 0))) {
-      throw new Exception('Horário não permitido.');
+      throw new Exception('Time not allowed.');
     }
 
     return Delivery.update(

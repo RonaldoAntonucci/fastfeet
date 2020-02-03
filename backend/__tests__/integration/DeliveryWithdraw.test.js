@@ -67,4 +67,28 @@ describe('Deliveryman Store', () => {
     expect(status).toBe(400);
     expect(body).toHaveProperty('message', 'Invalid Delivery id.');
   });
+
+  it('Deliveryman should not be able to withdraw if maximum withdraws exceeded.', async () => {
+    const start_date = new Date();
+    start_date.setHours(13, 0, 0);
+
+    const deliveryman = await factory.create('Deliveryman');
+
+    const [delivery] = await Promise.all([
+      factory.create('Delivery', {
+        deliveryman_id: deliveryman.id,
+      }),
+      factory.createMany('Delivery', 5, {
+        start_date,
+        deliveryman_id: deliveryman.id,
+      }),
+    ]);
+
+    const { status, body } = await request(app)
+      .put(`/deliverymen/${deliveryman.id}/deliveries/${delivery.id}`)
+      .send({ start_date });
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty('message', 'Maximum withdrawals exceeded.');
+  });
 });

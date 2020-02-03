@@ -1,4 +1,5 @@
 import Sequelize, { Model, Op } from 'sequelize';
+import { startOfDay, endOfDay } from 'date-fns';
 
 class Delivery extends Model {
   static init(sequelize) {
@@ -30,6 +31,13 @@ class Delivery extends Model {
                     end_date: null,
                   },
                 };
+          },
+          withdrawToday: {
+            where: {
+              start_date: {
+                [Op.between]: [startOfDay(new Date()), endOfDay(new Date())],
+              },
+            },
           },
         },
       }

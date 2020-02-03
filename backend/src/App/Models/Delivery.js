@@ -8,10 +8,12 @@ class Delivery extends Model {
         product: Sequelize.STRING,
         start_date: Sequelize.DATE,
         end_date: Sequelize.DATE,
-        canceled_at: Sequelize.DATE,
       },
       {
         sequelize,
+        timestamps: true,
+        paranoid: true,
+        deletedAt: 'canceledAt',
       }
     );
 

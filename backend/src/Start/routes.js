@@ -85,7 +85,7 @@ routes.delete(
   '/deliverymans/:deliverymanId',
   isAdminMiddleware,
   RouteParamsIdValidator(['deliverymanId']),
-  DeliverymanController.destroy
+  DeliverymanController.delete
 );
 
 routes.get('/deliveries', isAdminMiddleware, DeliveryController.index);
@@ -109,6 +109,13 @@ routes.put(
   RouteParamsIdValidator(['deliveryId']),
   DeliveryUpdateValidator,
   DeliveryController.update
+);
+
+routes.delete(
+  '/deliveries/:deliveryId',
+  isAdminMiddleware,
+  RouteParamsIdValidator(['deliveryId']),
+  DeliveryController.delete
 );
 
 export default routes;

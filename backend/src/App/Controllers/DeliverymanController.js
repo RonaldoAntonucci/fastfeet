@@ -32,7 +32,7 @@ export default {
     );
   },
 
-  async destroy({ params }, res) {
+  async delete({ params }, res) {
     await DeleteDeliveryman.run(params);
     return res.send();
   },

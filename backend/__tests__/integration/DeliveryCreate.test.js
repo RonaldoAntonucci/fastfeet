@@ -1,8 +1,11 @@
+/* eslint-disable import/first */
 /* eslint-disable no-undef */
+jest.mock('../../src/Lib/Queue');
 import request from 'supertest';
 import app from '../../src/Start/app';
 
 import { factory, truncate, getToken, onlyAuth, onlyAdmin } from '../utils';
+import Queue from '../../src/Lib/Queue';
 
 describe('Delivery Create', () => {
   afterEach(async () => {
@@ -33,6 +36,7 @@ describe('Delivery Create', () => {
     expect(body).toHaveProperty('product', product);
     expect(body).toHaveProperty('createdAt');
     expect(body).toHaveProperty('updatedAt');
+    expect(Queue.add.mock.calls.length).toBe(1);
   });
 
   it('Should be not able to store an Delivery with invalid data', async () => {

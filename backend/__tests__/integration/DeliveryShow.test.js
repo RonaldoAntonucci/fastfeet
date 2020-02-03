@@ -29,7 +29,7 @@ describe('Delivery Show', () => {
       ...body,
       createdAt: new Date(body.createdAt),
       updatedAt: new Date(body.updatedAt),
-    }).toStrictEqual(delivery.toJSON());
+    }).toStrictEqual({ ...delivery.toJSON(), canceledAt: null });
   });
 
   it('Should can not be Show a Deliveryman with invalid id', async () => {

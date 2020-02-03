@@ -7,7 +7,7 @@ export default {
   async run({ deliverymanId: id }, { name, avatar_id }) {
     const dialectIsProtgres = process.env.DB_DIALECT === 'postgres';
 
-    if (!(await File.findByPk(avatar_id))) {
+    if (avatar_id && !(await File.findByPk(avatar_id))) {
       throw new Exception('Invalid File id.');
     }
 

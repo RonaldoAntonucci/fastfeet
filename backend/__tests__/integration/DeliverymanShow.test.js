@@ -9,9 +9,9 @@ describe('Deliveryman Show', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliverymans/naoImporta', method: 'get' });
+  onlyAuth({ path: '/deliverymen/naoImporta', method: 'get' });
 
-  onlyAdmin({ path: '/deliverymans/naoImporta', method: 'get' });
+  onlyAdmin({ path: '/deliverymen/naoImporta', method: 'get' });
 
   it('Should can be Show a Deliveryman', async () => {
     const [token, deliveryman] = await Promise.all([
@@ -20,7 +20,7 @@ describe('Deliveryman Show', () => {
     ]);
 
     const { status, body } = await request(app)
-      .get(`/deliverymans/${deliveryman.id}`)
+      .get(`/deliverymen/${deliveryman.id}`)
       .set('Authorization', `Berar ${token}`)
       .send();
 
@@ -43,7 +43,7 @@ describe('Deliveryman Show', () => {
     await deliveryman.destroy();
 
     const { status, body } = await request(app)
-      .get(`/deliverymans/${deliveryman.id}`)
+      .get(`/deliverymen/${deliveryman.id}`)
       .set('Authorization', `Berar ${token}`)
       .send();
 

@@ -17,6 +17,7 @@ class Deliveryman extends Model {
       },
       {
         sequelize,
+        tableName: 'deliverymen',
         defaultScope: { include: ['avatar'] },
       }
     );

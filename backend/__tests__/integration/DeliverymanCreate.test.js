@@ -9,16 +9,16 @@ describe('Deliveryman Store', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliverymans', method: 'post' });
+  onlyAuth({ path: '/deliverymen', method: 'post' });
 
-  onlyAdmin({ path: '/deliverymans', method: 'post' });
+  onlyAdmin({ path: '/deliverymen', method: 'post' });
 
   it('Should can be Store a Deliveryman', async () => {
     const token = await getToken({ isAdmin: true });
     const deliveryman = await factory.attrs('Deliveryman');
 
     const { status, body } = await request(app)
-      .post('/deliverymans')
+      .post('/deliverymen')
       .set('Authorization', `Bearer ${token}`)
       .send(deliveryman);
 
@@ -33,7 +33,7 @@ describe('Deliveryman Store', () => {
     const deliveryman = await factory.create('Deliveryman');
     const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
-      .post('/deliverymans')
+      .post('/deliverymen')
       .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'batata',
@@ -47,7 +47,7 @@ describe('Deliveryman Store', () => {
   it('Should be not able to store an Deliveryman with invalid data', async () => {
     const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
-      .post('/deliverymans')
+      .post('/deliverymen')
       .set('Authorization', `Bearer ${token}`)
       .send({
         name: '',

@@ -32,6 +32,12 @@ routes.use(parseEmptyBodyToNull);
 routes.post('/users', UserStoreValidator, UserController.store);
 routes.post('/sessions', SessionStoreValidator, SessionController.store);
 
+routes.get(
+  '/deliverymen/:deliverymanId/deliveries',
+  RouteParamsIdValidator(['deliverymanId']),
+  DeliveryController.index
+);
+
 routes.use(authMiddleware);
 
 routes.post(
@@ -49,24 +55,24 @@ routes.put(
   RecipientsController.update
 );
 
-routes.get('/deliverymans', isAdminMiddleware, DeliverymanController.index);
+routes.get('/deliverymen', isAdminMiddleware, DeliverymanController.index);
 
 routes.get(
-  '/deliverymans/:deliverymanId',
+  '/deliverymen/:deliverymanId',
   isAdminMiddleware,
   RouteParamsIdValidator(['deliverymanId']),
   DeliverymanController.show
 );
 
 routes.post(
-  '/deliverymans',
+  '/deliverymen',
   isAdminMiddleware,
   DeliverymanStoreValidator,
   DeliverymanController.store
 );
 
 routes.put(
-  '/deliverymans/:deliverymanId',
+  '/deliverymen/:deliverymanId',
   isAdminMiddleware,
   RouteParamsIdValidator(['deliverymanId']),
   DeliverymanUpdateValidator,
@@ -74,7 +80,7 @@ routes.put(
 );
 
 routes.post(
-  '/deliverymans/:deliverymanId/avatar',
+  '/deliverymen/:deliverymanId/avatar',
   isAdminMiddleware,
   upload.single('file'),
   FileController.store,
@@ -82,7 +88,7 @@ routes.post(
 );
 
 routes.delete(
-  '/deliverymans/:deliverymanId',
+  '/deliverymen/:deliverymanId',
   isAdminMiddleware,
   RouteParamsIdValidator(['deliverymanId']),
   DeliverymanController.delete

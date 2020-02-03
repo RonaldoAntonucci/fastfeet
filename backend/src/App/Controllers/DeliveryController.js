@@ -7,8 +7,8 @@ import ListDelivery from '../Repository/ListDeliveryRepository';
 import Delivery from '../Models/Delivery';
 
 export default {
-  async index({ query }, res) {
-    return res.json(await ListDelivery.run(query)).send();
+  async index({ params, query }, res) {
+    return res.json(await ListDelivery.run(params, query)).send();
   },
 
   async show({ params: { deliveryId: id } }, res) {

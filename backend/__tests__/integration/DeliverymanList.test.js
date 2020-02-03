@@ -16,11 +16,11 @@ describe('Deliveryman List', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliverymans', method: 'get' });
+  onlyAuth({ path: '/deliverymen', method: 'get' });
 
-  onlyAdmin({ path: '/deliverymans', method: 'get' });
+  onlyAdmin({ path: '/deliverymen', method: 'get' });
 
-  it('Should can be list deliverymans with pagination.', async () => {
+  it('Should can be list deliverymen with pagination.', async () => {
     const total = faker.integer({ min: 1, max: 50 });
     const quantity = faker.integer({ min: 1, max: 50 });
     const page = Math.ceil(total / quantity);
@@ -34,7 +34,7 @@ describe('Deliveryman List', () => {
       status,
       body: { data, count, totalPages },
     } = await request(app)
-      .get('/deliverymans')
+      .get('/deliverymen')
       .query({ page, quantity })
       .set('Authorization', `Bearer ${token}`)
       .send();
@@ -47,7 +47,7 @@ describe('Deliveryman List', () => {
     expect(Number(count)).toBe(total);
   });
 
-  it('Should can be list deliverymans with pagination and filter by name.', async () => {
+  it('Should can be list deliverymen with pagination and filter by name.', async () => {
     const total = faker.integer({ min: 1, max: 50 });
     const quantity = faker.integer({ min: 1, max: 50 });
     const page = Math.ceil(total / quantity);
@@ -62,7 +62,7 @@ describe('Deliveryman List', () => {
       status,
       body: { data, count, totalPages },
     } = await request(app)
-      .get('/deliverymans')
+      .get('/deliverymen')
       .query({ page, quantity, q: 'João' })
       .set('Authorization', `Bearer ${token}`)
       .send();

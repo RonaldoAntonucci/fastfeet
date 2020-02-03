@@ -9,9 +9,9 @@ describe('Deliveryman Update', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliverymans/naoImporta', method: 'put' });
+  onlyAuth({ path: '/deliverymen/naoImporta', method: 'put' });
 
-  onlyAdmin({ path: '/deliverymans/naoImporta', method: 'put' });
+  onlyAdmin({ path: '/deliverymen/naoImporta', method: 'put' });
 
   it('Should can be update a Deliveryman', async () => {
     const [deliveryman, newAttrs, token] = await Promise.all([
@@ -21,7 +21,7 @@ describe('Deliveryman Update', () => {
     ]);
 
     const { status, body } = await request(app)
-      .put(`/deliverymans/${deliveryman.id}`)
+      .put(`/deliverymen/${deliveryman.id}`)
       .set('Authorization', `Bearer ${token}`)
       .send(newAttrs);
 
@@ -38,7 +38,7 @@ describe('Deliveryman Update', () => {
     ]);
 
     const { status, body } = await request(app)
-      .post(`/deliverymans/${deliveryman.id}/avatar`)
+      .post(`/deliverymen/${deliveryman.id}/avatar`)
       .set('Authorization', `Bearer ${token}`)
       .attach(
         'file',
@@ -58,7 +58,7 @@ describe('Deliveryman Update', () => {
   it('Should can not update Deliveryman without valid data', async () => {
     const token = await getToken({ isAdmin: true });
     const { status, body } = await request(app)
-      .put(`/deliverymans/naoImporta`)
+      .put(`/deliverymen/naoImporta`)
       .set('Authorization', `Bearer ${token}`)
       .send({});
 
@@ -79,7 +79,7 @@ describe('Deliveryman Update', () => {
     await deliveryman.destroy({ force: true });
 
     const { status, body } = await request(app)
-      .put(`/deliverymans/${id}`)
+      .put(`/deliverymen/${id}`)
       .set('Authorization', `Berar ${token}`)
       .send(attrs);
 

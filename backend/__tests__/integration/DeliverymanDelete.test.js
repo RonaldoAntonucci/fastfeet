@@ -8,9 +8,9 @@ describe('Deliveryman Delete', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliverymans/naoImporta', method: 'delete' });
+  onlyAuth({ path: '/deliverymen/naoImporta', method: 'delete' });
 
-  onlyAdmin({ path: '/deliverymans/naoImporta', method: 'delete' });
+  onlyAdmin({ path: '/deliverymen/naoImporta', method: 'delete' });
 
   it('Should can be destroy an Deliveryman', async () => {
     const { id } = await factory.create('Deliveryman');
@@ -18,7 +18,7 @@ describe('Deliveryman Delete', () => {
     const token = await getToken({ isAdmin: true });
 
     const { status } = await request(app)
-      .delete(`/deliverymans/${id}`)
+      .delete(`/deliverymen/${id}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 
@@ -35,7 +35,7 @@ describe('Deliveryman Delete', () => {
     await deliveryman.destroy();
 
     const { status, body } = await request(app)
-      .delete(`/deliverymans/${id}`)
+      .delete(`/deliverymen/${id}`)
       .set('Authorization', `Bearer ${token}`)
       .send();
 

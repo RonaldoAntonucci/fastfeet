@@ -15,6 +15,7 @@ import SessionStoreValidator from '../App/Validators/SessionStoreValidator';
 import RecipientStoreValidator from '../App/Validators/RecipientStoreValidator';
 import RecipientUpdateValidator from '../App/Validators/RecipientUpdateValidator';
 import DeliveryStoreValidator from '../App/Validators/DeliveryStoreValidator';
+import DeliveryUpdateValidator from '../App/Validators/DeliveryUpdateValidator';
 
 import UserController from '../App/Controllers/UserController';
 import DeliverymanController from '../App/Controllers/DeliverymanController';
@@ -100,6 +101,14 @@ routes.post(
   isAdminMiddleware,
   DeliveryStoreValidator,
   DeliveryController.store
+);
+
+routes.put(
+  '/deliveries/:deliveryId',
+  isAdminMiddleware,
+  RouteParamsIdValidator(['deliveryId']),
+  DeliveryUpdateValidator,
+  DeliveryController.update
 );
 
 export default routes;

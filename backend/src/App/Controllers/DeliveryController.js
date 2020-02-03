@@ -1,4 +1,5 @@
 import CreateDelivery from '../Services/CreateDeliveryService';
+import UpdateDelivery from '../Services/UpdateDeliveryService';
 
 import ListDelivery from '../Repository/ListDeliveryRepository';
 
@@ -19,5 +20,9 @@ export default {
 
   async store({ body }, res) {
     return res.json(await CreateDelivery.run(body)).send();
+  },
+
+  async update({ params, body }, res) {
+    return res.json(await UpdateDelivery.run(params, body));
   },
 };

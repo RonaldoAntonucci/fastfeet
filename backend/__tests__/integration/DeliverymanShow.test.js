@@ -14,10 +14,8 @@ describe('Deliveryman Show', () => {
   onlyAdmin({ path: '/deliverymen/naoImporta', method: 'get' });
 
   it('Should can be Show a Deliveryman', async () => {
-    const [token, deliveryman] = await Promise.all([
-      getToken({ isAdmin: true }),
-      factory.create('Deliveryman'),
-    ]);
+    const deliveryman = await factory.create('Deliveryman');
+    const token = await getToken({ isAdmin: true });
 
     const { status, body } = await request(app)
       .get(`/deliverymen/${deliveryman.id}`)
@@ -35,10 +33,8 @@ describe('Deliveryman Show', () => {
   });
 
   it('Should can not be Show a Deliveryman with invalid id', async () => {
-    const [token, deliveryman] = await Promise.all([
-      getToken({ isAdmin: true }),
-      factory.create('Deliveryman'),
-    ]);
+    const deliveryman = await factory.create('Deliveryman');
+    const token = await getToken({ isAdmin: true });
 
     await deliveryman.destroy();
 

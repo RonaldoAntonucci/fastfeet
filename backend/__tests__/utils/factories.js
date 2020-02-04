@@ -9,24 +9,11 @@ import File from '../../src/App/Models/File';
 
 import faker from './faker';
 
-factory.define(
-  'User',
-  User,
-  () => ({
-    name: faker.name(),
-    email: faker.email(),
-    password: faker.string({ length: 50 }),
-  }),
-  {
-    afterCreate: async (model, attrs) => {
-      if (attrs.isAdmin) {
-        await factory.create('Admin', { user_id: model.id });
-      }
-
-      return model;
-    },
-  }
-);
+factory.define('User', User, () => ({
+  name: faker.name(),
+  email: faker.email(),
+  password: faker.string({ length: 50 }),
+}));
 
 factory.define('Admin', Admin, () => ({
   user_id: factory.assoc('User', 'id'),

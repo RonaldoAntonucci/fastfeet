@@ -14,10 +14,8 @@ describe('Delivery Show', () => {
   onlyAdmin({ path: '/deliveries/naoImporta', method: 'get' });
 
   it('Should can be Show a Delivery', async () => {
-    const [token, delivery] = await Promise.all([
-      getToken({ isAdmin: true }),
-      factory.create('Delivery'),
-    ]);
+    const delivery = await factory.create('Delivery');
+    const token = await getToken({ isAdmin: true });
 
     const { status, body } = await request(app)
       .get(`/deliveries/${delivery.id}`)
@@ -33,10 +31,8 @@ describe('Delivery Show', () => {
   });
 
   it('Should can not be Show a Deliveryman with invalid id', async () => {
-    const [token, delivery] = await Promise.all([
-      getToken({ isAdmin: true }),
-      factory.create('Delivery'),
-    ]);
+    const delivery = await factory.create('Delivery');
+    const token = await getToken({ isAdmin: true });
 
     await delivery.destroy();
 

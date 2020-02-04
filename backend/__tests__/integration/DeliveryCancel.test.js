@@ -2,7 +2,7 @@
 import request from 'supertest';
 import app from '../../src/Start/app';
 
-import { factory, truncate, getToken, onlyAuth, onlyAdmin } from '../utils';
+import { factory, truncate, getToken, onlyAdmin, onlyAuth } from '../utils';
 
 import Delivery from '../../src/App/Models/Delivery';
 
@@ -16,10 +16,8 @@ describe('Delivery Create', () => {
   onlyAdmin({ path: '/deliveries/id', method: 'delete' });
 
   it('Should can be cancel a Delivery with admin user.', async () => {
-    const [token, delivery] = await Promise.all([
-      getToken({ isAdmin: true }),
-      factory.create('Delivery'),
-    ]);
+    const token = await getToken({ isAdmin: true });
+    const delivery = await factory.create('Delivery');
 
     const { status } = await request(app)
       .delete(`/deliveries/${delivery.id}`)
@@ -35,10 +33,8 @@ describe('Delivery Create', () => {
   });
 
   it('Should be return error without valid delivery id.', async () => {
-    const [token, delivery] = await Promise.all([
-      getToken({ isAdmin: true }),
-      factory.create('Delivery'),
-    ]);
+    const token = await getToken({ isAdmin: true });
+    const delivery = await factory.create('Delivery');
 
     const { id } = delivery;
 

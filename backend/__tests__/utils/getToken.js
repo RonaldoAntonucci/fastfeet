@@ -1,16 +1,19 @@
-import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import factory from './factories';
 
-import app from '../../src/Start/app';
+import authConfig from '../../src/Config/auth';
 
-export default async ({ isAdmin = false } = { isAdmin: false }) => {
-  const password = '123456';
-  const { email } = await factory.create('User', { password, isAdmin });
+export default async ({ isAdmin = false } = {}) => {
+  let id = null;
 
-  const {
-    body: { token },
-  } = await request(app)
-    .post('/sessions')
-    .send({ email, password });
-  return token;
+  if (isAdmin) {
+    const admin = await factory.create('Admin');
+    id = admin.user_id;
+  } else {
+    id = (await factory.create('User')).id;
+  }
+
+  return jwt.sign({ id }, authConfig.secret, {
+    expiresIn: authConfig.expiresIn,
+  });
 };

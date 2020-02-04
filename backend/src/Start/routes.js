@@ -10,7 +10,6 @@ import RouteParamsIdValidator from '../App/Validators/RouteParamsIdValidator';
 import UserStoreValidator from '../App/Validators/UserStoreValidator';
 import DeliverymanStoreValidator from '../App/Validators/DeliverymanStoreValidator';
 import DeliverymanUpdateValidator from '../App/Validators/DeliverymanUpdateValidator';
-// import UserUpdateValidator from './app/Validators/UserUpdateValidator';
 import SessionStoreValidator from '../App/Validators/SessionStoreValidator';
 import RecipientStoreValidator from '../App/Validators/RecipientStoreValidator';
 import RecipientUpdateValidator from '../App/Validators/RecipientUpdateValidator';
@@ -39,10 +38,18 @@ routes.get(
   DeliveryController.index
 );
 
-routes.put(
-  '/deliverymen/:deliverymanId/deliveries/:deliveryId',
+routes.post(
+  '/deliverymen/:deliverymanId/deliveries/:deliveryId/withdraw',
   RouteParamsIdValidator(['deliverymanId', 'deliveryId']),
   DeliveryWithdrawValidator,
+  DeliveryController.update
+);
+
+routes.post(
+  '/deliverymen/:deliverymanId/deliveries/:deliveryId/finish',
+  RouteParamsIdValidator(['deliverymanId', 'deliveryId']),
+  upload.single('file'),
+  FileController.store,
   DeliveryController.update
 );
 

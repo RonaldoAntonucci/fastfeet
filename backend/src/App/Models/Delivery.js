@@ -5,7 +5,6 @@ class Delivery extends Model {
   static init(sequelize) {
     super.init(
       {
-        signature_id: Sequelize.STRING,
         product: Sequelize.STRING,
         start_date: Sequelize.DATE,
         end_date: Sequelize.DATE,
@@ -54,6 +53,10 @@ class Delivery extends Model {
     this.belongsTo(models.Deliveryman, {
       foreignKey: 'deliveryman_id',
       source: 'id',
+    });
+    this.belongsTo(models.File, {
+      foreignKey: 'signature_id',
+      as: 'signature',
     });
   }
 }

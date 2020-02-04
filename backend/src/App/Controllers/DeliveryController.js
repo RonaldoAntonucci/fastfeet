@@ -23,8 +23,10 @@ export default {
     return res.json(await CreateDelivery.run(body)).send();
   },
 
-  async update({ params, body }, res) {
-    return res.json(await UpdateDelivery.run(params, body));
+  async update({ params, body, fileId }, res) {
+    return res.json(
+      await UpdateDelivery.run(params, { ...body, signature_id: fileId })
+    );
   },
 
   async delete({ params }, res) {

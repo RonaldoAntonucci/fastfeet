@@ -16,7 +16,7 @@ describe('Deliveryman Store', () => {
     start_date.setHours(12, 0, 0);
 
     const { status, body } = await request(app)
-      .put(`/deliverymen/${deliveryman_id}/deliveries/${id}`)
+      .post(`/deliverymen/${deliveryman_id}/deliveries/${id}/withdraw`)
       .send({ start_date });
 
     expect(status).toBe(200);
@@ -30,7 +30,7 @@ describe('Deliveryman Store', () => {
     start_date.setHours(7, 59, 0);
 
     const { status, body } = await request(app)
-      .put(`/deliverymen/${deliveryman_id}/deliveries/${id}`)
+      .post(`/deliverymen/${deliveryman_id}/deliveries/${id}/withdraw`)
       .send({ start_date });
 
     expect(status).toBe(400);
@@ -44,7 +44,7 @@ describe('Deliveryman Store', () => {
     start_date.setHours(18, 1, 0);
 
     const { status, body } = await request(app)
-      .put(`/deliverymen/${deliveryman_id}/deliveries/${id}`)
+      .post(`/deliverymen/${deliveryman_id}/deliveries/${id}/withdraw`)
       .send({ start_date });
 
     expect(status).toBe(400);
@@ -61,7 +61,7 @@ describe('Deliveryman Store', () => {
     start_date.setHours(13, 0, 0);
 
     const { status, body } = await request(app)
-      .put(`/deliverymen/${deliveryman_id}/deliveries/${id}`)
+      .post(`/deliverymen/${deliveryman_id}/deliveries/${id}/withdraw`)
       .send({ start_date });
 
     expect(status).toBe(400);
@@ -85,7 +85,7 @@ describe('Deliveryman Store', () => {
     ]);
 
     const { status, body } = await request(app)
-      .put(`/deliverymen/${deliveryman.id}/deliveries/${delivery.id}`)
+      .post(`/deliverymen/${deliveryman.id}/deliveries/${delivery.id}/withdraw`)
       .send({ start_date });
 
     expect(status).toBe(400);

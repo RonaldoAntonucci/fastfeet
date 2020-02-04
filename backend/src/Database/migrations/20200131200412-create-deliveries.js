@@ -29,9 +29,6 @@ module.exports = {
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       },
-      signature_id: {
-        type: Sequelize.STRING,
-      },
       product: {
         type: Sequelize.STRING,
         allowNull: false,

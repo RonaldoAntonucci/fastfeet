@@ -25,9 +25,10 @@ describe('Deliveries List', () => {
     const quantity = faker.integer({ min: 1, max: 10 });
     const page = Math.ceil(total / quantity);
 
-    const token = await getToken({ isAdmin: true });
-
-    await factory.createMany('Delivery', total);
+    const [token] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.createMany('Delivery', total),
+    ]);
 
     const {
       status,
@@ -49,11 +50,10 @@ describe('Deliveries List', () => {
   it('Deliverymens must be able to list their Deliveries (not delivered).', async () => {
     const deliveryman = await factory.create('Deliveryman');
 
-    const deliveries = await factory.createMany('Delivery', 3, {
-      deliveryman_id: deliveryman.id,
-    });
-
-    await Promise.all([
+    const [deliveries] = await Promise.all([
+      factory.createMany('Delivery', 3, {
+        deliveryman_id: deliveryman.id,
+      }),
       factory.createMany('Delivery', 2),
       factory.create('Delivery', {
         deliveryman_id: deliveryman.id,
@@ -75,12 +75,11 @@ describe('Deliveries List', () => {
   it('Deliverymens must be able to list their Deliveries (delivered).', async () => {
     const deliveryman = await factory.create('Deliveryman');
 
-    const deliveries = await factory.createMany('Delivery', 3, {
-      deliveryman_id: deliveryman.id,
-      end_date: new Date(),
-    });
-
-    await Promise.all([
+    const [deliveries] = await Promise.all([
+      factory.createMany('Delivery', 3, {
+        deliveryman_id: deliveryman.id,
+        end_date: new Date(),
+      }),
       factory.createMany('Delivery', 2),
       factory.create('Delivery', { deliveryman_id: deliveryman.id }),
     ]);

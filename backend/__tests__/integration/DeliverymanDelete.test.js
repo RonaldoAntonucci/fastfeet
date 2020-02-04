@@ -26,8 +26,10 @@ describe('Deliveryman Delete', () => {
   });
 
   it('Should can not be destroy an Deliveryman withou valid id', async () => {
-    const token = await getToken({ isAdmin: true });
-    const deliveryman = await factory.create('Deliveryman');
+    const [token, deliveryman] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.create('Deliveryman'),
+    ]);
     const { id } = deliveryman;
 
     await deliveryman.destroy();

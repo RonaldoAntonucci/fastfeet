@@ -13,9 +13,11 @@ describe('Delivery Update', () => {
   onlyAdmin({ path: '/deliveries/naoImporta', method: 'put' });
 
   it('Should be able to update a Delivery', async () => {
-    const delivery = await factory.create('Delivery');
-    const attrs = await factory.attrs('Delivery');
-    const token = await getToken({ isAdmin: true });
+    const [token, delivery, attrs] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.create('Delivery'),
+      factory.attrs('Delivery'),
+    ]);
 
     const { status, body } = await request(app)
       .put(`/deliveries/${delivery.id}`)
@@ -32,9 +34,11 @@ describe('Delivery Update', () => {
   });
 
   it('Should be return error without valid deliverymanId', async () => {
-    const delivery = await factory.create('Delivery');
-    const deliveryman = await factory.create('Deliveryman');
-    const token = await getToken({ isAdmin: true });
+    const [token, delivery, deliveryman] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.create('Delivery'),
+      factory.create('Deliveryman'),
+    ]);
 
     const { id: deliveryman_id } = deliveryman;
     await deliveryman.destroy();
@@ -49,9 +53,11 @@ describe('Delivery Update', () => {
   });
 
   it('Should be return error without valid delivery', async () => {
-    const delivery = await factory.create('Delivery');
-    const deliveryman = await factory.create('Deliveryman');
-    const token = await getToken({ isAdmin: true });
+    const [token, delivery, deliveryman] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.create('Delivery'),
+      factory.create('Deliveryman'),
+    ]);
 
     const { id: deliveryman_id } = deliveryman;
     const { id } = delivery;

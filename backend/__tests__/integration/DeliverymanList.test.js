@@ -21,12 +21,14 @@ describe('Deliveryman List', () => {
   onlyAdmin({ path: '/deliverymen', method: 'get' });
 
   it('Should can be list deliverymen with pagination.', async () => {
-    const total = faker.integer({ min: 1, max: 5 });
-    const quantity = faker.integer({ min: 1, max: 5 });
+    const total = faker.integer({ min: 1, max: 50 });
+    const quantity = faker.integer({ min: 1, max: 50 });
     const page = Math.ceil(total / quantity);
 
-    await factory.createMany('Deliveryman', total);
-    const token = await getToken({ isAdmin: true });
+    const [token] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.createMany('Deliveryman', total),
+    ]);
 
     const {
       status,
@@ -46,16 +48,15 @@ describe('Deliveryman List', () => {
   });
 
   it('Should can be list deliverymen with pagination and filter by name.', async () => {
-    const total = faker.integer({ min: 1, max: 5 });
-    const quantity = faker.integer({ min: 1, max: 5 });
+    const total = faker.integer({ min: 1, max: 50 });
+    const quantity = faker.integer({ min: 1, max: 50 });
     const page = Math.ceil(total / quantity);
 
-    await Promise.all([
+    const [token] = await Promise.all([
+      getToken({ isAdmin: true }),
       factory.createMany('Deliveryman', total, { name: 'João' }),
       factory.createMany('Deliveryman', total),
     ]);
-
-    const token = await getToken({ isAdmin: true });
 
     const {
       status,

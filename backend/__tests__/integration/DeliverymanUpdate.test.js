@@ -14,11 +14,11 @@ describe('Deliveryman Update', () => {
   onlyAdmin({ path: '/deliverymen/naoImporta', method: 'put' });
 
   it('Should can be update a Deliveryman', async () => {
-    const deliveryman = await factory.create('Deliveryman', {
-      avatar_id: null,
-    });
-    const newAttrs = await factory.attrs('Deliveryman', { avatar_id: null });
-    const token = await getToken({ isAdmin: true });
+    const [deliveryman, newAttrs, token] = await Promise.all([
+      factory.create('Deliveryman', { avatar_id: null }),
+      factory.attrs('Deliveryman', { avatar_id: null }),
+      getToken({ isAdmin: true }),
+    ]);
 
     const { status, body } = await request(app)
       .put(`/deliverymen/${deliveryman.id}`)
@@ -32,10 +32,10 @@ describe('Deliveryman Update', () => {
   });
 
   it('Should can be add a Deliveryman avatar img', async () => {
-    const deliveryman = await factory.create('Deliveryman', {
-      avatar_id: null,
-    });
-    const token = await getToken({ isAdmin: true });
+    const [deliveryman, token] = await Promise.all([
+      factory.create('Deliveryman', { avatar_id: null }),
+      getToken({ isAdmin: true }),
+    ]);
 
     const { status, body } = await request(app)
       .post(`/deliverymen/${deliveryman.id}/avatar`)
@@ -68,9 +68,11 @@ describe('Deliveryman Update', () => {
   });
 
   it('Should can not be Update a Deliveryman with invalid id', async () => {
-    const attrs = await factory.attrs('Deliveryman');
-    const deliveryman = await factory.create('Deliveryman');
-    const token = await getToken({ isAdmin: true });
+    const [token, attrs, deliveryman] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.attrs('Deliveryman'),
+      factory.create('Deliveryman'),
+    ]);
 
     const { id } = deliveryman;
 

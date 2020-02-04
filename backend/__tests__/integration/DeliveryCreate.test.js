@@ -17,8 +17,10 @@ describe('Delivery Create', () => {
   onlyAdmin({ path: '/deliveries', method: 'post' });
 
   it('Should can be Create a Delivery', async () => {
-    const token = await getToken({ isAdmin: true });
-    const attrs = await factory.attrs('Delivery');
+    const [token, attrs] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.attrs('Delivery'),
+    ]);
 
     const { deliveryman_id, recipient_id, product } = attrs;
 
@@ -54,8 +56,10 @@ describe('Delivery Create', () => {
   });
 
   it('Should be not able to store an Delivery with invalid Deliveryman Id', async () => {
-    const token = await getToken({ isAdmin: true });
-    const attrs = await factory.attrs('Delivery', { deliveryman_id: 1 });
+    const [token, attrs] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.attrs('Delivery', { deliveryman_id: 1 }),
+    ]);
 
     const { status, body } = await request(app)
       .post(`/deliveries`)
@@ -67,8 +71,10 @@ describe('Delivery Create', () => {
   });
 
   it('Should be not able to store an Delivery with invalid Recipient Id', async () => {
-    const token = await getToken({ isAdmin: true });
-    const attrs = await factory.attrs('Delivery', { recipient_id: 1 });
+    const [token, attrs] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.attrs('Delivery', { recipient_id: 1 }),
+    ]);
 
     const { status, body } = await request(app)
       .post(`/deliveries`)

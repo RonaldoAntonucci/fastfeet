@@ -13,12 +13,11 @@ describe('Recipient Update', () => {
   onlyAdmin({ path: '/recipients/naoImporta', method: 'put' });
 
   it('Should can be update a Recipient', async () => {
-    const [recipient, newAttrs] = await Promise.all([
+    const [recipient, newAttrs, token] = await Promise.all([
       factory.create('Recipient'),
       factory.attrs('Recipient'),
+      getToken({ isAdmin: true }),
     ]);
-
-    const token = await getToken({ isAdmin: true });
 
     const { status, body } = await request(app)
       .put(`/recipients/${recipient.id}`)
@@ -50,9 +49,10 @@ describe('Recipient Update', () => {
   });
 
   it('Should can not be Update a Recipient with invalid id', async () => {
-    const attrs = await factory.attrs('Recipient');
-
-    const token = await getToken({ isAdmin: true });
+    const [token, attrs] = await Promise.all([
+      getToken({ isAdmin: true }),
+      factory.attrs('Recipient'),
+    ]);
 
     const { status, body } = await request(app)
       .put(`/recipients/1`)

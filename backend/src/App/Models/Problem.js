@@ -20,6 +20,12 @@ class Problem extends Model {
       foreignKey: 'delivery_id',
       source: 'id',
     });
+
+    this.addScope('delivery', {
+      include: [
+        { model: models.Delivery, include: ['Recipient', 'Deliveryman'] },
+      ],
+    });
   }
 }
 

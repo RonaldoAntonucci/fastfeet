@@ -64,7 +64,7 @@ routes.post(
 
 routes.use(authMiddleware);
 
-routes.get('/deliveries/problems', isAdminMiddleware, ProblemController.index);
+routes.get('/problems', isAdminMiddleware, ProblemController.index);
 routes.get(
   '/deliveries/:deliveryId/problems',
   RouteParamsIdValidator(['deliveryId']),
@@ -150,9 +150,9 @@ routes.put(
 );
 
 routes.delete(
-  '/deliveries/:deliveryId',
+  '/problems/:problemId/cancel-delivery',
   isAdminMiddleware,
-  RouteParamsIdValidator(['deliveryId']),
+  RouteParamsIdValidator(['problemId']),
   DeliveryController.delete
 );
 

@@ -1,6 +1,6 @@
 import CreateDelivery from '../Services/CreateDeliveryService';
 import UpdateDelivery from '../Services/UpdateDeliveryService';
-import DeleteDelivery from '../Services/DeleteDeliveryService';
+import CancelDelivery from '../Services/CancelDeliveryService';
 
 import ListDelivery from '../Repository/ListDeliveryRepository';
 
@@ -30,7 +30,7 @@ export default {
   },
 
   async delete({ params }, res) {
-    await DeleteDelivery.run(params);
+    await CancelDelivery.run(params);
     return res.send();
   },
 };

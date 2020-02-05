@@ -1,8 +1,9 @@
 import Bee from 'bee-queue';
 import DeliveryAvailableMail from '../App/Jobs/deliveryAvailableMail';
+import DeliveryCancelledMail from '../App/Jobs/deliveryCancelledMail';
 import redisConfig from '../Config/redis';
 
-const jobs = [DeliveryAvailableMail];
+const jobs = [DeliveryAvailableMail, DeliveryCancelledMail];
 
 class Queue {
   constructor() {
@@ -11,9 +12,9 @@ class Queue {
   }
 
   init() {
-    if (process.env.NODE_ENV === 'test') {
-      return;
-    }
+    // if (process.env.NODE_ENV === 'test') {
+    //   return;
+    // }
     jobs.forEach(({ key, handle }) => {
       this.queues[key] = {
         bee: new Bee(key, {

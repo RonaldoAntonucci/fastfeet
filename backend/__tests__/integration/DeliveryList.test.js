@@ -16,9 +16,9 @@ describe('Deliveries List', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliveries', method: 'get' });
+  onlyAuth({ path: '/problems', method: 'get' });
 
-  onlyAdmin({ path: '/deliveries', method: 'get' });
+  onlyAdmin({ path: '/problems', method: 'get' });
 
   it('Should can be list deliveries with pagination.', async () => {
     const total = faker.integer({ min: 1, max: 10 });

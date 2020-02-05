@@ -16,9 +16,13 @@ describe('Problem List', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliveries/problems', method: 'get' });
+  onlyAuth({ path: '/problems', method: 'get' });
 
-  onlyAdmin({ path: '/deliveries/problems', method: 'get' });
+  onlyAdmin({ path: '/problems', method: 'get' });
+
+  onlyAuth({ path: '/deliveries/1/problems', method: 'get' });
+
+  onlyAdmin({ path: '/deliveries/1/problems', method: 'get' });
 
   it('Should be able to list all Problems.', async () => {
     const total = faker.integer({ min: 1, max: 10 });
@@ -34,7 +38,7 @@ describe('Problem List', () => {
       status,
       body: { data, count, totalPages },
     } = await request(app)
-      .get('/deliveries/problems')
+      .get('/problems')
       .query({ page, quantity })
       .set('Authorization', `Bearer ${token}`)
       .send();

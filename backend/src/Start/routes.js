@@ -64,6 +64,14 @@ routes.post(
 
 routes.use(authMiddleware);
 
+routes.get('/deliveries/problems', isAdminMiddleware, ProblemController.index);
+routes.get(
+  '/deliveries/:deliveryId/problems',
+  RouteParamsIdValidator(['deliveryId']),
+  isAdminMiddleware,
+  ProblemController.index
+);
+
 routes.post(
   '/recipients',
   isAdminMiddleware,

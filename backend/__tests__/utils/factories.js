@@ -6,6 +6,7 @@ import Recipient from '../../src/App/Models/Recipient';
 import Admin from '../../src/App/Models/Admin';
 import Delivery from '../../src/App/Models/Delivery';
 import File from '../../src/App/Models/File';
+import Problem from '../../src/App/Models/Problem';
 
 import faker from './faker';
 
@@ -48,6 +49,13 @@ factory.define('Delivery', Delivery, () => ({
 factory.define('File', File, () => ({
   name: `${faker.string({ length: 50 })}.png`,
   path: `${faker.string({ length: 50 })}.png`,
+}));
+
+factory.define('Problem', Problem, () => ({
+  description: faker.string({
+    length: faker.integer({ min: 10, max: 1000 }),
+  }),
+  delivery_id: factory.assoc('Delivery', 'id'),
 }));
 
 factory.randomIteger = faker.integer;

@@ -16,6 +16,7 @@ import RecipientUpdateValidator from '../App/Validators/RecipientUpdateValidator
 import DeliveryStoreValidator from '../App/Validators/DeliveryStoreValidator';
 import DeliveryUpdateValidator from '../App/Validators/DeliveryUpdateValidator';
 import DeliveryWithdrawValidator from '../App/Validators/DeliveryWithdrawValidator';
+import ProblemStoreValidator from '../App/Validators/ProblemStoreValidator';
 
 import UserController from '../App/Controllers/UserController';
 import DeliverymanController from '../App/Controllers/DeliverymanController';
@@ -23,6 +24,7 @@ import SessionController from '../App/Controllers/SessionController';
 import RecipientsController from '../App/Controllers/RecipientsController';
 import DeliveryController from '../App/Controllers/DeliveryController';
 import FileController from '../App/Controllers/FileController';
+import ProblemController from '../App/Controllers/ProblemController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -51,6 +53,13 @@ routes.post(
   upload.single('file'),
   FileController.store,
   DeliveryController.update
+);
+
+routes.post(
+  '/deliveries/:deliveryId/problems',
+  RouteParamsIdValidator(['deliveryId']),
+  ProblemStoreValidator,
+  ProblemController.store
 );
 
 routes.use(authMiddleware);

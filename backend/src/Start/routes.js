@@ -29,6 +29,8 @@ import ProblemController from '../App/Controllers/ProblemController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+routes.get('/test', (req, res) => res.json({ ok: 'ok' }));
+
 routes.use(parseEmptyBodyToNull);
 
 routes.post('/users', UserStoreValidator, UserController.store);
@@ -61,8 +63,6 @@ routes.post(
   ProblemStoreValidator,
   ProblemController.store
 );
-
-routes.get('/test', (req, res) => res.json({ ok: 'ok' }));
 
 routes.use(authMiddleware);
 

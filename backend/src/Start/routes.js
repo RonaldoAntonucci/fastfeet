@@ -31,12 +31,18 @@ import ProblemController from '../App/Controllers/ProblemController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
-const bruteStore = new BruteRedis({
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-});
+const bruteStore =
+  process.env.NODE_env === 'production'
+    ? new BruteRedis({
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+      })
+    : null;
 
-const bruteForce = new Brute(bruteStore);
+const bruteForce =
+  process.env.NODE_env === 'production'
+    ? new Brute(bruteStore)
+    : { prevent: (req, res, next) => next() };
 
 routes.use(parseEmptyBodyToNull);
 

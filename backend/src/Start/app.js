@@ -2,11 +2,17 @@ import './bootstrap';
 
 import express from 'express';
 import 'express-async-errors';
+
 import cors from 'cors';
 import helmet from 'helmet';
-import * as Sentry from '@sentry/node';
+// import redis from 'redis';
+import RateLimit from 'express-rate-limit';
+// import RedisStore from 'express-rate-limit-redis';
+
 import path from 'path';
+import * as Sentry from '@sentry/node';
 import routes from './routes';
+
 import sentryConfig from '../Config/sentry';
 import ExceptionHandler from '../App/Exceptions/Handler';
 
@@ -36,6 +42,21 @@ class App {
             path.resolve(__dirname, '..', '__tests__', 'utils', 'files')
           )
     );
+
+    if (process.env.NODE_ENV === 'production') {
+      this.server.use(
+        new RateLimit({
+          // store: new RedisStore({
+          //   client: redis.createClient({
+          //     host: process.env.REDIS_HOST,
+          //     port: process.env.REDIS_PORT,
+          //   }),
+          // }),
+          windowMs: 1000 * 60 * 15,
+          max: 100,
+        })
+      );
+    }
   }
 
   routes() {

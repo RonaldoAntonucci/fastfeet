@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import Brute from 'express-brute';
+import BruteRedis from 'express-brute-redis';
 import multer from 'multer';
 import multerConfig from '../Config/multer';
 
@@ -29,10 +31,27 @@ import ProblemController from '../App/Controllers/ProblemController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+const bruteStore = new BruteRedis({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+});
+
+const bruteForce = new Brute(bruteStore);
+
 routes.use(parseEmptyBodyToNull);
 
-routes.post('/users', UserStoreValidator, UserController.store);
-routes.post('/sessions', SessionStoreValidator, SessionController.store);
+routes.post(
+  '/users',
+  bruteForce.prevent,
+  UserStoreValidator,
+  UserController.store
+);
+routes.post(
+  '/sessions',
+  bruteForce.prevent,
+  SessionStoreValidator,
+  SessionController.store
+);
 
 routes.get(
   '/deliverymen/:deliverymanId/deliveries',

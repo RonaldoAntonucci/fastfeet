@@ -30,7 +30,7 @@ describe('Delivery Cancel', () => {
       .set('Authorization', `Bearer ${token}`)
       .send();
 
-    expect(status).toBe(100);
+    expect(status).toBe(200);
     const deletedDelivery = await Delivery.findByPk(problem.delivery_id, {
       paranoid: false,
     });

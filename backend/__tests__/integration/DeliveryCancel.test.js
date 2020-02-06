@@ -31,9 +31,11 @@ describe('Delivery Cancel', () => {
       .send();
 
     expect(status).toBe(200);
+
     const deletedDelivery = await Delivery.findByPk(problem.delivery_id, {
       paranoid: false,
     });
+
     expect(deletedDelivery).toHaveProperty('canceledAt');
     expect(deletedDelivery.canceledAt).not.toBe(null);
     expect(Queue.add.mock.calls.length).toBe(1);

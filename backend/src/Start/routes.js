@@ -62,6 +62,8 @@ routes.post(
   ProblemController.store
 );
 
+routes.get('/test', (req, res) => res.json({ ok: 'ok' }));
+
 routes.use(authMiddleware);
 
 routes.get('/problems', isAdminMiddleware, ProblemController.index);

@@ -26,6 +26,7 @@ module.exports = {
     '!src/App/Validators/**',
     '!src/App/Repository/**',
     '!src/App/Exceptions/**',
+    '!src/App/Jobs/**',
   ],
 
   // The directory where Jest should output its coverage files

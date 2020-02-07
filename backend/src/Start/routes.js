@@ -10,6 +10,7 @@ import parseEmptyBodyToNull from '../App/Middlewares/parseEmptyBodyToNull';
 
 import RouteParamsIdValidator from '../App/Validators/RouteParamsIdValidator';
 import UserStoreValidator from '../App/Validators/UserStoreValidator';
+import UserUpdateValidator from '../App/Validators/UserUpdateValidator';
 import DeliverymanStoreValidator from '../App/Validators/DeliverymanStoreValidator';
 import DeliverymanUpdateValidator from '../App/Validators/DeliverymanUpdateValidator';
 import SessionStoreValidator from '../App/Validators/SessionStoreValidator';
@@ -88,6 +89,13 @@ routes.post(
 );
 
 routes.use(authMiddleware);
+
+routes.put(
+  '/users/:userId',
+  RouteParamsIdValidator(['userId']),
+  UserUpdateValidator,
+  UserController.update
+);
 
 routes.get('/problems', isAdminMiddleware, ProblemController.index);
 routes.get(

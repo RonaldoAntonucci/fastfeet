@@ -5,6 +5,8 @@ import Exception from '../Exceptions/ServiceException';
 import Queue from '../../Lib/Queue';
 import DeliveryCancelledMail from '../Jobs/deliveryCancelledMail';
 
+import Cache from '../../Lib/Cache';
+
 export default {
   async run({ problemId }) {
     const problem = await Problem.scope('delivery').findByPk(problemId, {
@@ -23,9 +25,12 @@ export default {
       throw new Exception('Invalid Delivery id.');
     }
 
-    Queue.add(DeliveryCancelledMail.key, {
-      problem: problem.toJSON(),
-    });
+    await Promise.all([
+      Queue.add(DeliveryCancelledMail.key, {
+        problem: problem.toJSON(),
+      }),
+      Cache.invalidatePrefixes(['deliveries']),
+    ]);
 
     return true;
   },

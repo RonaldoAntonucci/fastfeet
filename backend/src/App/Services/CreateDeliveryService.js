@@ -6,6 +6,8 @@ import Exception from '../Exceptions/ServiceException';
 import Queue from '../../Lib/Queue';
 import DeliveryAvailableMail from '../Jobs/deliveryAvailableMail';
 
+import Cache from '../../Lib/Cache';
+
 export default {
   async run({ product, recipient_id, deliveryman_id }) {
     const deliveryman = await Deliveryman.findByPk(deliveryman_id);
@@ -25,11 +27,14 @@ export default {
       deliveryman_id,
     });
 
-    Queue.add(DeliveryAvailableMail.key, {
-      delivery,
-      recipient,
-      deliveryman,
-    });
+    await Promise.all([
+      Queue.add(DeliveryAvailableMail.key, {
+        delivery,
+        recipient,
+        deliveryman,
+      }),
+      Cache.invalidatePrefixes(['deliveries']),
+    ]);
 
     return delivery;
   },

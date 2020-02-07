@@ -1,7 +1,23 @@
 import Delivery from '../Models/Delivery';
 
+import Cache from '../../Lib/Cache';
+
 export default {
-  async run({ deliverymanId }, { page = 1, quantity = 20, delivered } = {}) {
+  async run(
+    { deliverymanId },
+    { page = 1, quantity = 20, delivered } = {},
+    { url } = {}
+  ) {
+    const cacheKey = url ? `deliveries:${url}` : false;
+
+    if (cacheKey) {
+      const cached = await Cache.get(cacheKey);
+
+      if (cached) {
+        return cached;
+      }
+    }
+
     if (deliverymanId) {
       const { rows: data, count } = await Delivery.scope([
         {
@@ -16,7 +32,13 @@ export default {
         order: ['updated_at'],
       });
 
-      return { data, count, totalPages: Math.ceil(count / quantity) };
+      const result = { data, count, totalPages: Math.ceil(count / quantity) };
+
+      if (cacheKey) {
+        Cache.set(cacheKey, result);
+      }
+
+      return result;
     }
 
     const { rows: data, count } = await Delivery.findAndCountAll({
@@ -25,6 +47,12 @@ export default {
       order: ['updated_at'],
     });
 
-    return { data, count, totalPages: Math.ceil(count / quantity) };
+    const result = { data, count, totalPages: Math.ceil(count / quantity) };
+
+    if (cacheKey) {
+      Cache.set(cacheKey, result);
+    }
+
+    return result;
   },
 };

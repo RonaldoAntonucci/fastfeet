@@ -7,8 +7,8 @@ import ListDeliveryman from '../Repository/ListDeliverymanRepository';
 import Deliveryman from '../Models/Deliveryman';
 
 export default {
-  async index({ query }, res) {
-    return res.json(await ListDeliveryman.run(query));
+  async index({ query, url }, res) {
+    return res.json(await ListDeliveryman.run(query, { url }));
   },
 
   async show({ params: { deliverymanId: id } }, res) {
@@ -19,21 +19,25 @@ export default {
     return res.json(deliveryman).send();
   },
 
-  async store(req, res, next) {
-    return res.json(await CreateDeliveryman.run(req.body));
+  async store({ body, url }, res, next) {
+    return res.json(await CreateDeliveryman.run(body, { url }));
   },
 
-  async update({ params, body, fileId }, res) {
+  async update({ params, body, fileId, url }, res) {
     return res.json(
-      await UpdateDeliveryman.run(params, {
-        ...body,
-        avatar_id: fileId,
-      })
+      await UpdateDeliveryman.run(
+        params,
+        {
+          ...body,
+          avatar_id: fileId,
+        },
+        { url }
+      )
     );
   },
 
-  async delete({ params }, res) {
-    await DeleteDeliveryman.run(params);
+  async delete({ params, url }, res) {
+    await DeleteDeliveryman.run(params, { url });
     return res.send();
   },
 };

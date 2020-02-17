@@ -1,3 +1,5 @@
+import { Op } from 'sequelize';
+
 import Delivery from '../Models/Delivery';
 
 import Cache from '../../Lib/Cache';
@@ -5,7 +7,7 @@ import Cache from '../../Lib/Cache';
 export default {
   async run(
     { deliverymanId },
-    { page = 1, quantity = 20, delivered } = {},
+    { page = 1, quantity = 20, delivered, q: product = '' } = {},
     { url } = {}
   ) {
     const cacheKey = url ? `deliveries:${url}` : false;
@@ -29,6 +31,11 @@ export default {
       ]).findAndCountAll({
         limit: quantity,
         offset: (page - 1) * quantity,
+        where: {
+          product: {
+            [Op.like]: `%${product}%`,
+          },
+        },
         order: ['updated_at'],
       });
 

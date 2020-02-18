@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { NavLink } from 'react-router-dom';
 import logo from '~/assets/logo.png';
 
 export const Container = styled.div`
@@ -8,27 +9,36 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   border: 1px solid #dddddd;
+  background-color: #ffffff;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+  padding: 20px;
 `;
 
-export const Logo = styled.div.attrs(() => ({
-  children: <img src={logo} alt="FastFeet" />,
+export const Logo = styled.div.attrs(props => ({
+  children: (
+    <NavLink to={props.to}>
+      <img src={logo} alt="FastFeet" />
+    </NavLink>
+  ),
 }))`
   img {
     height: 26px;
   }
-  padding: 20px 30px;
+  padding: 0px 30px;
+  border-right: 1px solid #eee;
 `;
 
-export const Perfil = styled.div`
+export const Perfil = styled.aside`
   width: 100;
   height: 100%;
-  padding: 20px 30px;
+  padding: 0px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  h1 {
+  flex-shrink: 0;
+
+  strong {
     font-size: 14px;
     color: #666;
   }
@@ -50,5 +60,19 @@ export const Menu = styled.nav`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px 30px;
+  flex-wrap: wrap;
+
+  a {
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0px 30px;
+    height: 100%;
+  }
+`;
+
+export const NavButton = styled(NavLink)`
+  color: ${props => (props.selected ? '#444444' : ' #999999')};
 `;

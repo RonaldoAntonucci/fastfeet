@@ -7,54 +7,36 @@ const Table = styled.table`
   text-align: left;
 
   border-collapse: separate;
-  border-spacing: 0 2em;
-
-  tbody {
-    overflow-y: scroll;
-    display: block;
-    height: 500px;
-  }
-
-  thead,
-  tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-  thead {
-    width: calc(100% - 1em);
-  }
+  border-spacing: 0 1.5em;
 
   tr {
     color: #666;
     font-size: 16px;
     line-height: 20px;
-    background-color: #fff;
-    td:first-child {
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-    }
-    td:last-child {
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-    }
+    td:first-child,
     th:first-child {
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
     }
+    td:last-child,
     th:last-child {
       border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
     }
   }
 
-  tr + tr {
-    border-top: 1px solid ${colors.secondary};
+  tbody tr {
+    background-color: #fff;
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+  }
+
+  th {
+    color: #444;
   }
 
   td,
   th {
-    padding: 20px;
+    padding: 14px;
   }
 `;
 

@@ -68,6 +68,11 @@ export default {
       offset: (page - 1) * quantity,
       order: ['updated_at'],
       attributes: ['id', 'end_date'],
+      where: {
+        product: {
+          [Op.like]: `%${product}%`,
+        },
+      },
     });
 
     const result = { data, count, totalPages: Math.ceil(count / quantity) };

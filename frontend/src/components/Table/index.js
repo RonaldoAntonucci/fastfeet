@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { darken } from 'polished';
 
 import ActionDropdown from './Dropdown';
 
@@ -31,6 +32,10 @@ const Table = styled.table`
   tbody tr {
     background-color: #fff;
     box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      background: ${darken(0.04, '#fff')};
+    }
   }
 
   thead tr th:last-child {

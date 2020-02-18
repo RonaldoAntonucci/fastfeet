@@ -2,7 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { MdAdd, MdVisibility, MdCreate, MdDeleteForever } from 'react-icons/md';
+import {
+  MdAdd,
+  MdVisibility,
+  MdCreate,
+  MdDeleteForever,
+  MdSearch,
+} from 'react-icons/md';
 import { Form } from '@rocketseat/unform';
 
 import api from '~/services/api';
@@ -18,27 +24,34 @@ export default function DeliveriesList() {
   const [deliveries, setDeliveries] = useState([]);
   const [page, setPage] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
+  const [search, setSearch] = useState('');
 
-  const handleSearchSubmit = useCallback(() => {}, []);
+  const handleSearchSubmit = useCallback(data => {
+    setPage(1);
+    setSearch(data.search);
+  }, []);
 
   useEffect(() => {
     async function getData() {
       try {
-        const response = await api.get('/deliveries', {
+        const {
+          data: { data, totalPages },
+        } = await api.get('/deliveries', {
           params: {
             page,
             quantity: 20,
             scope: ['deliveryList'],
+            q: search,
           },
         });
-        setDeliveries(response.data.data);
-        setPageAmount(response.data.totalPages);
+        setDeliveries(data);
+        setPageAmount(totalPages);
       } catch (err) {
         toast.error('Não foi possível carregar as entregas.');
       }
     }
     getData();
-  }, [page]);
+  }, [page, search]);
 
   return (
     <>
@@ -47,6 +60,10 @@ export default function DeliveriesList() {
 
         <div>
           <Form onSubmit={handleSearchSubmit}>
+            <button type="submit">
+              <MdSearch color="#999999" />
+            </button>
+
             <Input
               type="text"
               name="search"

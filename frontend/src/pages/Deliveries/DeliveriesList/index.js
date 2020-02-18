@@ -10,7 +10,7 @@ import api from '~/services/api';
 import Title from '~/components/Title';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
-import Table from '~/components/Table';
+import Table, { ActionDropdown } from '~/components/Table';
 
 import { Status } from './styles';
 
@@ -69,8 +69,8 @@ export default function DeliveriesList() {
             <th>Entregador</th>
             <th>Cidade</th>
             <th>Estado</th>
-            <th style={{ width: '120px' }}>Status</th>
-            <th>Ações</th>
+            <th style={{ width: '120px', textAlign: 'center' }}>Status</th>
+            <th style={{ width: '100px' }}>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -84,7 +84,9 @@ export default function DeliveriesList() {
               <td>
                 <Status>{delivery.status}</Status>
               </td>
-              <td>Actions</td>
+              <td>
+                <ActionDropdown size={24} />
+              </td>
             </tr>
           ))}
         </tbody>

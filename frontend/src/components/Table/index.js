@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import ActionDropdown from './Dropdown';
+
 import colors from '~/styles/colors';
 
 const Table = styled.table`
@@ -13,6 +15,7 @@ const Table = styled.table`
     color: #666;
     font-size: 16px;
     line-height: 20px;
+
     td:first-child,
     th:first-child {
       border-top-left-radius: 4px;
@@ -28,6 +31,16 @@ const Table = styled.table`
   tbody tr {
     background-color: #fff;
     box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+  }
+
+  thead tr th:last-child {
+    text-align: right;
+  }
+
+  tbody tr td:last-child {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   th {
@@ -74,16 +87,19 @@ const TableFooterButton = styled.button`
   }
 `;
 
-const ActionButton = styled.button`
-  color: ${props => colors[props.color]};
-  background: transparent;
-  border: 0;
+// const ActionMoreButton = styled.button.attrs(() => ({
+//   children: MdMoreHoriz({ size: 24, color: '#C6C6C6' }),
+//   type: 'button',
+// }))`
+//   background: none;
+//   border: 1px solid rgba(0, 0, 0, 0);
+//   border-radius: 5px;
 
-  &:first-child {
-    margin-right: 20px;
-  }
-`;
+//   &:hover {
+//     border: 1px solid ${darken(0.1, '#C6C6C6')};
+//   }
+// `;
 
-export { TableFooter, TableFooterButton, ActionButton };
+export { TableFooter, TableFooterButton, ActionDropdown };
 
 export default Table;

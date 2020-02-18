@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 import colors from '~/styles/colors';
 
@@ -25,15 +26,19 @@ export default styled.button.attrs(props => ({
   font-size: 14px;
   height: 36px;
 
+  &:hover {
+    background: ${darken(0.03, colors.primary)};
+  }
+
   div {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
+    margin-right: 5px;
 
     svg {
       color: ${colors.white};
-      font-size: 20px;
+      font-size: 24px;
     }
   }
 `;

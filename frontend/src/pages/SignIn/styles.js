@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Input from '~/components/Input';
 
 export const Container = styled.div`
   background: #fff;
@@ -11,4 +12,8 @@ export const Container = styled.div`
 export const Img = styled.img`
   height: 44px;
   margin-bottom: 30px;
+`;
+
+export const SignInput = styled(Input)`
+  margin: 0 0 15px;
 `;

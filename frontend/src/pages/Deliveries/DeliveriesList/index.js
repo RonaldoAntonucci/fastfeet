@@ -28,7 +28,7 @@ export default function DeliveriesList() {
           </Form>
           <Link to="/deliveries/create">
             <Button icon={MdAdd} type="button">
-              Cadastrar
+              CADASTRAR
             </Button>
           </Link>
         </div>

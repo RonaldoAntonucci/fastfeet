@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
-import { Container, Img } from './styles';
+import { Container, Img, SignInput } from './styles';
 import logo from '~/assets/logo.png';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 import Label from '~/components/Label';
-import Input from '~/components/Input';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -32,10 +31,10 @@ export default function SignIn() {
 
       <Form schema={schema} onSubmit={handleSubmit}>
         <Label>SEU E-MAIL</Label>
-        <Input name="email" type="email" placeholder="exemplo@email.com" />
+        <SignInput name="email" type="email" placeholder="exemplo@email.com" />
 
         <Label>SUA SENHA</Label>
-        <Input name="password" type="password" placeholder="************" />
+        <SignInput name="password" type="password" placeholder="************" />
 
         <button type="submit">
           {loading ? 'Carregando...' : 'Entrar no sistema'}

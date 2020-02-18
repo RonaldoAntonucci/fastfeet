@@ -24,7 +24,7 @@ export default styled.button.attrs(props => ({
   border: none;
   font-weight: bold;
   font-size: 14px;
-  height: 36px;
+  height: 40px;
 
   &:hover {
     background: ${darken(0.03, colors.primary)};

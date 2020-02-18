@@ -1,6 +1,9 @@
 import Sequelize, { Model, Op } from 'sequelize';
 import { startOfDay, endOfDay } from 'date-fns';
 
+import Recipient from './Recipient';
+import Deliveryman from './Deliveryman';
+
 class Delivery extends Model {
   static init(sequelize) {
     super.init(
@@ -8,6 +11,21 @@ class Delivery extends Model {
         product: Sequelize.STRING,
         start_date: Sequelize.DATE,
         end_date: Sequelize.DATE,
+        status: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            if (this.canceled_at) {
+              return 'CANCELADA';
+            }
+            if (this.end_date) {
+              return 'ENTREGUE';
+            }
+            if (this.start_date) {
+              return 'RETIRADA';
+            }
+            return 'PENDENTE';
+          },
+        },
       },
       {
         sequelize,
@@ -15,6 +33,20 @@ class Delivery extends Model {
         paranoid: true,
         deletedAt: 'canceledAt',
         scopes: {
+          deliveryList: {
+            attributes: [
+              'id',
+              'end_date',
+              'status',
+              'created_at',
+              'updated_at',
+              'canceled_at',
+            ],
+            include: [
+              { model: Recipient, attributes: ['name', 'city', 'state'] },
+              { model: Deliveryman, attributes: ['name'] },
+            ],
+          },
           deliverymanId(id) {
             return !id ? {} : { where: { deliveryman_id: id } };
           },

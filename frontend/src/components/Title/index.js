@@ -8,6 +8,8 @@ export default styled.div`
   align-items: right;
   width: 100%;
 
+  margin-bottom: 20px;
+
   h1 {
     font-size: 24px;
     color: #444;

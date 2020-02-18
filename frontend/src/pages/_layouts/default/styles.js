@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   max-width: 1366px;
   width: 100%;
-  height: 100%;
+  height: 100vh - 64px;
   background: none;
   padding: 30px;
 `;

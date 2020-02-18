@@ -29,6 +29,8 @@ import DeliveryController from '../App/Controllers/DeliveryController';
 import FileController from '../App/Controllers/FileController';
 import ProblemController from '../App/Controllers/ProblemController';
 
+import FakeDataController from '../App/Controllers/FakeDataController';
+
 const routes = new Router();
 const upload = multer(multerConfig);
 
@@ -46,6 +48,8 @@ const bruteForce =
     : { prevent: (req, res, next) => next() };
 
 routes.use(parseEmptyBodyToNull);
+
+routes.get('/fake', FakeDataController.index);
 
 routes.post(
   '/users',

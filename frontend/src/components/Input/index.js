@@ -9,6 +9,6 @@ export default styled(Input)`
   height: 40px;
   padding: 0 15px;
   color: ${colors.input};
-  margin: 0 0 15px;
+  /* margin: 0 0 15px; */
   width: 100%;
 `;

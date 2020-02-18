@@ -95,7 +95,7 @@ export default createGlobalStyle`
   form {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    /* margin-top: 30px; */
 
     span {
       color: #fb6f91;

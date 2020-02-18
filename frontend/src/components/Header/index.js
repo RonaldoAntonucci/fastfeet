@@ -15,10 +15,10 @@ export default function Header() {
     <Container>
       <Logo to="/" />
       <Menu>
-        <NavButton selected to="/">
+        <NavButton selected to="/deliveries">
           ENCOMENDAS
         </NavButton>
-        <NavButton to="/deliveries"> ENTREGADORES </NavButton>
+        <NavButton to="/deliverymen"> ENTREGADORES </NavButton>
         <NavButton to="/recipients"> DESTINATÁRIOS </NavButton>
         <NavButton to="/problems"> PROBLEMAS </NavButton>
       </Menu>

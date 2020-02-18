@@ -8,15 +8,24 @@ import {
   MdCreate,
   MdDeleteForever,
   MdSearch,
+  MdKeyboardArrowLeft,
+  MdFirstPage,
+  MdKeyboardArrowRight,
+  MdLastPage,
 } from 'react-icons/md';
 import { Form } from '@rocketseat/unform';
+import { usePagination } from '~/hooks';
 
 import api from '~/services/api';
 
 import Title from '~/components/Title';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
-import Table, { ActionDropdown } from '~/components/Table';
+import Table, {
+  ActionDropdown,
+  TablePagination,
+  PaginationInput,
+} from '~/components/Table';
 
 import { Status } from './styles';
 
@@ -25,6 +34,14 @@ export default function DeliveriesList() {
   const [page, setPage] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
   const [search, setSearch] = useState('');
+
+  const {
+    handleFirst,
+    handleLast,
+    handleNext,
+    handlePrevious,
+    handlePage,
+  } = usePagination({ page, setPage, pageAmount });
 
   const handleSearchSubmit = useCallback(data => {
     setPage(1);
@@ -75,6 +92,31 @@ export default function DeliveriesList() {
               CADASTRAR
             </Button>
           </Link>
+        </div>
+        <div>
+          <TablePagination>
+            <button type="button" onClick={handleFirst}>
+              <MdFirstPage />
+            </button>
+            <button type="button" onClick={handlePrevious}>
+              <MdKeyboardArrowLeft />
+            </button>
+            <Form onSubmit={handlePage} initialData={{ page }}>
+              <PaginationInput
+                name="page"
+                type="number"
+                min="1"
+                max={pageAmount}
+                placeholder={page}
+              />
+            </Form>
+            <button type="button" onClick={handleNext}>
+              <MdKeyboardArrowRight />
+            </button>
+            <button type="button" onClick={handleLast}>
+              <MdLastPage />
+            </button>
+          </TablePagination>
         </div>
       </Title>
       <Table>

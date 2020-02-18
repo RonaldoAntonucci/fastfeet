@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 
+import { Input } from '@rocketseat/unform';
 import ActionDropdown from './Dropdown';
 
 import colors from '~/styles/colors';
@@ -92,19 +93,40 @@ const TableFooterButton = styled.button`
   }
 `;
 
-// const ActionMoreButton = styled.button.attrs(() => ({
-//   children: MdMoreHoriz({ size: 24, color: '#C6C6C6' }),
-//   type: 'button',
-// }))`
-//   background: none;
-//   border: 1px solid rgba(0, 0, 0, 0);
-//   border-radius: 5px;
+const TablePagination = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  border-radius: 4px;
+  width: 100%;
 
-//   &:hover {
-//     border: 1px solid ${darken(0.1, '#C6C6C6')};
-//   }
-// `;
+  button {
+    background: none;
+    border: 0;
+    > svg {
+      font-size: 24px;
+      color: #444444;
+    }
+    margin: 0 8px;
+  }
 
-export { TableFooter, TableFooterButton, ActionDropdown };
+  input {
+    background-color: #fff;
+    border: 1px solid #444444;
+    border-radius: 20px;
+  }
+`;
+
+const PaginationInput = styled(Input)``;
+
+export {
+  TableFooter,
+  TableFooterButton,
+  ActionDropdown,
+  TablePagination,
+  PaginationInput,
+};
 
 export default Table;

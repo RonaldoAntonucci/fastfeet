@@ -8,15 +8,13 @@ export default styled.div`
   align-items: right;
   width: 100%;
 
-  margin-bottom: 14px;
-
   h1 {
     font-size: 24px;
     color: #444;
     margin-bottom: 30px;
   }
 
-  div {
+  > div {
     display: flex;
     width: 100%;
     align-items: flex-end;

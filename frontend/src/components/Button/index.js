@@ -18,8 +18,8 @@ export default styled.button.attrs(props => ({
   align-items: center;
 
   padding: 0 16px;
-  background-color: ${colors.primary};
-  color: #fff;
+  background-color: ${props => (props.color ? props.color : colors.primary)};
+  color: ${props => (props.textColor ? props.textColor : '#fff')};
   border-radius: 4px;
   border: none;
   font-weight: bold;
@@ -27,7 +27,8 @@ export default styled.button.attrs(props => ({
   height: 40px;
 
   &:hover {
-    background: ${darken(0.03, colors.primary)};
+    background: ${props =>
+      darken(0.03, props.color ? props.color : colors.primary)};
   }
 
   div {
@@ -37,7 +38,7 @@ export default styled.button.attrs(props => ({
     margin-right: 5px;
 
     svg {
-      color: ${colors.white};
+      color: ${props => (props.iconColor ? props.iconColor : colors.white)};
       font-size: 24px;
     }
   }

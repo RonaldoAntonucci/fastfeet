@@ -1,7 +1,6 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { MdMoreHoriz } from 'react-icons/md';
-
 import { Container, Arrow, MoreButton } from './styles';
 
 export default function Dropdown({ children }) {
@@ -18,3 +17,7 @@ export default function Dropdown({ children }) {
     </Container>
   );
 }
+
+Dropdown.propTypes = {
+  children: PropTypes.element.isRequired,
+};

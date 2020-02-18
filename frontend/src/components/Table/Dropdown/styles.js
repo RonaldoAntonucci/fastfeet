@@ -16,7 +16,7 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 35px;
+    margin-top: 28px;
 
     > div:last-child {
       background-color: #fff;
@@ -24,6 +24,12 @@ export const Container = styled.div`
       margin-top: 10px;
 
       padding: 10px;
+
+      li {
+        &:hover {
+          background: ${darken(0.04, '#fff')};
+        }
+      }
     }
   }
 

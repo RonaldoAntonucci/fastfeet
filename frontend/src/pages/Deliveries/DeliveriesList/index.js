@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { MdAdd } from 'react-icons/md';
+import { MdAdd, MdVisibility, MdCreate, MdDeleteForever } from 'react-icons/md';
 import { Form } from '@rocketseat/unform';
 
 import api from '~/services/api';
@@ -31,7 +31,6 @@ export default function DeliveriesList() {
             scope: ['deliveryList'],
           },
         });
-        console.log(response.data);
         setDeliveries(response.data.data);
         setPageAmount(response.data.totalPages);
       } catch (err) {
@@ -85,7 +84,43 @@ export default function DeliveriesList() {
                 <Status>{delivery.status}</Status>
               </td>
               <td>
-                <ActionDropdown size={24} />
+                <ActionDropdown>
+                  <ul>
+                    <li>
+                      <Button
+                        icon={MdVisibility}
+                        color="transparent"
+                        textColor="#999999"
+                        iconColor="#8E5BE8"
+                        type="button"
+                      >
+                        Visualizar
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        icon={MdCreate}
+                        color="transparent"
+                        textColor="#999999"
+                        iconColor="#4D85EE"
+                        type="button"
+                      >
+                        Editar
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        icon={MdDeleteForever}
+                        color="transparent"
+                        textColor="#999999"
+                        iconColor="#DE3B3B"
+                        type="button"
+                      >
+                        Excluir
+                      </Button>
+                    </li>
+                  </ul>
+                </ActionDropdown>
               </td>
             </tr>
           ))}

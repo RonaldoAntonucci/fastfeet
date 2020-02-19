@@ -8,6 +8,8 @@ import DeliveriesList from '~/pages/Deliveries/DeliveriesList';
 
 import DeliverymenList from '~/pages/Deliverymen/DeliverymenList';
 
+import RecipientsList from '~/pages/Recipients/RecipientsList';
+
 export default function Routes() {
   return (
     <Switch>
@@ -17,6 +19,8 @@ export default function Routes() {
       <Route path="/deliveries" component={DeliveriesList} exact isPrivate />
 
       <Route path="/deliverymen" component={DeliverymenList} exact isPrivate />
+
+      <Route path="/recipients" component={RecipientsList} exact isPrivate />
     </Switch>
   );
 }

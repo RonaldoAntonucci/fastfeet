@@ -4,13 +4,15 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import logo from '~/assets/logo.png';
 
+import colors from '~/styles/colors';
+
 export const Container = styled.div`
   height: 64px;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border: 1px solid #dddddd;
-  background-color: #ffffff;
+  border: 1px solid ${colors.border};
+  background-color: ${colors.second};
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
   padding: 20px;
 `;
@@ -26,7 +28,7 @@ export const Logo = styled.div.attrs(props => ({
     height: 26px;
   }
   padding: 0px 30px;
-  border-right: 1px solid #eee;
+  border-right: 1px solid ${colors.border};
 `;
 
 export const Perfil = styled.aside`
@@ -41,7 +43,7 @@ export const Perfil = styled.aside`
 
   strong {
     font-size: 14px;
-    color: #666;
+    color: ${colors.fontColor};
   }
 
   button {
@@ -51,7 +53,7 @@ export const Perfil = styled.aside`
     border: none;
     text-align: right;
     font-size: 14px;
-    color: #de3b3b;
+    color: ${colors.red};
   }
 `;
 
@@ -75,5 +77,5 @@ export const Menu = styled.nav`
 `;
 
 export const NavButton = styled(NavLink)`
-  color: ${props => (props.selected ? '#444444' : ' #999999')};
+  color: ${props => (props.selected ? colors.fontDark : colors.fontLigh)};
 `;

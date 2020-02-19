@@ -19,7 +19,7 @@ export default styled.button.attrs(props => ({
 
   padding: 0 16px;
   background-color: ${props => (props.color ? props.color : colors.primary)};
-  color: ${props => (props.textColor ? props.textColor : '#fff')};
+  color: ${props => (props.textColor ? props.textColor : colors.second)};
   border-radius: 4px;
   border: none;
   font-weight: bold;

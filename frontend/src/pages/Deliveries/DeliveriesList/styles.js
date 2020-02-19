@@ -3,20 +3,22 @@ import styled from 'styled-components';
 
 import { lighten } from 'polished';
 
+import colors from '~/styles/colors';
+
 export const Status = styled.div.attrs(props => {
   let color = null;
   switch (props.children) {
     case 'CANCELADA':
-      color = '#DE3B3B';
+      color = colors.red;
       break;
     case 'ENTREGUE':
-      color = '#2CA42B';
+      color = colors.green;
       break;
     case 'RETIRADA':
-      color = '#4D85EE';
+      color = colors.blue;
       break;
     default:
-      color = '#C1BC35';
+      color = colors.yellow;
       break;
   }
 

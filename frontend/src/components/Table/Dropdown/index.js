@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { MdMoreHoriz } from 'react-icons/md';
 import { Container, Arrow, MoreButton } from './styles';
 
+import colors from '~/styles/colors';
+
 export default function Dropdown({ children }) {
   return (
     <Container>
       <MoreButton>
-        <MdMoreHoriz size={24} color="#C6C6C6" />
+        <MdMoreHoriz size={24} color={colors.fontLigh} />
       </MoreButton>
 
       <div>

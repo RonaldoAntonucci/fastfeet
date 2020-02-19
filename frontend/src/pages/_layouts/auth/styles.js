@@ -3,7 +3,7 @@ import { darken } from 'polished';
 import colors from '~/styles/colors';
 
 export const Wrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   background: ${colors.primary};
 
   display: flex;
@@ -22,7 +22,7 @@ export const Content = styled.div`
     background: ${colors.primary};
     font-weight: bold;
     border: 0;
-    color: #fff;
+    color: ${colors.second};
     border-radius: 4px;
     font-size: 16px;
     transition: background 0.2s;
@@ -32,7 +32,7 @@ export const Content = styled.div`
     }
   }
   a {
-    color: #fff;
+    color: ${colors.second};
     margin-top: 5px;
     font-size: 16px;
     opacity: 0.8;

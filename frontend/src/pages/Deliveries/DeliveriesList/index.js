@@ -27,6 +27,8 @@ import Table, {
   PaginationInput,
 } from '~/components/Table';
 
+import colors from '~/styles/colors';
+
 import { Status } from './styles';
 
 export default function DeliveriesList() {
@@ -78,7 +80,7 @@ export default function DeliveriesList() {
         <div>
           <Form onSubmit={handleSearchSubmit}>
             <button type="submit">
-              <MdSearch color="#999999" />
+              <MdSearch color={colors.fontLigh} />
             </button>
 
             <Input
@@ -149,8 +151,8 @@ export default function DeliveriesList() {
                       <Button
                         icon={MdVisibility}
                         color="transparent"
-                        textColor="#999999"
-                        iconColor="#8E5BE8"
+                        textColor={colors.fontLigh}
+                        iconColor={colors.primary}
                         type="button"
                       >
                         Visualizar
@@ -160,8 +162,8 @@ export default function DeliveriesList() {
                       <Button
                         icon={MdCreate}
                         color="transparent"
-                        textColor="#999999"
-                        iconColor="#4D85EE"
+                        textColor={colors.fontLigh}
+                        iconColor={colors.blue}
                         type="button"
                       >
                         Editar
@@ -171,8 +173,8 @@ export default function DeliveriesList() {
                       <Button
                         icon={MdDeleteForever}
                         color="transparent"
-                        textColor="#999999"
-                        iconColor="#DE3B3B"
+                        textColor={colors.fontLigh}
+                        iconColor={colors.red}
                         type="button"
                       >
                         Excluir

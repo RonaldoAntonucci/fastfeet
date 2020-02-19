@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import Input from '~/components/Input';
 
+import colors from '~/styles/colors';
+
 export const Container = styled.div`
-  background: #fff;
+  background: ${colors.second};
   border-radius: 4px;
   padding: 60px 30px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);

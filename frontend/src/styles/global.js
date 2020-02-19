@@ -42,12 +42,12 @@ export default createGlobalStyle`
   input {
       
       &::placeholder {
-        color: ${colors.placeholder};
+        color: ${colors.fontLigh};
       }
 
       &:focus {
-        background:  ${lighten(0.45, colors.focus)};
-        border: 1px solid ${colors.focus};
+        background:  ${lighten(0.45, colors.primary)};
+        border: 1px solid ${colors.primary};
       }
 
       &:disabled{
@@ -68,12 +68,12 @@ export default createGlobalStyle`
   
   textarea {
       &::placeholder {
-        color: ${colors.placeholder};
+        color: ${colors.fontLigh};
       }
 
       &:focus {
-        background:  ${lighten(0.45, colors.focus)};
-        border: 1px solid ${colors.focus};
+        background:  ${lighten(0.45, colors.primary)};
+        border: 1px solid ${colors.primary};
       }
           
 
@@ -92,13 +92,6 @@ export default createGlobalStyle`
     display: flex;
     flex-direction: column;
     /* margin-top: 30px; */
-
-    span {
-      color: #fb6f91;
-      align-self: flex-start;
-      margin: 0 0 10px;
-      font-weight: bold;
-    }
 
   }
 

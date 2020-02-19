@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { darken } from 'polished';
 
+import colors from '~/styles/colors';
+
 export const Container = styled.div`
   position: relative;
   display: flex;
@@ -19,7 +21,7 @@ export const Container = styled.div`
     margin-top: 28px;
 
     > div:last-child {
-      background-color: #fff;
+      background-color: ${colors.second};
       box-shadow: 0px 0px 2px #00000026;
       margin-top: 10px;
 
@@ -27,7 +29,7 @@ export const Container = styled.div`
 
       li {
         &:hover {
-          background: ${darken(0.04, '#fff')};
+          background: ${darken(0.04, colors.second)};
         }
       }
     }
@@ -49,7 +51,7 @@ export const Arrow = styled.div`
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #fff;
+  border-bottom: 10px solid ${colors.second};
 `;
 
 export const MoreButton = styled.button`
@@ -58,6 +60,6 @@ export const MoreButton = styled.button`
   border-radius: 5px;
 
   &:hover {
-    border: 1px solid ${props => darken(0.1, props.color || '#C6C6C6')};
+    border: 1px solid ${props => darken(0.1, props.color || colors.second)};
   }
 `;

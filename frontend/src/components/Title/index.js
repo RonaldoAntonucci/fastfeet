@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import colors from '~/styles/colors';
+
 export default styled.div`
   display: flex;
   flex: 1;
@@ -10,7 +12,7 @@ export default styled.div`
 
   h1 {
     font-size: 24px;
-    color: #444;
+    color: ${colors.fontDark};
     margin-bottom: 30px;
   }
 

@@ -1,24 +1,17 @@
 export default {
   primary: '#7D40E7',
-  second: '#dddddd',
-  dark: '#191920',
+  second: '#fff',
+
+  fontLigh: `#999999`,
+  fontColor: '#666666',
+  fontDark: '#444444',
 
   red: '#DE3B3B',
+  blue: '#4D85EE',
+  green: '#2CA42B',
+  yellow: '#C1BC35',
 
-  edit: '#4D85EE',
-  delete: '#DE3B3B',
-
-  linkActive: '#191920',
-  disabled: '#dddddd',
-
-  focus: '#7D40E7',
-  bg: '#ebebeb',
   border: '#dddddd',
-  placeholder: '#999',
-  input: '#333',
-  label: '#444444',
-  strong: '#333',
-
-  tableTd: '#666666',
-  tableBorder: '#EEEEEE',
+  disabled: '#dddddd',
+  bg: '#f5f5f5',
 };

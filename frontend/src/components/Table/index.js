@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { darken } from 'polished';
 
 import { Input } from '@rocketseat/unform';
@@ -14,7 +14,7 @@ const Table = styled.table`
   border-spacing: 0 1.5em;
 
   tr {
-    color: #666;
+    color: ${colors.fontColor};
     font-size: 16px;
     line-height: 20px;
 
@@ -31,11 +31,11 @@ const Table = styled.table`
   }
 
   tbody tr {
-    background-color: #fff;
+    background-color: ${colors.second};
     box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
 
     &:hover {
-      background: ${darken(0.04, '#fff')};
+      background: ${darken(0.04, colors.second)};
     }
   }
 
@@ -50,46 +50,12 @@ const Table = styled.table`
   }
 
   th {
-    color: #444;
+    color: ${colors.fontDark};
   }
 
   td,
   th {
     padding: 14px;
-  }
-`;
-
-const TableFooter = styled.div`
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  span {
-    margin: 0 10px;
-  }
-`;
-
-const TableFooterButton = styled.button`
-  background: ${props => (props.disabled ? colors.white : colors.primary)};
-  color: ${props => (props.disabled ? colors.darkGrey : colors.white)};
-  padding: 10px 15px;
-  border-radius: 4px;
-  border: 0;
-
-  ${props =>
-    props.disabled &&
-    css`
-      border: 2px solid ${colors.grey};
-    `}
-
-  &:hover {
-    ${props =>
-      props.disabled &&
-      css`
-        cursor: not-allowed;
-      `}
   }
 `;
 
@@ -99,6 +65,7 @@ const TablePagination = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 8px;
+
   border-radius: 4px;
   width: 100%;
 
@@ -107,26 +74,20 @@ const TablePagination = styled.div`
     border: 0;
     > svg {
       font-size: 24px;
-      color: #444444;
+      color: ${colors.fontDark};
     }
     margin: 0 8px;
   }
 
   input {
-    background-color: #fff;
-    border: 1px solid #444444;
+    background-color: ${colors.second}d;
+    border: 1px solid ${colors.border};
     border-radius: 20px;
   }
 `;
 
 const PaginationInput = styled(Input)``;
 
-export {
-  TableFooter,
-  TableFooterButton,
-  ActionDropdown,
-  TablePagination,
-  PaginationInput,
-};
+export { ActionDropdown, TablePagination, PaginationInput };
 
 export default Table;

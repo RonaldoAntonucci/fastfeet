@@ -8,7 +8,7 @@ export default styled(Input)`
   border-radius: 4px;
   height: 40px;
   padding: 0 15px;
-  color: ${colors.input};
+  color: ${colors.fontDark};
   /* margin: 0 0 15px; */
   width: 100%;
 `;

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
 
 import colors from '~/styles/colors';
 
-export default styled.button.attrs(props => ({
+const Button = styled.button.attrs(props => ({
   children: props.icon ? (
     <>
       <div>{props.icon()}</div>
@@ -43,3 +43,5 @@ export default styled.button.attrs(props => ({
     }
   }
 `;
+
+export default memo(Button);

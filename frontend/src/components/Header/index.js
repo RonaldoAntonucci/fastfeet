@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Logo, Perfil, Menu, NavButton } from './styles';
 
-export default function Header() {
+function Header() {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
@@ -31,3 +31,5 @@ export default function Header() {
     </Container>
   );
 }
+
+export default memo(Header);

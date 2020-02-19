@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import { StyledTitle } from './styles';
 
 import colors from '~/styles/colors';
 
-export default function Title({ title, handleSearchSubmit, buttonLink }) {
+function Title({ title, handleSearchSubmit, buttonLink }) {
   return (
     <StyledTitle>
       <h1>{title}</h1>
@@ -44,3 +44,5 @@ Title.propTypes = {
   handleSearchSubmit: PropTypes.func.isRequired,
   buttonLink: PropTypes.string.isRequired,
 };
+
+export default memo(Title);

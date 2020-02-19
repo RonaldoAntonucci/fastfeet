@@ -1,45 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, createContext } from 'react';
 
 import { toast } from 'react-toastify';
-import {
-  MdVisibility,
-  MdCreate,
-  MdDeleteForever,
-  MdKeyboardArrowLeft,
-  MdFirstPage,
-  MdKeyboardArrowRight,
-  MdLastPage,
-} from 'react-icons/md';
-import { Form } from '@rocketseat/unform';
-import { usePagination } from '~/hooks';
+import { MdVisibility, MdCreate, MdDeleteForever } from 'react-icons/md';
 
 import api from '~/services/api';
 
 import Title from '~/components/Title';
+import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
-import Table, {
-  ActionDropdown,
-  TablePagination,
-  PaginationInput,
-} from '~/components/Table';
+import Table, { ActionDropdown } from '~/components/Table';
 
 import colors from '~/styles/colors';
 
 import { Status } from './styles';
+
+const PageContext = createContext(null);
 
 export default function DeliveriesList() {
   const [deliveries, setDeliveries] = useState([]);
   const [page, setPage] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
   const [search, setSearch] = useState('');
-
-  const {
-    handleFirst,
-    handleLast,
-    handleNext,
-    handlePrevious,
-    handlePage,
-  } = usePagination({ page, setPage, pageAmount });
 
   const handleSearchSubmit = useCallback(data => {
     setPage(1);
@@ -69,35 +50,15 @@ export default function DeliveriesList() {
   }, [page, search]);
 
   return (
-    <>
+    <PageContext.Provider
+      value={{ page: [page, setPage], pageAmount: [pageAmount, setPageAmount] }}
+    >
       <Title
         title="Gerenciando encomendas"
         handleSearchSubmit={handleSearchSubmit}
         buttonLink="/deliveries/create"
       />
-      <TablePagination>
-        <button type="button" onClick={handleFirst}>
-          <MdFirstPage />
-        </button>
-        <button type="button" onClick={handlePrevious}>
-          <MdKeyboardArrowLeft />
-        </button>
-        <Form onSubmit={handlePage}>
-          <PaginationInput
-            name="page"
-            type="number"
-            min="1"
-            max={pageAmount}
-            placeholder={page}
-          />
-        </Form>
-        <button type="button" onClick={handleNext}>
-          <MdKeyboardArrowRight />
-        </button>
-        <button type="button" onClick={handleLast}>
-          <MdLastPage />
-        </button>
-      </TablePagination>
+      <Pagination context={PageContext} />
       <Table>
         <thead>
           <tr>
@@ -164,6 +125,6 @@ export default function DeliveriesList() {
           ))}
         </tbody>
       </Table>
-    </>
+    </PageContext.Provider>
   );
 }

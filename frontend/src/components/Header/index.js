@@ -1,4 +1,4 @@
-import React, { useCallback, memo } from 'react';
+import React, { useCallback, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '~/store/modules/auth/actions';
@@ -6,6 +6,7 @@ import { signOut } from '~/store/modules/auth/actions';
 import { Container, Logo, Perfil, Menu, NavButton } from './styles';
 
 function Header() {
+  const [selected, setSelected] = useState('deliveries');
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
@@ -15,12 +16,34 @@ function Header() {
     <Container>
       <Logo to="/" />
       <Menu>
-        <NavButton selected to="/deliveries">
+        <NavButton
+          selected={selected === 'deliveries'}
+          to="/deliveries"
+          onClick={() => setSelected('deliveries')}
+        >
           ENCOMENDAS
         </NavButton>
-        <NavButton to="/deliverymen"> ENTREGADORES </NavButton>
-        <NavButton to="/recipients"> DESTINATÁRIOS </NavButton>
-        <NavButton to="/problems"> PROBLEMAS </NavButton>
+        <NavButton
+          selected={selected === 'deliverymen'}
+          to="/deliverymen"
+          onClick={() => setSelected('deliverymen')}
+        >
+          ENTREGADORES
+        </NavButton>
+        <NavButton
+          selected={selected === 'recipients'}
+          to="/recipients"
+          onClick={() => setSelected('recipients')}
+        >
+          DESTINATÁRIOS
+        </NavButton>
+        <NavButton
+          selected={selected === 'problems'}
+          to="/problems"
+          onClick={() => setSelected('problems')}
+        >
+          PROBLEMAS
+        </NavButton>
       </Menu>
       <Perfil>
         <strong> {profile.name} </strong>

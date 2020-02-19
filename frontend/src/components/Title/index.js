@@ -1,46 +1,46 @@
-import styled from 'styled-components';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import { Form } from '@rocketseat/unform';
+import { MdAdd, MdSearch } from 'react-icons/md';
+
+import Input from '~/components/Input';
+import Button from '~/components/Button';
+
+import { StyledTitle } from './styles';
 
 import colors from '~/styles/colors';
 
-export default styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: right;
-  width: 100%;
+export default function Title({ title, handleSearchSubmit, buttonLink }) {
+  return (
+    <StyledTitle>
+      <h1>{title}</h1>
 
-  h1 {
-    font-size: 24px;
-    color: ${colors.fontDark};
-    margin-bottom: 30px;
-  }
+      <div>
+        <Form onSubmit={handleSearchSubmit}>
+          <button type="submit">
+            <MdSearch color={colors.fontLigh} />
+          </button>
 
-  > div {
-    display: flex;
-    width: 100%;
-    align-items: flex-end;
-    justify-content: space-between;
+          <Input
+            type="text"
+            name="search"
+            placeholder="Buscar por encomendas"
+          />
+        </Form>
+        <Link to={buttonLink}>
+          <Button icon={MdAdd} type="button">
+            CADASTRAR
+          </Button>
+        </Link>
+      </div>
+    </StyledTitle>
+  );
+}
 
-    form {
-      display: flex;
-      flex-direction: row;
-      position: relative;
-
-      button {
-        height: 40px;
-        background: none;
-        border: 0;
-        position: absolute;
-        svg {
-          margin: 10px;
-          font-size: 20px;
-        }
-      }
-
-      input {
-        padding-left: 35px;
-      }
-    }
-  }
-`;
+Title.propTypes = {
+  title: PropTypes.string.isRequired,
+  handleSearchSubmit: PropTypes.func.isRequired,
+  buttonLink: PropTypes.string.isRequired,
+};

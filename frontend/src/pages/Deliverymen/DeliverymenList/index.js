@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { toast } from 'react-toastify';
+import { Form } from '@rocketseat/unform';
 import {
   MdVisibility,
   MdCreate,
@@ -10,7 +11,7 @@ import {
   MdKeyboardArrowRight,
   MdLastPage,
 } from 'react-icons/md';
-import { Form } from '@rocketseat/unform';
+
 import { usePagination } from '~/hooks';
 
 import api from '~/services/api';
@@ -25,10 +26,8 @@ import Table, {
 
 import colors from '~/styles/colors';
 
-import { Status } from './styles';
-
-export default function DeliveriesList() {
-  const [deliveries, setDeliveries] = useState([]);
+export default function DeliverymenList() {
+  const [deliverymen, setDeliverymen] = useState([]);
   const [page, setPage] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
   const [search, setSearch] = useState('');
@@ -51,7 +50,7 @@ export default function DeliveriesList() {
       try {
         const {
           data: { data, totalPages },
-        } = await api.get('/deliveries', {
+        } = await api.get('/deliverymen', {
           params: {
             page,
             quantity: 20,
@@ -59,10 +58,10 @@ export default function DeliveriesList() {
             q: search,
           },
         });
-        setDeliveries(data);
+        setDeliverymen(data);
         setPageAmount(totalPages);
       } catch (err) {
-        toast.error('Não foi possível carregar as entregas.');
+        toast.error('Não foi possível carregar os entregadores.');
       }
     }
     getData();
@@ -71,56 +70,52 @@ export default function DeliveriesList() {
   return (
     <>
       <Title
-        title="Gerenciando encomendas"
+        title="Gerenciando entregadores"
         handleSearchSubmit={handleSearchSubmit}
-        buttonLink="/deliveries/create"
+        buttonLink="deliverymen/create"
       />
-      <TablePagination>
-        <button type="button" onClick={handleFirst}>
-          <MdFirstPage />
-        </button>
-        <button type="button" onClick={handlePrevious}>
-          <MdKeyboardArrowLeft />
-        </button>
-        <Form onSubmit={handlePage}>
-          <PaginationInput
-            name="page"
-            type="number"
-            min="1"
-            max={pageAmount}
-            placeholder={page}
-          />
-        </Form>
-        <button type="button" onClick={handleNext}>
-          <MdKeyboardArrowRight />
-        </button>
-        <button type="button" onClick={handleLast}>
-          <MdLastPage />
-        </button>
-      </TablePagination>
+      <div>
+        <TablePagination>
+          <button type="button" onClick={handleFirst}>
+            <MdFirstPage />
+          </button>
+          <button type="button" onClick={handlePrevious}>
+            <MdKeyboardArrowLeft />
+          </button>
+          <Form onSubmit={handlePage}>
+            <PaginationInput
+              name="page"
+              type="number"
+              min="1"
+              max={pageAmount}
+              placeholder={page}
+            />
+          </Form>
+          <button type="button" onClick={handleNext}>
+            <MdKeyboardArrowRight />
+          </button>
+          <button type="button" onClick={handleLast}>
+            <MdLastPage />
+          </button>
+        </TablePagination>
+      </div>
       <Table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Destinatário</th>
-            <th>Entregador</th>
-            <th>Cidade</th>
-            <th>Estado</th>
-            <th style={{ width: '120px', textAlign: 'center' }}>Status</th>
+            <th>Foto</th>
+            <th>Nome</th>
+            <th>Email</th>
             <th style={{ width: '100px' }}>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {deliveries.map(delivery => (
-            <tr key={delivery.id}>
-              <td>#{`000${delivery.id}`.slice(-2)}</td>
-              <td>{delivery.Recipient.name}</td>
-              <td>{delivery.Deliveryman.name}</td>
-              <td>{delivery.Recipient.city}</td>
-              <td>{delivery.Recipient.state}</td>
-              <td>
-                <Status>{delivery.status}</Status>
-              </td>
+          {deliverymen.map(deliveryman => (
+            <tr key={deliveryman.id}>
+              <td>#{`000${deliveryman.id}`.slice(-2)}</td>
+              <td>foto</td>
+              <td>{deliveryman.name}</td>
+              <td>{deliveryman.email}</td>
               <td>
                 <ActionDropdown>
                   <ul>

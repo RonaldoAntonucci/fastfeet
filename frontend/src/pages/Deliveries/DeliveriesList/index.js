@@ -103,7 +103,7 @@ export default function DeliveriesList() {
             <button type="button" onClick={handlePrevious}>
               <MdKeyboardArrowLeft />
             </button>
-            <Form onSubmit={handlePage} initialData={{ page }}>
+            <Form onSubmit={handlePage}>
               <PaginationInput
                 name="page"
                 type="number"

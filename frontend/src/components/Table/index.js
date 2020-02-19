@@ -83,6 +83,10 @@ const TablePagination = styled.div`
     background-color: ${colors.second}d;
     border: 1px solid ${colors.border};
     border-radius: 20px;
+
+    &::placeholder {
+      color: ${colors.fontDark};
+    }
   }
 `;
 

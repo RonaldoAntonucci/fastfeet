@@ -12,14 +12,14 @@ import { StyledTitle } from './styles';
 
 import colors from '~/styles/colors';
 
-function Title({ title, handleSearchSubmit, buttonLink }) {
+function Title({ title, handleSearchSubmit, buttonLink, loading }) {
   return (
     <StyledTitle>
       <h1>{title}</h1>
 
       <div>
         <Form onSubmit={handleSearchSubmit}>
-          <button type="submit">
+          <button type="submit" disabled={loading}>
             <MdSearch color={colors.fontLigh} />
           </button>
 
@@ -27,6 +27,7 @@ function Title({ title, handleSearchSubmit, buttonLink }) {
             type="text"
             name="search"
             placeholder="Buscar por encomendas"
+            disabled={loading}
           />
         </Form>
         <Link to={buttonLink}>
@@ -43,6 +44,11 @@ Title.propTypes = {
   title: PropTypes.string.isRequired,
   handleSearchSubmit: PropTypes.func.isRequired,
   buttonLink: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
+};
+
+Title.defaultProps = {
+  loading: false,
 };
 
 export default memo(Title);

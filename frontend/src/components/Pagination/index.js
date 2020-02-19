@@ -14,6 +14,7 @@ function Pagination({ context }) {
   const {
     page: [page, setPage],
     pageAmount: [pageAmount],
+    loading,
   } = useContext(context);
 
   const handleFirst = useCallback(() => {
@@ -52,14 +53,15 @@ function Pagination({ context }) {
 
   return (
     <StyledPagination>
-      <button type="button" onClick={handleFirst}>
+      <button type="button" onClick={handleFirst} disabled={loading}>
         <MdFirstPage />
       </button>
-      <button type="button" onClick={handlePrevious}>
+      <button type="button" onClick={handlePrevious} disabled={loading}>
         <MdKeyboardArrowLeft />
       </button>
       <StyledForm onSubmit={handlePage}>
         <StyledInput
+          disabled={loading}
           name="page"
           type="number"
           min="1"
@@ -67,10 +69,10 @@ function Pagination({ context }) {
           placeholder={page}
         />
       </StyledForm>
-      <button type="button" onClick={handleNext}>
+      <button type="button" onClick={handleNext} disabled={loading}>
         <MdKeyboardArrowRight />
       </button>
-      <button type="button" onClick={handleLast}>
+      <button type="button" onClick={handleLast} disabled={loading}>
         <MdLastPage />
       </button>
     </StyledPagination>

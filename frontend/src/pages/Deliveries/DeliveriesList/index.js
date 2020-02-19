@@ -9,6 +9,7 @@ import Title from '~/components/Title';
 import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Table, { ActionDropdown } from '~/components/Table';
+import LoadingLine from '~/components/LoadingLine';
 
 import colors from '~/styles/colors';
 
@@ -17,6 +18,7 @@ import { Status } from './styles';
 const PageContext = createContext(null);
 
 export default function DeliveriesList() {
+  const [loading, setLoading] = useState(false);
   const [deliveries, setDeliveries] = useState([]);
   const [page, setPage] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
@@ -30,6 +32,7 @@ export default function DeliveriesList() {
   useEffect(() => {
     async function getData() {
       try {
+        setLoading(true);
         const {
           data: { data, totalPages },
         } = await api.get('/deliveries', {
@@ -44,6 +47,8 @@ export default function DeliveriesList() {
         setPageAmount(totalPages);
       } catch (err) {
         toast.error('Não foi possível carregar as entregas.');
+      } finally {
+        setLoading(false);
       }
     }
     getData();
@@ -51,12 +56,17 @@ export default function DeliveriesList() {
 
   return (
     <PageContext.Provider
-      value={{ page: [page, setPage], pageAmount: [pageAmount, setPageAmount] }}
+      value={{
+        page: [page, setPage],
+        pageAmount: [pageAmount, setPageAmount],
+        loading,
+      }}
     >
       <Title
         title="Gerenciando encomendas"
         handleSearchSubmit={handleSearchSubmit}
         buttonLink="/deliveries/create"
+        loading={loading}
       />
       <Pagination context={PageContext} />
       <Table>
@@ -72,57 +82,83 @@ export default function DeliveriesList() {
           </tr>
         </thead>
         <tbody>
-          {deliveries.map(delivery => (
-            <tr key={delivery.id}>
-              <td>#{`000${delivery.id}`.slice(-2)}</td>
-              <td>{delivery.Recipient.name}</td>
-              <td>{delivery.Deliveryman.name}</td>
-              <td>{delivery.Recipient.city}</td>
-              <td>{delivery.Recipient.state}</td>
+          {loading ? (
+            <tr>
               <td>
-                <Status>{delivery.status}</Status>
+                <LoadingLine />
               </td>
               <td>
-                <ActionDropdown>
-                  <ul>
-                    <li>
-                      <Button
-                        icon={MdVisibility}
-                        color="transparent"
-                        textColor={colors.fontLigh}
-                        iconColor={colors.primary}
-                        type="button"
-                      >
-                        Visualizar
-                      </Button>
-                    </li>
-                    <li>
-                      <Button
-                        icon={MdCreate}
-                        color="transparent"
-                        textColor={colors.fontLigh}
-                        iconColor={colors.blue}
-                        type="button"
-                      >
-                        Editar
-                      </Button>
-                    </li>
-                    <li>
-                      <Button
-                        icon={MdDeleteForever}
-                        color="transparent"
-                        textColor={colors.fontLigh}
-                        iconColor={colors.red}
-                        type="button"
-                      >
-                        Excluir
-                      </Button>
-                    </li>
-                  </ul>
-                </ActionDropdown>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
               </td>
             </tr>
-          ))}
+          ) : (
+            deliveries.map(delivery => (
+              <tr key={delivery.id}>
+                <td>#{`000${delivery.id}`.slice(-2)}</td>
+                <td>{delivery.Recipient.name}</td>
+                <td>{delivery.Deliveryman.name}</td>
+                <td>{delivery.Recipient.city}</td>
+                <td>{delivery.Recipient.state}</td>
+                <td>
+                  <Status>{delivery.status}</Status>
+                </td>
+                <td>
+                  <ActionDropdown>
+                    <ul>
+                      <li>
+                        <Button
+                          icon={MdVisibility}
+                          color="transparent"
+                          textColor={colors.fontLigh}
+                          iconColor={colors.primary}
+                          type="button"
+                        >
+                          Visualizar
+                        </Button>
+                      </li>
+                      <li>
+                        <Button
+                          icon={MdCreate}
+                          color="transparent"
+                          textColor={colors.fontLigh}
+                          iconColor={colors.blue}
+                          type="button"
+                        >
+                          Editar
+                        </Button>
+                      </li>
+                      <li>
+                        <Button
+                          icon={MdDeleteForever}
+                          color="transparent"
+                          textColor={colors.fontLigh}
+                          iconColor={colors.red}
+                          type="button"
+                        >
+                          Excluir
+                        </Button>
+                      </li>
+                    </ul>
+                  </ActionDropdown>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </Table>
     </PageContext.Provider>

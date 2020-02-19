@@ -55,7 +55,7 @@ export default createGlobalStyle`
       }
   }
 
-  input:disabled {
+  button:disabled,input:disabled {
     cursor: not-allowed;
   }
 

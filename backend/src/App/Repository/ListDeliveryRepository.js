@@ -21,7 +21,7 @@ export default {
   ) {
     const cacheKey = url ? `deliveries:${url}` : false;
 
-    await Cache.invalidatePrefixes(['*']);
+    // await Cache.invalidatePrefixes(['*']);
 
     if (cacheKey) {
       const cached = await Cache.get(cacheKey);

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Input, Form } from '@rocketseat/unform';
+import { Input, Form } from '~/components/Form';
 
 import colors from '~/styles/colors';
 
@@ -28,10 +28,16 @@ export const StyledPagination = styled.div`
     background-color: ${colors.second}d;
     border: 1px solid ${colors.border};
     border-radius: 20px;
-    padding-left: 35px;
+    padding: 0 0 0 35px;
+    height: 24px;
 
     &::placeholder {
       color: ${colors.fontDark};
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      opacity: 1;
     }
   }
 `;

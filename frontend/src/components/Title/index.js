@@ -2,10 +2,9 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Form } from '@rocketseat/unform';
 import { MdAdd, MdSearch } from 'react-icons/md';
+import { Form, Input } from '~/components/Form';
 
-import Input from '~/components/Input';
 import Button from '~/components/Button';
 
 import { StyledTitle } from './styles';

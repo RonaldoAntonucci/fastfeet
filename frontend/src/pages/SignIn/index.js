@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
-import { Container, Img, SignInput } from './styles';
+import { Container, Img, SignInput, SignForm } from './styles';
 import logo from '~/assets/logo.png';
 
 import { signInRequest } from '~/store/modules/auth/actions';
@@ -29,17 +28,25 @@ export default function SignIn() {
     <Container>
       <Img src={logo} alt="FastFeet" />
 
-      <Form schema={schema} onSubmit={handleSubmit}>
-        <Label>SEU E-MAIL</Label>
-        <SignInput name="email" type="email" placeholder="exemplo@email.com" />
+      <SignForm schema={schema} onSubmit={handleSubmit}>
+        <SignInput
+          label="SEU E-MAIL"
+          name="email"
+          type="email"
+          placeholder="exemplo@email.com"
+        />
 
-        <Label>SUA SENHA</Label>
-        <SignInput name="password" type="password" placeholder="************" />
+        <SignInput
+          label="SEU SENHA"
+          name="password"
+          type="password"
+          placeholder="************"
+        />
 
         <button type="submit">
           {loading ? 'Carregando...' : 'Entrar no sistema'}
         </button>
-      </Form>
+      </SignForm>
     </Container>
   );
 }

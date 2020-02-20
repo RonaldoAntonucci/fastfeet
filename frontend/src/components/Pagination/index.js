@@ -1,4 +1,4 @@
-import React, { useContext, memo, useCallback } from 'react';
+import React, { useContext, memo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -17,38 +17,48 @@ function Pagination({ context }) {
     loading,
   } = useContext(context);
 
+  const [newPage, setNewPage] = useState(1);
+
+  const handlePage = useCallback(
+    value => {
+      setPage(value);
+      setNewPage(value);
+    },
+    [setPage]
+  );
+
   const handleFirst = useCallback(() => {
-    setPage(1);
-  }, [setPage]);
+    handlePage(1);
+  }, [handlePage]);
 
   const handleLast = useCallback(() => {
-    setPage(pageAmount);
-  }, [pageAmount, setPage]);
+    handlePage(pageAmount);
+  }, [handlePage, pageAmount]);
 
   const handleNext = useCallback(() => {
     const next = page + 1;
     if (next < 1 || next > pageAmount) {
       return;
     }
-    setPage(next);
-  }, [page, pageAmount, setPage]);
+    handlePage(next);
+  }, [handlePage, page, pageAmount]);
 
   const handlePrevious = useCallback(() => {
     const next = page - 1;
     if (next < 1 || next > pageAmount) {
       return;
     }
-    setPage(next);
-  }, [page, pageAmount, setPage]);
+    handlePage(next);
+  }, [handlePage, page, pageAmount]);
 
-  const handlePage = useCallback(
+  const handleNewPage = useCallback(
     ({ page: p }) => {
       if (p === page || p < 1 || p > pageAmount) {
         return;
       }
-      setPage(p);
+      handlePage(p);
     },
-    [page, pageAmount, setPage]
+    [handlePage, page, pageAmount]
   );
 
   return (
@@ -59,14 +69,15 @@ function Pagination({ context }) {
       <button type="button" onClick={handlePrevious} disabled={loading}>
         <MdKeyboardArrowLeft />
       </button>
-      <StyledForm onSubmit={handlePage}>
+      <StyledForm onSubmit={handleNewPage}>
         <StyledInput
           disabled={loading}
           name="page"
           type="number"
           min="1"
           max={pageAmount}
-          placeholder={page}
+          value={newPage}
+          onChange={e => setNewPage(e.target.value)}
         />
       </StyledForm>
       <button type="button" onClick={handleNext} disabled={loading}>

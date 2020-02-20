@@ -109,6 +109,8 @@ routes.get(
   ProblemController.index
 );
 
+routes.get('/recipients', isAdminMiddleware, RecipientsController.index);
+
 routes.post(
   '/recipients',
   isAdminMiddleware,

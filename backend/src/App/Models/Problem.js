@@ -26,6 +26,15 @@ class Problem extends Model {
         { model: models.Delivery, include: ['Recipient', 'Deliveryman'] },
       ],
     });
+
+    this.addScope('deliveries', {
+      include: [
+        {
+          model: models.Delivery,
+          attributes: ['id', 'status', 'product'],
+        },
+      ],
+    });
   }
 }
 

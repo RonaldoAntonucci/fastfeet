@@ -50,5 +50,85 @@ export default function RecipientsList() {
     }
     getData();
   }, [page, search]);
-  return <h1>RECIPIENTS</h1>;
+  return (
+    <PageContext.Provider
+      value={{
+        page: [page, setPage],
+        pageAmount: [pageAmount, setPageAmount],
+        loading,
+      }}
+    >
+      <Title
+        title="Gerenciando destinatários"
+        handleSearchSubmit={handleSearchSubmit}
+        buttonLink="recipients/create"
+        loading={loading}
+      />
+      <Pagination context={PageContext} />
+      <Table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th style={{ width: '100px' }}>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
+            <tr>
+              <td>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
+              </td>
+              <td>
+                <LoadingLine />
+              </td>
+            </tr>
+          ) : (
+            recipients.map(({ id, name, street, number, city, state }) => (
+              <tr key={id}>
+                <td>#{id}</td>
+                <td>{name}</td>
+                <td>{`${street}, ${number}, ${city} - ${state}`}</td>
+                <td>
+                  <ActionDropdown>
+                    <ul>
+                      <li>
+                        <Button
+                          icon={MdCreate}
+                          color="transparent"
+                          textColor={colors.fontLigh}
+                          iconColor={colors.blue}
+                          type="button"
+                        >
+                          Editar
+                        </Button>
+                      </li>
+                      <li>
+                        <Button
+                          icon={MdDeleteForever}
+                          color="transparent"
+                          textColor={colors.fontLigh}
+                          iconColor={colors.red}
+                          type="button"
+                        >
+                          Excluir
+                        </Button>
+                      </li>
+                    </ul>
+                  </ActionDropdown>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </Table>
+    </PageContext.Provider>
+  );
 }

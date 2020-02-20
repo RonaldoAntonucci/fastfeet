@@ -109,7 +109,7 @@ export default function DeliveriesList() {
           ) : (
             deliveries.map(delivery => (
               <tr key={delivery.id}>
-                <td>#{`000${delivery.id}`.slice(-2)}</td>
+                <td>#{delivery.id}</td>
                 <td>{delivery.Recipient.name}</td>
                 <td>{delivery.Deliveryman.name}</td>
                 <td>{delivery.Recipient.city}</td>

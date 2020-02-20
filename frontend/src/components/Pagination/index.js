@@ -37,6 +37,7 @@ function Pagination({ context }) {
 
   const handleNext = useCallback(() => {
     const next = page + 1;
+
     if (next < 1 || next > pageAmount) {
       return;
     }

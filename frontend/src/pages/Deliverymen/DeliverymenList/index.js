@@ -99,7 +99,7 @@ export default function DeliverymenList() {
           ) : (
             deliverymen.map(deliveryman => (
               <tr key={deliveryman.id}>
-                <td>#{`000${deliveryman.id}`.slice(-2)}</td>
+                <td>#{deliveryman.id}</td>
                 <td>
                   <img src={deliveryman.avatar_url} alt={deliveryman.name} />
                 </td>

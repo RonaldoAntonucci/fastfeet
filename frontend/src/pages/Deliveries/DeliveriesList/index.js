@@ -6,10 +6,13 @@ import { MdVisibility, MdCreate, MdDeleteForever } from 'react-icons/md';
 import api from '~/services/api';
 
 import Title from '~/components/Title';
+import Dialog from '~/components/Dialog';
 import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Table, { ActionDropdown } from '~/components/Table';
 import LoadingLine from '~/components/LoadingLine';
+
+import Delivery from './Delivery';
 
 import colors from '~/styles/colors';
 
@@ -20,9 +23,11 @@ const PageContext = createContext(null);
 export default function DeliveriesList() {
   const [loading, setLoading] = useState(false);
   const [deliveries, setDeliveries] = useState([]);
+  const [selectedDelivery, setSelectedDelivery] = useState({});
   const [page, setPage] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
   const [search, setSearch] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearchSubmit = useCallback(data => {
     setPage(1);
@@ -39,7 +44,7 @@ export default function DeliveriesList() {
           params: {
             page,
             quantity: 20,
-            scope: ['deliveryList'],
+            scopes: JSON.stringify(['recipient', 'deliveryman', 'signature']),
             q: search,
           },
         });
@@ -54,6 +59,11 @@ export default function DeliveriesList() {
     getData();
   }, [page, search]);
 
+  const handleDetails = useCallback(data => {
+    setSelectedDelivery(data);
+    setIsModalOpen(true);
+  }, []);
+
   return (
     <PageContext.Provider
       value={{
@@ -62,6 +72,13 @@ export default function DeliveriesList() {
         loading,
       }}
     >
+      <Dialog
+        title="Informações da encomenda"
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <Delivery delivery={selectedDelivery} />
+      </Dialog>
       <Title
         title="Gerenciando encomendas"
         handleSearchSubmit={handleSearchSubmit}
@@ -74,7 +91,7 @@ export default function DeliveriesList() {
           <tr>
             <th>ID</th>
             <th>Destinatário</th>
-            <th>Entregador</th>
+            <th>Produto</th>
             <th>Cidade</th>
             <th>Estado</th>
             <th style={{ width: '120px', textAlign: 'center' }}>Status</th>
@@ -111,7 +128,7 @@ export default function DeliveriesList() {
               <tr key={delivery.id}>
                 <td>#{delivery.id}</td>
                 <td>{delivery.Recipient.name}</td>
-                <td>{delivery.Deliveryman.name}</td>
+                <td>{delivery.product}</td>
                 <td>{delivery.Recipient.city}</td>
                 <td>{delivery.Recipient.state}</td>
                 <td>
@@ -127,6 +144,7 @@ export default function DeliveriesList() {
                           textColor={colors.fontLigh}
                           iconColor={colors.primary}
                           type="button"
+                          onClick={() => handleDetails(delivery)}
                         >
                           Visualizar
                         </Button>

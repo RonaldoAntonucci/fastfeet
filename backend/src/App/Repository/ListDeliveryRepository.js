@@ -8,7 +8,7 @@ import Exception from '../Exceptions/ServiceException';
 
 export default {
   scopeValidate(scope) {
-    const validScopes = ['deliveryList'];
+    const validScopes = ['deliveryman', 'recipient', 'signature'];
     if (scope[0] && !validScopes.some(r => scope.indexOf(r) >= 0)) {
       throw new Exception('Invalid scopes.');
     }
@@ -16,7 +16,7 @@ export default {
 
   async run(
     { deliverymanId },
-    { page = 1, quantity = 20, delivered, q: product = '', scope = [] } = {},
+    { page = 1, quantity = 20, delivered, q: product = '', scopes = [] } = {},
     { url } = {}
   ) {
     const cacheKey = url ? `deliveries:${url}` : false;
@@ -59,15 +59,12 @@ export default {
       return result;
     }
 
-    this.scopeValidate(scope);
+    this.scopeValidate(scopes);
 
-    const { rows: data, count } = await Delivery.scope([
-      ...scope,
-    ]).findAndCountAll({
+    const { rows: data, count } = await Delivery.scope(scopes).findAndCountAll({
       limit: quantity,
       offset: (page - 1) * quantity,
       order: ['updated_at'],
-      attributes: ['id', 'end_date'],
       where: {
         product: {
           [Op.like]: `%${product}%`,

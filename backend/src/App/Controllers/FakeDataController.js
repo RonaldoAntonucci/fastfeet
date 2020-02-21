@@ -4,15 +4,20 @@ import Cache from '../../Lib/Cache';
 
 export default {
   async index({ query }, res) {
+    let result = [];
+
     if (query.deliveries) {
-      await Factory.createMany('Delivery', 100);
+      result += await Factory.createMany('Delivery', 100, {
+        start_date: new Date(),
+        end_date: new Date(),
+      });
     }
 
     if (query.problems) {
-      await Factory.createMany('Problem', 100);
+      result += await Factory.createMany('Problem', 100);
     }
 
     await Cache.invalidatePrefixes(['*']);
-    return res.json({ ok: true });
+    return res.json(result);
   },
 };

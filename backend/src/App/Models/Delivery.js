@@ -1,9 +1,6 @@
 import Sequelize, { Model, Op } from 'sequelize';
 import { startOfDay, endOfDay } from 'date-fns';
 
-import Recipient from './Recipient';
-import Deliveryman from './Deliveryman';
-
 class Delivery extends Model {
   static init(sequelize) {
     super.init(
@@ -33,20 +30,6 @@ class Delivery extends Model {
         paranoid: true,
         deletedAt: 'canceledAt',
         scopes: {
-          deliveryList: {
-            attributes: [
-              'id',
-              'end_date',
-              'status',
-              'created_at',
-              'updated_at',
-              'canceled_at',
-            ],
-            include: [
-              { model: Recipient, attributes: ['name', 'city', 'state'] },
-              { model: Deliveryman, attributes: ['name'] },
-            ],
-          },
           deliverymanId(id) {
             return !id ? {} : { where: { deliveryman_id: id } };
           },
@@ -89,6 +72,34 @@ class Delivery extends Model {
     this.belongsTo(models.File, {
       foreignKey: 'signature_id',
       as: 'signature',
+    });
+
+    this.addScope('recipient', {
+      include: [
+        {
+          model: models.Recipient,
+          attributes: ['name', 'city', 'state', 'street', 'number', 'zip'],
+        },
+      ],
+    });
+
+    this.addScope('deliveryman', {
+      include: [
+        {
+          model: models.Deliveryman,
+          attributes: ['name'],
+        },
+      ],
+    });
+
+    this.addScope('signature', {
+      include: [
+        {
+          model: models.File,
+          as: 'signature',
+          attributes: ['url'],
+        },
+      ],
     });
   }
 }

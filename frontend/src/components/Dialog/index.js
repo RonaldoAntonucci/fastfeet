@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 
 import Dialog from '@material-ui/core/Dialog';
 import Paper from '@material-ui/core/Paper';
@@ -24,12 +25,25 @@ function MyDialog({ open, children, onClose, title }) {
       open={open}
       onClose={onClose}
     >
-      <Title style={{ cursor: 'move' }} id="draggable-dialog-title">
-        {title}
-      </Title>
+      {title && (
+        <Title style={{ cursor: 'move' }} id="draggable-dialog-title">
+          {title}
+        </Title>
+      )}
       {children}
     </Dialog>
   );
 }
+
+MyDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  children: PropTypes.element.isRequired,
+};
+
+MyDialog.defaultProps = {
+  title: null,
+};
 
 export default memo(MyDialog);

@@ -10,6 +10,8 @@ import DeliverymenList from '~/pages/Deliverymen/DeliverymenList';
 
 import RecipientsList from '~/pages/Recipients/RecipientsList';
 
+import Problems from '~/pages/Problems';
+
 export default function Routes() {
   return (
     <Switch>
@@ -21,6 +23,8 @@ export default function Routes() {
       <Route path="/deliverymen" component={DeliverymenList} exact isPrivate />
 
       <Route path="/recipients" component={RecipientsList} exact isPrivate />
+
+      <Route path="/problems" component={Problems} isPrivate />
     </Switch>
   );
 }

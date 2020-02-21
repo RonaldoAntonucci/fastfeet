@@ -16,38 +16,47 @@ function Title({ title, handleSearchSubmit, buttonLink, loading }) {
     <StyledTitle>
       <h1>{title}</h1>
 
-      <div>
-        <Form onSubmit={handleSearchSubmit}>
-          <button type="submit" disabled={loading}>
-            <MdSearch color={colors.fontLigh} />
-          </button>
+      {(handleSearchSubmit || buttonLink) && (
+        <div>
+          {handleSearchSubmit && (
+            <Form onSubmit={handleSearchSubmit}>
+              <button type="submit" disabled={loading}>
+                <MdSearch color={colors.fontLigh} />
+              </button>
 
-          <Input
-            type="text"
-            name="search"
-            placeholder="Buscar por encomendas"
-            disabled={loading}
-          />
-        </Form>
-        <Link to={buttonLink}>
-          <Button icon={MdAdd} type="button">
-            CADASTRAR
-          </Button>
-        </Link>
-      </div>
+              <Input
+                type="text"
+                name="search"
+                placeholder="Buscar por encomendas"
+                disabled={loading}
+              />
+            </Form>
+          )}
+
+          {buttonLink && (
+            <Link to={buttonLink}>
+              <Button icon={MdAdd} type="button">
+                CADASTRAR
+              </Button>
+            </Link>
+          )}
+        </div>
+      )}
     </StyledTitle>
   );
 }
 
 Title.propTypes = {
   title: PropTypes.string.isRequired,
-  handleSearchSubmit: PropTypes.func.isRequired,
-  buttonLink: PropTypes.string.isRequired,
+  handleSearchSubmit: PropTypes.func,
+  buttonLink: PropTypes.string,
   loading: PropTypes.bool,
 };
 
 Title.defaultProps = {
   loading: false,
+  handleSearchSubmit: null,
+  buttonLink: null,
 };
 
 export default memo(Title);

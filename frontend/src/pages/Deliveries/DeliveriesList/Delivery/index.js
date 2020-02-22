@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import pt from 'date-fns/locale/pt';
 import { format } from 'date-fns';
 
 import {
@@ -18,12 +19,20 @@ function Delivery({
   },
 }) {
   const formatedStartDate = useMemo(
-    () => start_date && format(new Date(start_date), "dd'/'MM'/'y"),
+    () =>
+      start_date &&
+      format(new Date(start_date), "dd'/'MM'/'y", {
+        locale: pt,
+      }),
     [start_date]
   );
 
   const formatedEndDate = useMemo(
-    () => end_date && format(new Date(end_date), "dd'/'MM'/'y"),
+    () =>
+      end_date &&
+      format(new Date(end_date), "dd'/'MM'/'y", {
+        locale: pt,
+      }),
     [end_date]
   );
 

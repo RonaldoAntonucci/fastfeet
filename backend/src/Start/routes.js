@@ -189,6 +189,13 @@ routes.put(
 );
 
 routes.delete(
+  '/deliveries/:deliveryId',
+  isAdminMiddleware,
+  RouteParamsIdValidator(['deliveryId']),
+  DeliveryController.delete
+);
+
+routes.delete(
   '/problems/:problemId/cancel-delivery',
   isAdminMiddleware,
   RouteParamsIdValidator(['problemId']),

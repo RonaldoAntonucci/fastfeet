@@ -1,6 +1,7 @@
 import CreateDelivery from '../Services/CreateDeliveryService';
 import UpdateDelivery from '../Services/UpdateDeliveryService';
 import CancelDelivery from '../Services/CancelDeliveryService';
+import DeleteDelivery from '../Services/DeleteDeliveryService';
 
 import ListDelivery from '../Repository/ListDeliveryRepository';
 
@@ -8,13 +9,13 @@ import Delivery from '../Models/Delivery';
 
 export default {
   async index({ params, query, url }, res) {
-    const { page, quantity, scopes } = query;
-    const scopesJson = JSON.parse(scopes);
+    const { page, quantity, scopes, delivered } = query;
+    const scopesJson = scopes ? JSON.parse(scopes) : undefined;
 
     return res.json(
       await ListDelivery.run(
         { ...params },
-        { page, quantity, scopes: scopesJson },
+        { page, quantity, scopes: scopesJson, delivered },
         { url }
       )
     );
@@ -42,8 +43,12 @@ export default {
     );
   },
 
-  async delete({ params, url }, res) {
-    await CancelDelivery.run(params, { url });
+  async delete({ params: { problemId, deliveryId } }, res) {
+    if (problemId) {
+      await CancelDelivery.run({ problemId });
+    } else {
+      await DeleteDelivery.run({ deliveryId });
+    }
     return res.send();
   },
 };

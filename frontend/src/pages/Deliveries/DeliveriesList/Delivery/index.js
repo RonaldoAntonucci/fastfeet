@@ -1,5 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 
 import {
   Container,
@@ -16,6 +17,16 @@ function Delivery({
     signature,
   },
 }) {
+  const formatedStartDate = useMemo(
+    () => start_date && format(new Date(start_date), "dd'/'MM'/'y"),
+    [start_date]
+  );
+
+  const formatedEndDate = useMemo(
+    () => end_date && format(new Date(end_date), "dd'/'MM'/'y"),
+    [end_date]
+  );
+
   return (
     <Container>
       <AdressContainer>
@@ -31,11 +42,11 @@ function Delivery({
       <DatesContainer>
         <span>
           <strong>Retirada: </strong>
-          {start_date}
+          {formatedStartDate}
         </span>
         <span>
-          <strong>Retirada: </strong>
-          {end_date}
+          <strong>Entrega: </strong>
+          {formatedEndDate}
         </span>
       </DatesContainer>
       <hr />

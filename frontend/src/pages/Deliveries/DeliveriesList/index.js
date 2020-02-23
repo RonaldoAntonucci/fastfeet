@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState, createContext } from 'react';
-
 import { toast } from 'react-toastify';
 import { MdVisibility, MdCreate, MdDeleteForever } from 'react-icons/md';
+import { confirmAlert } from 'react-confirm-alert';
 
 import api from '~/services/api';
+
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import Title from '~/components/Title';
 import Dialog from '~/components/Dialog';
@@ -11,6 +13,7 @@ import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Table, { ActionDropdown } from '~/components/Table';
 import LoadingLine from '~/components/LoadingLine';
+import ConfirmAlert from '~/components/ConfirmAlert';
 
 import Delivery from './Delivery';
 
@@ -63,6 +66,53 @@ export default function DeliveriesList() {
     setSelectedDelivery(data);
     setIsModalOpen(true);
   }, []);
+
+  const handleDelete = useCallback(
+    delivery => {
+      const deleteDelivery = async setDeli => {
+        try {
+          await api.delete(`/deliveries/${delivery.id}`);
+
+          toast.success('Entrega deletada com sucesso.');
+
+          setDeli(
+            deliveries.filter(
+              currentDelivery => currentDelivery.id !== delivery.id
+            )
+          );
+        } catch (error) {
+          toast.error('Não foi possível excluir esta entrega.');
+        }
+      };
+
+      confirmAlert({
+      customUI: ({ onClose }) => ( // eslint-disable-line
+          <ConfirmAlert
+            callback={() => deleteDelivery(setDeliveries)}
+            onClose={onClose}
+            title="Deseja excluir esta entrega?"
+            message={
+              <>
+                <p>
+                  <strong>ID: </strong>
+                  {delivery.id}
+                </p>
+                <p>
+                  <strong>Produto: </strong>
+                  {delivery.product}
+                </p>
+                <p>
+                  Se confirmar, a entrega <strong>{delivery.id}</strong> será
+                  deletada. Isso é irreversível. Deseja mesmo excluí-la?
+                </p>
+              </>
+            }
+          />
+        ),
+      });
+    },
+    [deliveries]
+  );
 
   return (
     <PageContext.Provider
@@ -160,17 +210,20 @@ export default function DeliveriesList() {
                           Editar
                         </Button>
                       </li>
-                      <li>
-                        <Button
-                          icon={MdDeleteForever}
-                          color="transparent"
-                          textColor={colors.fontLigh}
-                          iconColor={colors.red}
-                          type="button"
-                        >
-                          Excluir
-                        </Button>
-                      </li>
+                      {delivery.status === 'PENDENTE' && (
+                        <li>
+                          <Button
+                            icon={MdDeleteForever}
+                            color="transparent"
+                            textColor={colors.fontLigh}
+                            iconColor={colors.red}
+                            type="button"
+                            onClick={() => handleDelete(delivery)}
+                          >
+                            Excluir
+                          </Button>
+                        </li>
+                      )}
                     </ul>
                   </ActionDropdown>
                 </td>

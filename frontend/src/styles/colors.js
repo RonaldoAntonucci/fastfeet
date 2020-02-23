@@ -10,6 +10,7 @@ export default {
   blue: '#4D85EE',
   green: '#2CA42B',
   yellow: '#C1BC35',
+  grey: '#CCCCCC',
 
   border: '#dddddd',
   disabled: '#dddddd',

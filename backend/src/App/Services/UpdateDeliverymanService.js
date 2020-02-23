@@ -3,7 +3,7 @@ import File from '../Models/File';
 
 import Exception from '../Exceptions/ServiceException';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 export default {
   async run({ deliverymanId: id }, { name, avatar_id }) {
@@ -22,7 +22,7 @@ export default {
       throw new Exception('Invalid Deliveryman id.');
     }
 
-    await Cache.invalidatePrefixes(['deliverymen']);
+    // await Cache.invalidatePrefixes(['deliverymen']);
 
     if (!dialectIsProtgres) {
       return Deliveryman.findByPk(id);

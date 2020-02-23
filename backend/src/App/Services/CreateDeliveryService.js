@@ -6,7 +6,7 @@ import Exception from '../Exceptions/ServiceException';
 import Queue from '../../Lib/Queue';
 import DeliveryAvailableMail from '../Jobs/deliveryAvailableMail';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 export default {
   async run({ product, recipient_id, deliveryman_id }) {
@@ -33,7 +33,7 @@ export default {
         recipient,
         deliveryman,
       }),
-      Cache.invalidatePrefixes(['deliveries']),
+      // Cache.invalidatePrefixes(['deliveries']),
     ]);
 
     return delivery;

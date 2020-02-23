@@ -5,7 +5,7 @@ import File from '../Models/File';
 
 import Exception from '../Exceptions/ServiceException';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 export default {
   async admin(
@@ -121,7 +121,7 @@ export default {
       throw new Exception('Invalid Delivery id.');
     }
 
-    await Cache.invalidatePrefixes(['deliveries']);
+    // await Cache.invalidatePrefixes(['deliveries']);
 
     if (!dialectIsProtgres) {
       return Delivery.findByPk(deliveryId);

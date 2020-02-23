@@ -3,7 +3,7 @@ import Delivery from '../Models/Delivery';
 
 import Exception from '../Exceptions/ServiceException';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 export default {
   async run({ delivery_id, description }) {
@@ -13,7 +13,7 @@ export default {
 
     const problem = await Problem.create({ delivery_id, description });
 
-    await Cache.invalidatePrefixes(['problems']);
+    // await Cache.invalidatePrefixes(['problems']);
 
     return problem;
   },

@@ -1,7 +1,7 @@
 import Deliveryman from '../Models/Deliveryman';
 import Exception from '../Exceptions/ServiceException';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 export default {
   async run({ deliverymanId: id }) {
@@ -9,7 +9,7 @@ export default {
       throw new Exception('Invalid deliveryman id.');
     }
 
-    await Cache.invalidatePrefixes(['deliverymen']);
+    // await Cache.invalidatePrefixes(['deliverymen']);
 
     return true;
   },

@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 
 import Delivery from '../Models/Delivery';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 import Exception from '../Exceptions/ServiceException';
 
@@ -19,17 +19,17 @@ export default {
     { page = 1, quantity = 20, delivered, q: product = '', scopes = [] } = {},
     { url } = {}
   ) {
-    const cacheKey = url ? `deliveries:${url}` : false;
+    // const cacheKey = url ? `deliveries:${url}` : false;
 
-    // await Cache.invalidatePrefixes(['*']);
+    // // await Cache.invalidatePrefixes(['*']);
 
-    if (cacheKey) {
-      const cached = await Cache.get(cacheKey);
+    // if (cacheKey) {
+    //   const cached = await Cache.get(cacheKey);
 
-      if (cached) {
-        return cached;
-      }
-    }
+    //   if (cached) {
+    //     return cached;
+    //   }
+    // }
 
     if (deliverymanId) {
       const { rows: data, count } = await Delivery.scope([
@@ -52,9 +52,9 @@ export default {
 
       const result = { data, count, totalPages: Math.ceil(count / quantity) };
 
-      if (cacheKey) {
-        Cache.set(cacheKey, result);
-      }
+      // if (cacheKey) {
+      //   Cache.set(cacheKey, result);
+      // }
 
       return result;
     }
@@ -74,9 +74,9 @@ export default {
 
     const result = { data, count, totalPages: Math.ceil(count / quantity) };
 
-    if (cacheKey) {
-      Cache.set(cacheKey, result);
-    }
+    // if (cacheKey) {
+    //   Cache.set(cacheKey, result);
+    // }
 
     return result;
   },

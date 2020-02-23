@@ -1,6 +1,6 @@
 import Problem from '../Models/Problem';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 export default {
   async run(
@@ -8,7 +8,7 @@ export default {
     { page = 1, quantity = 20, scopes = [] } = {},
     { url } = {}
   ) {
-    const cacheKey = url ? `problems:${url}` : false;
+    // const cacheKey = url ? `problems:${url}` : false;
 
     // if (cacheKey) {
     //   const cached = await Cache.get(cacheKey);
@@ -27,9 +27,9 @@ export default {
 
     const result = { data, count, totalPages: Math.ceil(count / quantity) };
 
-    if (cacheKey) {
-      Cache.set(cacheKey, result);
-    }
+    // if (cacheKey) {
+    //   Cache.set(cacheKey, result);
+    // }
 
     return result;
   },

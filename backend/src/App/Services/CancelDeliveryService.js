@@ -5,7 +5,7 @@ import Exception from '../Exceptions/ServiceException';
 import Queue from '../../Lib/Queue';
 import DeliveryCancelledMail from '../Jobs/deliveryCancelledMail';
 
-import Cache from '../../Lib/Cache';
+// import Cache from '../../Lib/Cache';
 
 export default {
   async run({ problemId }) {
@@ -29,7 +29,7 @@ export default {
       Queue.add(DeliveryCancelledMail.key, {
         problem: problem.toJSON(),
       }),
-      Cache.invalidatePrefixes(['deliveries']),
+      // Cache.invalidatePrefixes(['deliveries']),
     ]);
 
     return true;

@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+import schema from './validator';
 
 import Button from '~/components/Button';
 import colors from '~/styles/colors';
-import { Form, Input } from '~/components/Form';
+import { Form, Input, InputMask } from '~/components/Form';
 
 import { TitleContainer, Content } from './styles';
 
 export default function RecipientForm() {
+  const handleSubmit = useCallback(async data => {
+    console.log(data);
+  }, []);
   return (
     <>
       <TitleContainer>
@@ -20,10 +25,12 @@ export default function RecipientForm() {
             </Button>
           </Link>
 
-          <Button icon={MdDone}>SALVAR</Button>
+          <Button type="submit" form="recipientForm" icon={MdDone}>
+            SALVAR
+          </Button>
         </div>
       </TitleContainer>
-      <Form>
+      <Form id="recipientForm" schema={schema} onSubmit={handleSubmit}>
         <Content>
           <Input
             label="Nome"
@@ -44,6 +51,7 @@ export default function RecipientForm() {
             name="number"
             type="number"
             placeholder="Digite o número"
+            min="0"
           />
 
           <Input label="Complemento" name="complement" type="text" />
@@ -52,7 +60,13 @@ export default function RecipientForm() {
 
           <Input label="Estado" name="state" type="text" />
 
-          <Input label="CEP" name="city" type="text" placeholder="00000-000" />
+          <InputMask
+            label="CEP"
+            name="zip"
+            type="text"
+            placeholder="00000-000"
+            mask="99999-999"
+          />
         </Content>
       </Form>
     </>

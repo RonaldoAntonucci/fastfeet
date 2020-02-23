@@ -1,40 +1,41 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import { useField } from '@unform/core';
 
-import { Input as StyledInput, Label as StyledLabel, Error } from './styles';
+import { Error, Label as StyledLabel, ReactInputMask } from './styles';
 
-export default function Input({ name, label, ...rest }) {
+const InputMask = ({ name, label, ...rest }) => {
   const inputRef = useRef(null);
-  const { fieldName, defaultValue, registerField, error } = useField(name);
-
+  const { fieldName, registerField, defaultValue, error } = useField(name);
   useEffect(() => {
     registerField({
       name: fieldName,
       ref: inputRef.current,
       path: 'value',
+      setValue(ref, _value) {
+        ref.setInputValue('');
+      },
+      clearValue(ref) {
+        ref.setInputValue('');
+      },
     });
   }, [fieldName, registerField]);
-
   return (
     <div>
       {label && <StyledLabel htmlFor={fieldName}>{label}</StyledLabel>}
-      <StyledInput
-        id={fieldName}
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
-      />
+      <ReactInputMask ref={inputRef} defaultValue={defaultValue} {...rest} />
       {error && <Error className="error">{error}</Error>}
     </div>
   );
-}
+};
+export default InputMask;
 
-Input.propTypes = {
+InputMask.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
 };
 
-Input.defaultProps = {
+InputMask.defaultProps = {
   label: null,
 };

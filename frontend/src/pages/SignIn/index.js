@@ -36,7 +36,7 @@ export default function SignIn() {
         />
 
         <SignInput
-          label="SEU SENHA"
+          label="SUA SENHA"
           name="password"
           type="password"
           placeholder="************"

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Form } from '@unform/web';
-import { Input } from '~/components/Form';
+import { Form, Input } from '~/components/Form';
 
 import colors from '~/styles/colors';
 
@@ -17,7 +16,10 @@ export const Img = styled.img`
   margin-bottom: 30px;
 `;
 
-export const SignForm = styled(Form)``;
+export const SignForm = styled(Form)`
+  margin: 0;
+  padding: 0;
+`;
 
 export const SignInput = styled(Input)`
   margin: 0 0 15px;

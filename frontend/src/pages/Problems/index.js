@@ -3,7 +3,10 @@ import React, { useEffect, useState, createContext, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { MdVisibility, MdDeleteForever } from 'react-icons/md';
 
+import { confirmAlert } from 'react-confirm-alert';
 import api from '~/services/api';
+
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import LoadingLine from '~/components/LoadingLine';
 import Dialog from '~/components/Dialog';
@@ -11,6 +14,7 @@ import Title from '~/components/Title';
 import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Table, { ActionDropdown } from '~/components/Table';
+import ConfirmAlert from '~/components/ConfirmAlert';
 
 import Problem from './Problem';
 
@@ -54,6 +58,43 @@ export default function Problems() {
     setSelectedProblem(data);
     setIsModalOpen(true);
   }, []);
+
+  const handleDelete = useCallback(
+    problem => {
+      const deleteDelivery = async set => {
+        try {
+          await api.delete(`/problems/${problem.id}/cancel-delivery`);
+
+          toast.success('Entrega cancelada com sucesso.');
+
+          set(
+            problems.filter(currentProblem => currentProblem.id !== problem.id)
+          );
+        } catch (error) {
+          toast.error('Não foi possível cancelar esta entrega.');
+        }
+      };
+
+      confirmAlert({
+      customUI: ({ onClose }) => ( // eslint-disable-line
+          <ConfirmAlert
+            callback={() => deleteDelivery(setProblems)}
+            onClose={onClose}
+            title="Deseja cancelar esta entrega?"
+            message={
+              <>
+                <p>
+                  Se confirmar, a entrega <strong>{problem.id}</strong> será
+                  cancelada. Deseja mesmo cancela-la?
+                </p>
+              </>
+            }
+          />
+        ),
+      });
+    },
+    [problems]
+  );
 
   return (
     <PageContext.Provider
@@ -124,6 +165,7 @@ export default function Problems() {
                           textColor={colors.fontLigh}
                           iconColor={colors.red}
                           type="button"
+                          onClick={() => handleDelete(problem)}
                         >
                           Cancelar encomenda
                         </Button>

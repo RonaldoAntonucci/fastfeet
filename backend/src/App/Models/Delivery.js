@@ -11,7 +11,7 @@ class Delivery extends Model {
         status: {
           type: Sequelize.VIRTUAL,
           get() {
-            if (this.canceled_at) {
+            if (this.canceledAt) {
               return 'CANCELADA';
             }
             if (this.end_date) {
@@ -36,11 +36,13 @@ class Delivery extends Model {
           delivered(is) {
             return is
               ? {
+                  paranoid: false,
                   where: {
                     end_date: { [Op.ne]: null },
                   },
                 }
               : {
+                  paranoid: false,
                   where: {
                     end_date: null,
                   },

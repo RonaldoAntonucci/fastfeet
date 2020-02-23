@@ -47,7 +47,7 @@ export default {
             [Op.like]: `%${product}%`,
           },
         },
-        order: ['updated_at'],
+        order: [['updated_at', 'DESC']],
       });
 
       const result = { data, count, totalPages: Math.ceil(count / quantity) };
@@ -62,9 +62,10 @@ export default {
     this.scopeValidate(scopes);
 
     const { rows: data, count } = await Delivery.scope(scopes).findAndCountAll({
+      paranoid: false,
       limit: quantity,
       offset: (page - 1) * quantity,
-      order: ['updated_at'],
+      order: [['updated_at', 'DESC']],
       where: {
         product: {
           [Op.like]: `%${product}%`,

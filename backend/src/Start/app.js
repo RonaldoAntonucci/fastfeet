@@ -22,7 +22,9 @@ class App {
   constructor() {
     this.server = express();
 
-    Sentry.init(sentryConfig);
+    if (process.NODE_ENV === 'production') {
+      Sentry.init(sentryConfig);
+    }
 
     this.middlewares();
     this.routes();
@@ -30,7 +32,10 @@ class App {
   }
 
   middlewares() {
-    this.server.use(Sentry.Handlers.requestHandler());
+    if (process.NODE_ENV === 'production') {
+      this.server.use(Sentry.Handlers.requestHandler());
+    }
+
     this.server.use(helmet());
     this.server.use(cors());
     this.server.use(express.json());
@@ -43,7 +48,7 @@ class App {
           )
     );
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'production') {
       this.server.use(
         new RateLimit({
           store: new RedisStore({
@@ -61,7 +66,9 @@ class App {
 
   routes() {
     this.server.use(routes);
-    this.server.use(Sentry.Handlers.errorHandler());
+    if (process.NODE_ENV === 'production') {
+      this.server.use(Sentry.Handlers.errorHandler());
+    }
   }
 
   exceptionHandler() {

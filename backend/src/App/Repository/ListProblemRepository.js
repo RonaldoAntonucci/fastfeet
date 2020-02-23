@@ -22,7 +22,7 @@ export default {
       limit: quantity,
       offset: (page - 1) * quantity,
       where: !deliveryId ? {} : { delivery_id: deliveryId },
-      order: ['updated_at'],
+      order: [['updated_at', 'DESC']],
     });
 
     const result = { data, count, totalPages: Math.ceil(count / quantity) };

@@ -32,6 +32,7 @@ class Problem extends Model {
         {
           model: models.Delivery,
           attributes: ['id', 'status', 'product'],
+          required: true,
         },
       ],
     });

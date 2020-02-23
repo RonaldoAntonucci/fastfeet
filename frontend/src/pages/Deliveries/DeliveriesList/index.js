@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState, createContext } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { MdVisibility, MdCreate, MdDeleteForever } from 'react-icons/md';
 import { confirmAlert } from 'react-confirm-alert';
@@ -200,15 +201,17 @@ export default function DeliveriesList() {
                         </Button>
                       </li>
                       <li>
-                        <Button
-                          icon={MdCreate}
-                          color="transparent"
-                          textColor={colors.fontLigh}
-                          iconColor={colors.blue}
-                          type="button"
-                        >
-                          Editar
-                        </Button>
+                        <Link to={`/deliveries/${delivery.id}`}>
+                          <Button
+                            icon={MdCreate}
+                            color="transparent"
+                            textColor={colors.fontLigh}
+                            iconColor={colors.blue}
+                            type="button"
+                          >
+                            Editar
+                          </Button>
+                        </Link>
                       </li>
                       {delivery.status === 'PENDENTE' && (
                         <li>

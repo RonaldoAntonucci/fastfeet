@@ -21,11 +21,20 @@ export default function RecipientForm({ match }) {
 
   useEffect(() => {
     if (id) {
-      try {
-        api.get(`/recipients/${id}`).then(({ data }) => setInitialData(data));
-      } catch (err) {
-        toast.error('Não foi possível carregar o Destinatário.');
-      }
+      const getData = async () => {
+        try {
+          const response = await api.get(`/recipients/${id}`);
+          if (!response.data) {
+            toast.error('Destinatário inexistente.');
+            history.push('/recipients');
+          }
+          setInitialData(response.data);
+        } catch (err) {
+          toast.error('Não foi possível carregar o Destinatário.');
+          history.push('/recipients');
+        }
+      };
+      getData();
     }
   }, [id]);
 

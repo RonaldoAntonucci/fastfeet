@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState, createContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 import { MdCreate, MdDeleteForever } from 'react-icons/md';
@@ -100,15 +101,17 @@ export default function RecipientsList() {
                   <ActionDropdown>
                     <ul>
                       <li>
-                        <Button
-                          icon={MdCreate}
-                          color="transparent"
-                          textColor={colors.fontLigh}
-                          iconColor={colors.blue}
-                          type="button"
-                        >
-                          Editar
-                        </Button>
+                        <Link to={`/recipients/${id}`}>
+                          <Button
+                            icon={MdCreate}
+                            color="transparent"
+                            textColor={colors.fontLigh}
+                            iconColor={colors.blue}
+                            type="button"
+                          >
+                            Editar
+                          </Button>
+                        </Link>
                       </li>
                       <li>
                         <Button

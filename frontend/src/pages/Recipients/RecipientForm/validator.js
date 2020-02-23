@@ -8,7 +8,9 @@ export default Yup.object().shape({
     .max(255, 'A rua deve ter no máximo 255 caracteres')
     .required('A rua é obrigatória'),
   number: Yup.string().required('O número é obrigatório'),
-  complement: Yup.string('O complemento deve ser um texto.'),
+  complement: Yup.string('O complemento deve ser um texto.').required(
+    'O complemeneto é obrigatório'
+  ),
   city: Yup.string()
     .max(255, 'A cidade deve ter no máximo 255 caracteres')
     .required('A cidade é obrigatória'),

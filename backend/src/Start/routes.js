@@ -110,6 +110,12 @@ routes.get(
 );
 
 routes.get('/recipients', isAdminMiddleware, RecipientsController.index);
+routes.get(
+  '/recipients/:recipientId',
+  RouteParamsIdValidator(['recipientId']),
+  isAdminMiddleware,
+  RecipientsController.show
+);
 
 routes.post(
   '/recipients',

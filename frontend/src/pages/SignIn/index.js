@@ -27,7 +27,7 @@ export default function SignIn() {
     <Container>
       <Img src={logo} alt="FastFeet" />
 
-      <SignForm schema={schema} onSubmit={handleSubmit}>
+      <SignForm schema={schema} onSubmit={handleSubmit} loading={loading}>
         <SignInput
           label="SEU E-MAIL"
           name="email"

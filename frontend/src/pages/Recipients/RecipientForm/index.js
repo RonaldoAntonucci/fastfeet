@@ -1,7 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+import api from '~/services/api';
+import history from '~/services/history';
+
 import schema from './validator';
 
 import Button from '~/components/Button';
@@ -10,14 +14,57 @@ import { Form, Input, InputMask } from '~/components/Form';
 
 import { TitleContainer, Content } from './styles';
 
-export default function RecipientForm() {
-  const handleSubmit = useCallback(async data => {
-    console.log(data);
-  }, []);
+export default function RecipientForm({ match }) {
+  const { id } = match.params;
+  const [loading, setLoading] = useState(false);
+  const [initialData, setInitialData] = useState();
+
+  useEffect(() => {
+    if (id) {
+      try {
+        api.get(`/recipients/${id}`).then(({ data }) => setInitialData(data));
+      } catch (err) {
+        toast.error('Não foi possível carregar o Destinatário.');
+      }
+    }
+  }, [id]);
+
+  const handleSubmit = useCallback(
+    async data => {
+      try {
+        setLoading(true);
+        const { name, street, number, complement, city, state, zip } = data;
+        const method = id ? api.put : api.post;
+
+        await method(`/recipients/${id || ''}`, {
+          name,
+          street,
+          number,
+          complement,
+          city,
+          state,
+          zip,
+        });
+
+        toast.success(
+          `Destinatário ${id ? 'editado' : 'cadastrado'} com sucesso.`
+        );
+        setLoading(false);
+
+        history.push('/recipients');
+      } catch (err) {
+        toast.error(
+          `Não foi possível ${id ? 'editar' : 'cadastrar'} o destinatário.`
+        );
+        setLoading(false);
+      }
+    },
+    [id]
+  );
   return (
     <>
       <TitleContainer>
-        <h1>Edição de destinatário</h1>
+        <h1>{id ? 'Edição' : 'Cadastro'} de destinatário</h1>
         <div>
           <Link to="/recipients">
             <Button color={colors.grey} icon={MdKeyboardArrowLeft}>
@@ -30,9 +77,16 @@ export default function RecipientForm() {
           </Button>
         </div>
       </TitleContainer>
-      <Form id="recipientForm" schema={schema} onSubmit={handleSubmit}>
+      <Form
+        id="recipientForm"
+        schema={schema}
+        onSubmit={handleSubmit}
+        loading={loading}
+        initialData={initialData}
+      >
         <Content>
           <Input
+            disabled={loading}
             label="Nome"
             name="name"
             type="text"
@@ -40,6 +94,7 @@ export default function RecipientForm() {
           />
 
           <Input
+            disabled={loading}
             label="Rua"
             name="street"
             type="text"
@@ -47,6 +102,7 @@ export default function RecipientForm() {
           />
 
           <Input
+            disabled={loading}
             label="Número"
             name="number"
             type="number"
@@ -54,15 +110,22 @@ export default function RecipientForm() {
             min="0"
           />
 
-          <Input label="Complemento" name="complement" type="text" />
+          <Input
+            disabled={loading}
+            label="Complemento"
+            name="complement"
+            type="text"
+          />
 
-          <Input label="Cidade" name="city" type="text" />
+          <Input disabled={loading} label="Cidade" name="city" type="text" />
 
-          <Input label="Estado" name="state" type="text" />
+          <Input disabled={loading} label="Estado" name="state" type="text" />
 
           <InputMask
+            disabled={loading}
             label="CEP"
             name="zip"
+            id="zip"
             type="text"
             placeholder="00000-000"
             mask="99999-999"
@@ -72,3 +135,19 @@ export default function RecipientForm() {
     </>
   );
 }
+
+RecipientForm.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+};
+
+RecipientForm.defaultProps = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: null,
+    }),
+  }),
+};

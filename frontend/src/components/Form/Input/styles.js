@@ -9,6 +9,7 @@ export const Label = styled.label`
   color: ${colors.label};
   text-align: left;
   margin-bottom: 10px;
+  display: flex;
 `;
 
 export const Input = styled.input`

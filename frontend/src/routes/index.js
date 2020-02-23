@@ -9,6 +9,7 @@ import DeliveriesList from '~/pages/Deliveries/DeliveriesList';
 import DeliverymenList from '~/pages/Deliverymen/DeliverymenList';
 
 import RecipientsList from '~/pages/Recipients/RecipientsList';
+import RecipientForm from '~/pages/Recipients/RecipientForm';
 
 import Problems from '~/pages/Problems';
 
@@ -18,13 +19,15 @@ export default function Routes() {
       <Route path="/" component={SignIn} exact />
 
       <Route path="/dashboard" component={DeliveriesList} isPrivate />
-      <Route path="/deliveries" component={DeliveriesList} exact isPrivate />
+      <Route path="/deliveries" component={DeliveriesList} isPrivate />
 
-      <Route path="/deliverymen" component={DeliverymenList} exact isPrivate />
+      <Route path="/deliverymen" component={DeliverymenList} isPrivate />
 
-      <Route path="/recipients" component={RecipientsList} exact isPrivate />
+      <Route path="/recipients/create" component={RecipientForm} isPrivate />
+      <Route path="/recipients/:id" component={RecipientForm} isPrivate />
+      <Route path="/recipients" component={RecipientsList} isPrivate />
 
-      <Route path="/problems" component={Problems} isPrivate />
+      <Route path="/problems" component={Problems} exact isPrivate />
     </Switch>
   );
 }

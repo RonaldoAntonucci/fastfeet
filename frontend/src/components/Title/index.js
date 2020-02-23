@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { MdAdd, MdSearch } from 'react-icons/md';
-import { Form, Input } from '~/components/Form';
+import { Form } from '@unform/web';
+import { Input } from '~/components/Form';
 
 import Button from '~/components/Button';
 

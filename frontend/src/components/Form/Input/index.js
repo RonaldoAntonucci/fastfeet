@@ -17,7 +17,7 @@ export default function Input({ name, label, ...rest }) {
   }, [fieldName, registerField]);
 
   return (
-    <>
+    <div>
       {label && <StyledLabel htmlFor={fieldName}>{label}</StyledLabel>}
       <StyledInput
         id={fieldName}
@@ -26,7 +26,7 @@ export default function Input({ name, label, ...rest }) {
         {...rest}
       />
       {error && <span className="error">{error}</span>}
-    </>
+    </div>
   );
 }
 

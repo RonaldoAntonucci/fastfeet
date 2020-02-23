@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import { Input, Form } from '~/components/Form';
+import { Form } from '@unform/web';
+import { Input } from '~/components/Form';
 
 import colors from '~/styles/colors';
 

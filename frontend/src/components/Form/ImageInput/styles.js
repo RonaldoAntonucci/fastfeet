@@ -12,7 +12,6 @@ export const Container = styled.div`
 
   label {
     cursor: pointer;
-    background-color: red;
     min-width: 150px;
     min-height: 150px;
     max-width: 300px;
@@ -62,8 +61,7 @@ export const Preview = styled.img`
   max-height: 300px;
   width: 100%;
   height: 100%;
-  border: 1px dashed ${colors.border};
+  border: 2px dashed ${colors.primary};
   border-radius: 100%;
   padding: 1px;
-  background-color: ${colors.primary};
 `;

@@ -33,7 +33,11 @@ export default function DeliverymanForm({ match }) {
             history.push('/deliverymen');
           }
 
-          formRef.current.setData(response.data);
+          formRef.current.setData({
+            name: response.data.name,
+            email: response.data.email,
+            avatar: response.data.avatar_url,
+          });
           setLoading(false);
           // setInitialData(response.data);
         } catch (err) {

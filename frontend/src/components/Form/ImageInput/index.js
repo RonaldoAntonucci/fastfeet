@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useField } from '@unform/core';
+import { MdInsertPhoto } from 'react-icons/md';
 
-import { Error } from './styles';
+import { Container, PreviewContainer, Preview, Error } from './styles';
 
 const ImageInput = ({ name, ...rest }) => {
   const inputRef = useRef(null);
@@ -31,11 +32,30 @@ const ImageInput = ({ name, ...rest }) => {
     });
   }, [fieldName, registerField]);
   return (
-    <div>
-      {preview && <img src={preview} alt="Preview" width="100" />}
-      <input type="file" ref={inputRef} onChange={handlePreview} {...rest} />
-      {error && <Error className="error">{error}</Error>}
-    </div>
+    <Container>
+      <label htmlFor={fieldName}>
+        <PreviewContainer>
+          {preview ? (
+            <Preview src={preview} alt="Preview" />
+          ) : (
+            <div>
+              <MdInsertPhoto />
+              <span>Adicionar foto</span>
+            </div>
+          )}
+        </PreviewContainer>
+
+        <input
+          id={fieldName}
+          type="file"
+          ref={inputRef}
+          onChange={handlePreview}
+          accept="image/*"
+          {...rest}
+        />
+        {error && <Error className="error">{error}</Error>}
+      </label>
+    </Container>
   );
 };
 export default ImageInput;

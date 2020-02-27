@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, createContext } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { MdCreate, MdDeleteForever } from 'react-icons/md';
+import { confirmAlert } from 'react-confirm-alert';
 
 import api from '~/services/api';
 
@@ -10,6 +11,7 @@ import Title from '~/components/Title';
 import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Table, { ActionDropdown } from '~/components/Table';
+import ConfirmAlert from '~/components/ConfirmAlert';
 
 import { Avatar } from './styles';
 
@@ -23,11 +25,6 @@ export default function DeliverymenList() {
   const [page, setPage] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
   const [search, setSearch] = useState('');
-
-  const handleSearchSubmit = useCallback(data => {
-    setPage(1);
-    setSearch(data.search);
-  }, []);
 
   useEffect(() => {
     async function getData() {
@@ -53,6 +50,56 @@ export default function DeliverymenList() {
     }
     getData();
   }, [page, search]);
+
+  const handleSearchSubmit = useCallback(data => {
+    setPage(1);
+    setSearch(data.search);
+  }, []);
+
+  const handleDelete = useCallback(
+    deliveryman => {
+      const deleteDeliveryman = async setDeli => {
+        try {
+          await api.delete(`/deliverymen/${deliveryman.id}`);
+
+          toast.success('Entregador deletado com sucesso.');
+
+          setDeli(
+            deliverymen.filter(
+              currentDeliveryman => currentDeliveryman.id !== deliveryman.id
+            )
+          );
+        } catch (error) {
+          toast.error('Não foi possível excluir este entregador.');
+        }
+      };
+
+      confirmAlert({
+        customUI: ({ onClose }) => ( // eslint-disable-line
+          <ConfirmAlert
+            callback={() => deleteDeliveryman(setDeliverymen)}
+            onClose={onClose}
+            title="Deseja excluir esta entrega?"
+            message={
+              <>
+                <p>
+                  <strong>nome: </strong> {deliveryman.name}
+                </p>
+                <p>
+                  <strong>email: </strong> {deliveryman.email}
+                </p>
+                <p>
+                  Se confirmar, o entregador <strong>{deliveryman.id}</strong>{' '}
+                  será deletado. Isso é irreversível. Deseja mesmo excluí-la?
+                </p>
+              </>
+            }
+          />
+        ),
+      });
+    },
+    [deliverymen]
+  );
 
   return (
     <PageContext.Provider
@@ -137,6 +184,7 @@ export default function DeliverymenList() {
                           textColor={colors.fontLigh}
                           iconColor={colors.red}
                           type="button"
+                          onClick={() => handleDelete(deliveryman)}
                         >
                           Excluir
                         </Button>

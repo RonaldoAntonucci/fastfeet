@@ -14,6 +14,10 @@ describe('Deliveryman Delete', () => {
 
   it('Should can be destroy an Deliveryman', async () => {
     const { id } = await factory.create('Deliveryman');
+    const deliveries = await factory.createMany('Delivery', 5, {
+      start_date: new Date(),
+      deliveryman_id: id,
+    });
 
     const token = await getToken({ isAdmin: true });
 
@@ -23,6 +27,9 @@ describe('Deliveryman Delete', () => {
       .send();
 
     expect(status).toBe(200);
+
+    await Promise.all(deliveries.map(delivery => delivery.reload()));
+    deliveries.map(delivery => expect(delivery.start_date).toBe(null));
   });
 
   it('Should can not be destroy an Deliveryman withou valid id', async () => {

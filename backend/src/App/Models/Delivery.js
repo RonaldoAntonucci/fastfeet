@@ -76,6 +76,13 @@ class Delivery extends Model {
       as: 'signature',
     });
 
+    this.addScope('defaultScope', {
+      include: [
+        { model: models.Recipient, attributes: ['id', 'name'] },
+        { model: models.Deliveryman, attributes: ['id', 'name'] },
+      ],
+    });
+
     this.addScope('recipient', {
       include: [
         {

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Unform from './Form';
 import Input from './Input';
 import InputMask from './InputMask';
+import AsyncSelect from './AsyncSelect';
 
 import colors from '~/styles/colors';
 
@@ -30,4 +31,4 @@ export const FormRow = styled.div`
   }
 `;
 
-export { Input, InputMask };
+export { Input, InputMask, AsyncSelect };

@@ -14,13 +14,13 @@ const InputMask = ({ name, label, ...rest }) => {
       ref: inputRef.current,
       path: 'value',
       setValue(ref, _value) {
-        ref.setInputValue('');
+        ref.setInputValue(_value);
       },
       clearValue(ref) {
         ref.setInputValue('');
       },
     });
-  }, [fieldName, registerField]);
+  }, [defaultValue, fieldName, registerField]);
   return (
     <div>
       {label && <StyledLabel htmlFor={fieldName}>{label}</StyledLabel>}

@@ -200,19 +200,22 @@ export default function DeliveriesList() {
                           Visualizar
                         </Button>
                       </li>
-                      <li>
-                        <Link to={`/deliveries/${delivery.id}`}>
-                          <Button
-                            icon={MdCreate}
-                            color="transparent"
-                            textColor={colors.fontLigh}
-                            iconColor={colors.blue}
-                            type="button"
-                          >
-                            Editar
-                          </Button>
-                        </Link>
-                      </li>
+                      {delivery.status === 'PENDENTE' && (
+                        <li>
+                          <Link to={`/deliveries/${delivery.id}`}>
+                            <Button
+                              icon={MdCreate}
+                              color="transparent"
+                              textColor={colors.fontLigh}
+                              iconColor={colors.blue}
+                              type="button"
+                            >
+                              Editar
+                            </Button>
+                          </Link>
+                        </li>
+                      )}
+
                       {delivery.status === 'PENDENTE' && (
                         <li>
                           <Button

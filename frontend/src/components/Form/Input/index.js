@@ -23,6 +23,7 @@ export default function Input({ name, label, ...rest }) {
         id={fieldName}
         ref={inputRef}
         defaultValue={defaultValue}
+        className={error ? 'has-error' : ''}
         {...rest}
       />
       {error && <Error className="error">{error}</Error>}

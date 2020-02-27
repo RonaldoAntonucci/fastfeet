@@ -1,8 +1,10 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { MdKeyboardArrowLeft, MdDone } from 'react-icons/md';
+import { Form } from '@unform/web';
+import { ValidationError } from 'yup';
 import api from '~/services/api';
 import history from '~/services/history';
 
@@ -10,27 +12,33 @@ import schema from './validator';
 
 import Button from '~/components/Button';
 import colors from '~/styles/colors';
-import { Form, Input, InputMask } from '~/components/Form';
+import { Input, InputMask } from '~/components/Form';
+import LoadingLine from '~/components/LoadingLine';
 
 import { TitleContainer, Content } from './styles';
 
 export default function RecipientForm({ match }) {
+  const formRef = useRef(null);
   const { id } = match.params;
   const [loading, setLoading] = useState(false);
-  const [initialData, setInitialData] = useState();
 
   useEffect(() => {
     if (id) {
       const getData = async () => {
         try {
+          setLoading(true);
           const response = await api.get(`/recipients/${id}`);
           if (!response.data) {
             toast.error('Destinatário inexistente.');
             history.push('/recipients');
           }
-          setInitialData(response.data);
+
+          formRef.current.setData(response.data);
+          setLoading(false);
+          // setInitialData(response.data);
         } catch (err) {
           toast.error('Não foi possível carregar o Destinatário.');
+          setLoading(false);
           history.push('/recipients');
         }
       };
@@ -42,6 +50,10 @@ export default function RecipientForm({ match }) {
     async data => {
       try {
         setLoading(true);
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
         const { name, street, number, complement, city, state, zip } = data;
         const method = id ? api.put : api.post;
 
@@ -62,9 +74,18 @@ export default function RecipientForm({ match }) {
 
         history.push('/recipients');
       } catch (err) {
-        toast.error(
-          `Não foi possível ${id ? 'editar' : 'cadastrar'} o destinatário.`
-        );
+        const validationErrors = {};
+        if (err instanceof ValidationError) {
+          err.inner.forEach(error => {
+            validationErrors[error.path] = error.message;
+          });
+          formRef.current.setErrors(validationErrors);
+        } else {
+          toast.error(
+            `Não foi possível ${id ? 'editar' : 'cadastrar'} o destinatário.`
+          );
+        }
+
         setLoading(false);
       }
     },
@@ -86,14 +107,9 @@ export default function RecipientForm({ match }) {
           </Button>
         </div>
       </TitleContainer>
-      <Form
-        id="recipientForm"
-        schema={schema}
-        onSubmit={handleSubmit}
-        loading={loading}
-        initialData={initialData}
-      >
-        <Content>
+      <Content>
+        {loading && <LoadingLine />}
+        <Form ref={formRef} id="recipientForm" onSubmit={handleSubmit}>
           <Input
             disabled={loading}
             label="Nome"
@@ -139,8 +155,8 @@ export default function RecipientForm({ match }) {
             placeholder="00000-000"
             mask="99999-999"
           />
-        </Content>
-      </Form>
+        </Form>
+      </Content>
     </>
   );
 }

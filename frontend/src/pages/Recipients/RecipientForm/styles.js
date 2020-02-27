@@ -25,26 +25,38 @@ export const TitleContainer = styled.div`
 `;
 
 export const Content = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-column-gap: 15px;
-  grid-row-gap: 20px;
+  background-color: ${colors.second};
+  padding: 30px;
+  border-radius: 4px;
 
-  div:nth-child(1) {
-    grid-column: 1/7;
-  }
-
-  div:nth-child(2) {
-    grid-column: 1/5;
+  input {
+    font-size: 21px;
+    height: 45px;
+    margin-bottom: 15px;
   }
 
-  div:nth-child(5) {
-    grid-column: 1/3;
-  }
-  div:nth-child(6) {
-    grid-column: 3/5;
-  }
-  div:nth-child(7) {
-    grid-column: 5/7;
+  form {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-column-gap: 15px;
+    grid-row-gap: 20px;
+
+    div:nth-child(1) {
+      grid-column: 1/7;
+    }
+
+    div:nth-child(2) {
+      grid-column: 1/5;
+    }
+
+    div:nth-child(5) {
+      grid-column: 1/3;
+    }
+    div:nth-child(6) {
+      grid-column: 3/5;
+    }
+    div:nth-child(7) {
+      grid-column: 5/7;
+    }
   }
 `;

@@ -84,8 +84,8 @@ export default function Problems() {
             message={
               <>
                 <p>
-                  Se confirmar, a entrega <strong>{problem.id}</strong> será
-                  cancelada. Deseja mesmo cancela-la?
+                  Se confirmar, a entrega <strong>{problem.Delivery.id}</strong>{' '}
+                  será cancelada. Deseja mesmo cancela-la?
                 </p>
               </>
             }

@@ -9,7 +9,8 @@ import DeliveryCancelledMail from '../Jobs/deliveryCancelledMail';
 
 export default {
   async run({ problemId }) {
-    const problem = await Problem.scope('delivery').findByPk(problemId, {
+    const problem = await Problem.findByPk(problemId, {
+      include: ['Delivery'],
       paranoid: false,
     });
 

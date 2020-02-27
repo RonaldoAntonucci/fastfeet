@@ -25,11 +25,11 @@ describe('Delivery Show', () => {
       .send();
 
     expect(status).toBe(200);
-    expect({
-      ...body,
-      createdAt: new Date(body.createdAt),
-      updatedAt: new Date(body.updatedAt),
-    }).toStrictEqual({ ...delivery.toJSON(), canceledAt: null });
+    expect(body).toHaveProperty('id', delivery.id);
+    expect(body).toHaveProperty('product', delivery.product);
+    expect(body).toHaveProperty('status');
+    expect(body).toHaveProperty('createdAt');
+    expect(body).toHaveProperty('updatedAt');
   });
 
   it('Should can not be Show a Deliveryman with invalid id', async () => {

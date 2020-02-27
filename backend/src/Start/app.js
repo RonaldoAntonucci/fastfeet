@@ -42,9 +42,9 @@ class App {
     this.server.use(
       '/files',
       process.env.NODE_ENV !== 'test'
-        ? express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+        ? express.static(path.resolve(__dirname, '..', '..', 'tmp', 'uploads'))
         : express.static(
-            path.resolve(__dirname, '..', '__tests__', 'utils', 'files')
+            path.resolve(__dirname, '..', '..', '__tests__', 'utils', 'files')
           )
     );
 

@@ -132,6 +132,13 @@ routes.put(
   RecipientsController.update
 );
 
+routes.delete(
+  '/recipients/:recipientId',
+  isAdminMiddleware,
+  RouteParamsIdValidator(['recipientId']),
+  RecipientsController.delete
+);
+
 routes.get('/deliverymen', isAdminMiddleware, DeliverymanController.index);
 
 routes.get(

@@ -42,7 +42,7 @@ describe('Deliveryman Update', () => {
       .set('Authorization', `Bearer ${token}`)
       .attach(
         'file',
-        path.resolve(__dirname, '..', 'utils', 'files', 'img.png'),
+        path.resolve(__dirname, '..', 'utils', 'files', 'img.jpg'),
         'profile'
       );
 

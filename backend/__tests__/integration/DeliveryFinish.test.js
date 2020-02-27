@@ -17,7 +17,7 @@ describe('Deliveryman Store', () => {
       .post(`/deliverymen/${deliveryman_id}/deliveries/${id}/finish`)
       .attach(
         'file',
-        path.resolve(__dirname, '..', 'utils', 'files', 'img.png'),
+        path.resolve(__dirname, '..', 'utils', 'files', 'img.jpg'),
         'profile'
       );
 
@@ -36,7 +36,7 @@ describe('Deliveryman Store', () => {
       .post(`/deliverymen/${deliveryman_id}/deliveries/${id}/finish`)
       .attach(
         'file',
-        path.resolve(__dirname, '..', 'utils', 'files', 'img.png'),
+        path.resolve(__dirname, '..', 'utils', 'files', 'img.jpg'),
         'profile'
       );
 

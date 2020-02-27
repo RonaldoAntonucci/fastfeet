@@ -11,6 +11,8 @@ import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Table, { ActionDropdown } from '~/components/Table';
 
+import { Avatar } from './styles';
+
 import colors from '~/styles/colors';
 
 const PageContext = createContext(null);
@@ -101,7 +103,14 @@ export default function DeliverymenList() {
               <tr key={deliveryman.id}>
                 <td>#{deliveryman.id}</td>
                 <td>
-                  <img src={deliveryman.avatar_url} alt={deliveryman.name} />
+                  <Avatar
+                    src={
+                      deliveryman.avatar_url
+                        ? deliveryman.avatar_url
+                        : 'https://api.adorable.io/avatars/50/abott@adorable.png'
+                    }
+                    alt={deliveryman.name}
+                  />
                 </td>
                 <td>{deliveryman.name}</td>
                 <td>{deliveryman.email}</td>

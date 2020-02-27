@@ -33,7 +33,7 @@ factory.define('Recipient', Recipient, () => ({
 factory.define('Deliveryman', Deliveryman, () => ({
   name: faker.name(),
   email: faker.email(),
-  avatar_id: factory.assoc('File', 'id'),
+  // avatar_id: factory.assoc('File', 'id'),
 }));
 
 factory.define('Delivery', Delivery, () => ({
@@ -46,10 +46,10 @@ factory.define('Delivery', Delivery, () => ({
   canceled_at: null,
 }));
 
-factory.define('File', File, () => ({
-  name: `${faker.string({ length: 50 })}.png`,
-  path: `${faker.string({ length: 50 })}.png`,
-}));
+// factory.define('File', File, () => ({
+//   name: `${faker.string({ length: 50 })}.png`,
+//   path: `${faker.string({ length: 50 })}.png`,
+// }));
 
 factory.define('Problem', Problem, () => ({
   description: faker.string({

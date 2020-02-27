@@ -1,4 +1,4 @@
-import React, { useCallback, useState, memo } from 'react';
+import React, { useCallback, useState, memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '~/store/modules/auth/actions';
@@ -10,6 +10,10 @@ function Header() {
   const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
 
+  useEffect(() => {
+    setSelected(window.location.href.split('/')[3]);
+  }, []);
+
   const handleSignOut = useCallback(() => dispatch(signOut()), [dispatch]);
 
   return (
@@ -17,7 +21,7 @@ function Header() {
       <Logo to="/" />
       <Menu>
         <NavButton
-          selected={selected === 'deliveries'}
+          selected={selected === 'deliveries' || selected === 'dashboard'}
           to="/deliveries"
           onClick={() => setSelected('deliveries')}
         >

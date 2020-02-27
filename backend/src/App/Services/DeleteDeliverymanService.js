@@ -18,6 +18,7 @@ export default {
             end_date: null,
             canceledAt: null,
           },
+          required: false,
         },
       ],
     });

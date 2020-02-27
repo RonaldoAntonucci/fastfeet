@@ -8,6 +8,7 @@ import DeliveriesList from '~/pages/Deliveries/DeliveriesList';
 import DeliveryForm from '~/pages/Deliveries/DeliveryForm';
 
 import DeliverymenList from '~/pages/Deliverymen/DeliverymenList';
+import DeliverymanForm from '~/pages/Deliverymen/DeliverymanForm';
 
 import RecipientsList from '~/pages/Recipients/RecipientsList';
 import RecipientForm from '~/pages/Recipients/RecipientForm';
@@ -24,6 +25,8 @@ export default function Routes() {
       <Route path="/deliveries/:id" component={DeliveryForm} isPrivate />
       <Route path="/deliveries" component={DeliveriesList} isPrivate />
 
+      <Route path="/deliverymen/create" component={DeliverymanForm} isPrivate />
+      <Route path="/deliverymen/:id" component={DeliverymanForm} isPrivate />
       <Route path="/deliverymen" component={DeliverymenList} isPrivate />
 
       <Route path="/recipients/create" component={RecipientForm} isPrivate />

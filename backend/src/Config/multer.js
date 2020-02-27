@@ -11,9 +11,9 @@ export default {
 
         return cb(
           null,
-          `${new Date().getTime()}-${file.originalname
-            .split('.')[0]
-            .trim()}.png`
+          `${new Date().getTime()}-${
+            file.originalname.split('.')[0]
+          }.png`.replace(/ /g, '')
         );
       });
     },

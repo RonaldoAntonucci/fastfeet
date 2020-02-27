@@ -13,6 +13,8 @@ export default {
       throw new Exception('Invalid Deliveryman id.');
     }
 
+    const avatarId = {};
+
     if (avatar_id) {
       const avatar = await File.findByPk(avatar_id);
 
@@ -20,8 +22,9 @@ export default {
         throw new Exception('Invalid File id.');
       }
       deliveryman.avatar = avatar;
+      avatarId.avatar_id = avatar.id;
     }
 
-    return deliveryman.update({ name });
+    return deliveryman.update({ name, ...avatarId });
   },
 };

@@ -3,6 +3,7 @@ import Unform from './Form';
 import Input from './Input';
 import InputMask from './InputMask';
 import AsyncSelect from './AsyncSelect';
+import ImageInput from './ImageInput';
 
 import colors from '~/styles/colors';
 
@@ -31,4 +32,4 @@ export const FormRow = styled.div`
   }
 `;
 
-export { Input, InputMask, AsyncSelect };
+export { Input, InputMask, AsyncSelect, ImageInput };

@@ -12,7 +12,7 @@ import schema from './validator';
 
 import Button from '~/components/Button';
 import colors from '~/styles/colors';
-import { Input } from '~/components/Form';
+import { Input, ImageInput } from '~/components/Form';
 import LoadingLine from '~/components/LoadingLine';
 
 import { TitleContainer, Content } from './styles';
@@ -50,14 +50,28 @@ export default function DeliverymanForm({ match }) {
     async data => {
       try {
         setLoading(true);
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+        const { name, email, avatar } = data;
 
-        const { name, email } = data;
+        await schema.validate(
+          { name, email },
+          {
+            abortEarly: false,
+          }
+        );
+
         const method = id ? api.put : api.post;
 
-        await method(`/deliverymen/${id || ''}`, { name, email });
+        const { data: deliveryman } = await method(`/deliverymen/${id || ''}`, {
+          name,
+          email,
+        });
+
+        if (avatar) {
+          const formData = new FormData();
+          formData.append('file', avatar);
+
+          await api.post(`/deliverymen/${deliveryman.id}/avatar`, formData);
+        }
 
         toast.success(
           `Entregador ${id ? 'editado' : 'cadastrado'} com sucesso.`
@@ -66,6 +80,7 @@ export default function DeliverymanForm({ match }) {
 
         history.push('/deliverymen');
       } catch (err) {
+        console.log(err);
         const validationErrors = {};
         if (err instanceof ValidationError) {
           err.inner.forEach(error => {
@@ -103,6 +118,7 @@ export default function DeliverymanForm({ match }) {
       <Content>
         {loading && <LoadingLine />}
         <Form ref={formRef} id="deliverymanForm" onSubmit={handleSubmit}>
+          <ImageInput name="avatar" />
           <Input
             disabled={loading}
             label="Nome"

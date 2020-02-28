@@ -51,6 +51,13 @@ routes.use(parseEmptyBodyToNull);
 
 routes.get('/fake', FakeDataController.index);
 
+routes.get(
+  '/deliverymen/:deliverymanId',
+  // isAdminMiddleware,
+  RouteParamsIdValidator(['deliverymanId']),
+  DeliverymanController.show
+);
+
 routes.post(
   '/users',
   bruteForce.prevent,
@@ -141,12 +148,12 @@ routes.delete(
 
 routes.get('/deliverymen', isAdminMiddleware, DeliverymanController.index);
 
-routes.get(
-  '/deliverymen/:deliverymanId',
-  isAdminMiddleware,
-  RouteParamsIdValidator(['deliverymanId']),
-  DeliverymanController.show
-);
+// routes.get(
+//   '/deliverymen/:deliverymanId',
+//   isAdminMiddleware,
+//   RouteParamsIdValidator(['deliverymanId']),
+//   DeliverymanController.show
+// );
 
 routes.post(
   '/deliverymen',

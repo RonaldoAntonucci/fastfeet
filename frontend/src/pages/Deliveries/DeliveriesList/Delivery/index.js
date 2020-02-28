@@ -11,12 +11,7 @@ import {
 } from './styles';
 
 function Delivery({
-  delivery: {
-    start_date,
-    end_date,
-    Recipient: { name, street, number, city, state, zip },
-    signature,
-  },
+  delivery: { start_date, end_date, Recipient, signature },
 }) {
   const formatedStartDate = useMemo(
     () =>
@@ -38,15 +33,18 @@ function Delivery({
 
   return (
     <Container>
-      <AdressContainer>
-        <span>
-          {street}, {number}
-        </span>
-        <span>
-          {city} - {state}
-        </span>
-        <span>{zip}</span>
-      </AdressContainer>
+      {Recipient && (
+        <AdressContainer>
+          <span>
+            {Recipient.street}, {Recipient.number}
+          </span>
+          <span>
+            {Recipient.city} - {Recipient.state}
+          </span>
+          <span>{Recipient.zip}</span>
+        </AdressContainer>
+      )}
+
       <hr />
       <DatesContainer>
         <span>
@@ -61,8 +59,8 @@ function Delivery({
       <hr />
       <SignatureContainer>
         <strong>Assinatura do destinatário</strong>
-        {signature && signature.url && (
-          <img src={signature.url} alt={`${name} signature`} />
+        {signature && signature.url && Recipient && (
+          <img src={signature.url} alt={`${Recipient.name} signature`} />
         )}
       </SignatureContainer>
     </Container>
@@ -74,13 +72,13 @@ Delivery.propTypes = {
     start_date: PropTypes.string,
     end_date: PropTypes.string,
     Recipient: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      street: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-      city: PropTypes.string.isRequired,
-      state: PropTypes.string.isRequired,
-      zip: PropTypes.string.isRequired,
-    }).isRequired,
+      name: PropTypes.string,
+      street: PropTypes.string,
+      number: PropTypes.string,
+      city: PropTypes.string,
+      state: PropTypes.string,
+      zip: PropTypes.string,
+    }),
     signature: PropTypes.shape({ url: PropTypes.string }),
   }).isRequired,
 };

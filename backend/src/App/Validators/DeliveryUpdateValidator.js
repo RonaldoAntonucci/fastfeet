@@ -5,9 +5,8 @@ export default async (req, res, next) => {
     const schema = Yup.object()
       .shape({
         product: Yup.string().min(2),
-        deliveryman_id: Yup.number()
-          .positive()
-          .required(),
+        deliveryman_id: Yup.number().positive(),
+        recipient_id: Yup.number().positive(),
       })
       .required();
 

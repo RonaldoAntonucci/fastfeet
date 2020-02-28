@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 import { MdCreate, MdDeleteForever } from 'react-icons/md';
-
+import { confirmAlert } from 'react-confirm-alert';
 import api from '~/services/api';
 
 import LoadingLine from '~/components/LoadingLine';
@@ -11,6 +11,7 @@ import Title from '~/components/Title';
 import Pagination from '~/components/Pagination';
 import Button from '~/components/Button';
 import Table, { ActionDropdown } from '~/components/Table';
+import ConfirmAlert from '~/components/ConfirmAlert';
 
 import colors from '~/styles/colors';
 
@@ -51,6 +52,49 @@ export default function RecipientsList() {
     }
     getData();
   }, [page, search]);
+
+  const handleDelete = useCallback(
+    recipient => {
+      const deleteRecipient = async setDeli => {
+        try {
+          await api.delete(`/recipients/${recipient.id}`);
+
+          toast.success('Entregador deletado com sucesso.');
+
+          setDeli(
+            recipients.filter(
+              currentRecipient => currentRecipient.id !== recipient.id
+            )
+          );
+        } catch (error) {
+          toast.error('Não foi possível excluir este destinatário.');
+        }
+      };
+
+      confirmAlert({
+        customUI: ({ onClose }) => ( // eslint-disable-line
+          <ConfirmAlert
+            callback={() => deleteRecipient(setRecipients)}
+            onClose={onClose}
+            title="Deseja excluir esta entrega?"
+            message={
+              <>
+                <p>
+                  <strong>nome: </strong> {recipient.name}
+                </p>
+                <p>
+                  Se confirmar, o destinatário <strong>{recipient.id}</strong>{' '}
+                  será deletado. Isso é irreversível. Deseja mesmo excluí-lo?
+                </p>
+              </>
+            }
+          />
+        ),
+      });
+    },
+    [recipients]
+  );
+
   return (
     <PageContext.Provider
       value={{
@@ -92,16 +136,16 @@ export default function RecipientsList() {
               </td>
             </tr>
           ) : (
-            recipients.map(({ id, name, street, number, city, state }) => (
-              <tr key={id}>
-                <td>#{id}</td>
-                <td>{name}</td>
-                <td>{`${street}, ${number}, ${city} - ${state}`}</td>
+            recipients.map(recipient => (
+              <tr key={recipient.id}>
+                <td>#{recipient.id}</td>
+                <td>{recipient.name}</td>
+                <td>{`${recipient.street}, ${recipient.number}, ${recipient.city} - ${recipient.state}`}</td>
                 <td>
                   <ActionDropdown>
                     <ul>
                       <li>
-                        <Link to={`/recipients/${id}`}>
+                        <Link to={`/recipients/${recipient.id}`}>
                           <Button
                             icon={MdCreate}
                             color="transparent"
@@ -120,6 +164,7 @@ export default function RecipientsList() {
                           textColor={colors.fontLigh}
                           iconColor={colors.red}
                           type="button"
+                          onClick={() => handleDelete(recipient)}
                         >
                           Excluir
                         </Button>

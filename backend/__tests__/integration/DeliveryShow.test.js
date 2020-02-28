@@ -32,7 +32,7 @@ describe('Delivery Show', () => {
     expect(body).toHaveProperty('updatedAt');
   });
 
-  it('Should can not be Show a Deliveryman with invalid id', async () => {
+  it('Should can not be Show a Delivery with invalid id', async () => {
     const [token, delivery] = await Promise.all([
       getToken({ isAdmin: true }),
       factory.create('Delivery'),

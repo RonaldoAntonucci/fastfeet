@@ -16,7 +16,7 @@ export default {
     if (!deliveryman) {
       return res.status(400).json({ message: 'Invalid deliveryman id.' });
     }
-    return res.json(deliveryman).send();
+    return res.json(deliveryman);
   },
 
   async store({ body, url }, res, next) {

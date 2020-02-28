@@ -49,10 +49,12 @@ export default function DeliveryForm({ match }) {
             product: response.data.product,
           });
 
-          setSelectedRecipient({
-            value: response.data.recipient_id,
-            label: response.data.Recipient.name,
-          });
+          if (response.data.recipient_id) {
+            setSelectedRecipient({
+              value: response.data.recipient_id,
+              label: response.data.Recipient.name,
+            });
+          }
 
           setSelectedDeliveryman({
             value: response.data.deliveryman_id,

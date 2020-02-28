@@ -26,7 +26,7 @@ describe('Delivery Update', () => {
 
     expect(status).toBe(200);
     expect(body).toHaveProperty('id', delivery.id);
-    expect(body).toHaveProperty('recipient_id', delivery.recipient_id);
+    expect(body).toHaveProperty('recipient_id', attrs.recipient_id);
     expect(body).toHaveProperty('product', attrs.product);
     expect(body).toHaveProperty('deliveryman_id', attrs.deliveryman_id);
     expect(body).toHaveProperty('updatedAt');

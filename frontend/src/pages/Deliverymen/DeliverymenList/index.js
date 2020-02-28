@@ -90,7 +90,7 @@ export default function DeliverymenList() {
                 </p>
                 <p>
                   Se confirmar, o entregador <strong>{deliveryman.id}</strong>{' '}
-                  será deletado. Isso é irreversível. Deseja mesmo excluí-la?
+                  será deletado. Isso é irreversível. Deseja mesmo excluí-lo?
                 </p>
               </>
             }

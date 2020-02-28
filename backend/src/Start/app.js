@@ -41,11 +41,7 @@ class App {
     this.server.use(express.json());
     this.server.use(
       '/files',
-      process.env.NODE_ENV !== 'test'
-        ? express.static(path.resolve(__dirname, '..', '..', 'tmp', 'uploads'))
-        : express.static(
-            path.resolve(__dirname, '..', '..', '__tests__', 'utils', 'files')
-          )
+      express.static(path.resolve(__dirname, '..', '..', 'tmp', 'uploads'))
     );
 
     if (process.env.NODE_ENV === 'production') {

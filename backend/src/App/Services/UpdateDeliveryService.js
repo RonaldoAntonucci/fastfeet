@@ -1,6 +1,7 @@
 import { isAfter, isBefore, parseISO } from 'date-fns';
 import Delivery from '../Models/Delivery';
 import Deliveryman from '../Models/Deliveryman';
+import Recipient from '../Models/Recipient';
 import File from '../Models/File';
 
 import Exception from '../Exceptions/ServiceException';
@@ -10,15 +11,19 @@ import Exception from '../Exceptions/ServiceException';
 export default {
   async admin(
     { deliveryId },
-    { product, deliveryman_id },
+    { product, deliveryman_id, recipient_id },
     { dialectIsProtgres }
   ) {
-    if (!(await Deliveryman.findByPk(deliveryman_id))) {
+    if (deliveryman_id && !(await Deliveryman.findByPk(deliveryman_id))) {
       throw new Exception('Invalid Deliveryman id.');
     }
 
+    if (recipient_id && !(await Recipient.findByPk(recipient_id))) {
+      throw new Exception('Invalid Recipient id.');
+    }
+
     return Delivery.update(
-      { product, deliveryman_id },
+      { product, deliveryman_id, recipient_id },
       { where: { id: deliveryId }, returning: dialectIsProtgres }
     );
   },
@@ -101,7 +106,7 @@ export default {
 
   async run(
     { deliverymanId, deliveryId },
-    { product, deliveryman_id, start_date, signature_id }
+    { product, deliveryman_id, start_date, signature_id, recipient_id }
   ) {
     const dialectIsProtgres = process.env.DB_DIALECT === 'postgres';
 
@@ -113,7 +118,7 @@ export default {
         )
       : await this.admin(
           { deliveryId },
-          { product, deliveryman_id },
+          { product, deliveryman_id, recipient_id },
           { dialectIsProtgres }
         );
 

@@ -78,7 +78,11 @@ class Delivery extends Model {
 
     this.addScope('defaultScope', {
       include: [
-        { model: models.Recipient, attributes: ['id', 'name'] },
+        {
+          model: models.Recipient,
+          attributes: ['id', 'name'],
+          required: false,
+        },
         { model: models.Deliveryman, attributes: ['id', 'name'] },
       ],
     });
@@ -88,6 +92,7 @@ class Delivery extends Model {
         {
           model: models.Recipient,
           attributes: ['name', 'city', 'state', 'street', 'number', 'zip'],
+          required: false,
         },
       ],
     });

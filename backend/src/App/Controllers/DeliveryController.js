@@ -26,11 +26,11 @@ export default {
     if (!delivery) {
       return res.status(400).json({ message: 'Invalid delivery id.' });
     }
-    return res.json(delivery).send();
+    return res.json(delivery);
   },
 
   async store({ body, url }, res) {
-    return res.json(await CreateDelivery.run(body, { url })).send();
+    return res.json(await CreateDelivery.run(body, { url }));
   },
 
   async update({ params, body, fileId, url }, res) {

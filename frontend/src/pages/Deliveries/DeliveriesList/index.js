@@ -178,10 +178,10 @@ export default function DeliveriesList() {
             deliveries.map(delivery => (
               <tr key={delivery.id}>
                 <td>#{delivery.id}</td>
-                <td>{delivery.Recipient.name}</td>
+                <td>{delivery.Recipient ? delivery.Recipient.name : ''}</td>
                 <td>{delivery.product}</td>
-                <td>{delivery.Recipient.city}</td>
-                <td>{delivery.Recipient.state}</td>
+                <td>{delivery.Recipient ? delivery.Recipient.city : ''}</td>
+                <td>{delivery.Recipient ? delivery.Recipient.state : ''}</td>
                 <td>
                   <Status>{delivery.status}</Status>
                 </td>

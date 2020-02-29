@@ -4,6 +4,7 @@ import Button from '~/components/Button';
 import colors from '~/styles/colors';
 
 export const Container = styled.View`
+  flex: 1;
   align-items: center;
   padding: 36px;
 

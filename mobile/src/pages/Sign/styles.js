@@ -5,7 +5,10 @@ import Button from '~/components/Button';
 
 import colors from '~/styles/colors';
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView.attrs({
+  enabled: true,
+  behavior: 'padding',
+})`
   display: flex;
   flex: 1;
   align-items: center;

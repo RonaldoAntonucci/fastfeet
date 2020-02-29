@@ -12,6 +12,12 @@ export const BarButton = styled.TouchableOpacity`
 
 export const Container = styled.View`
   background-color: ${colors.bg};
+
+  border-width: 3px;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-color: ${colors.border};
 `;
 
 export const Label = styled.Text`

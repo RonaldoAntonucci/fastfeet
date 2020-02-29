@@ -4,6 +4,7 @@ export default {
 
   fontLight: '#666666',
   fontDark: '#444',
+  border: '#ddd',
 
   white: '#fff',
   green: '#82BF18',

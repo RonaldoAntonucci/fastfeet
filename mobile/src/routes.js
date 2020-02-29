@@ -22,6 +22,7 @@ export default function Routes({ signed }) {
       <StatusBar
         barStyle={`${signed ? 'dark' : 'light'}-content`}
         backgroundColor={!signed ? colors.primary : colors.bg}
+        hidden
       />
       <NavigationContainer>
         {!signed ? (

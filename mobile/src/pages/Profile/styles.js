@@ -6,6 +6,8 @@ import colors from '~/styles/colors';
 export const Container = styled.View`
   align-items: center;
   padding: 36px;
+
+  background-color: ${colors.bg};
 `;
 
 export const Card = styled.View`

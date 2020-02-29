@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
-import api from '~/services/api';
+import pt from 'date-fns/locale/pt';
+import { format } from 'date-fns';
 
 import {
   Container,
@@ -19,6 +19,15 @@ export default function Profile() {
   const user = useSelector(state => state.user.profile);
 
   const [avatarImageUrl, setAvatarImageUrl] = useState();
+
+  const formatedCreatedAt = useMemo(
+    () =>
+      user.createdAt &&
+      format(new Date(user.createdAt), "dd'/'MM'/'y", {
+        locale: pt,
+      }),
+    [user.createdAt]
+  );
 
   useEffect(() => {
     if (user.avatar_url) {
@@ -52,7 +61,7 @@ export default function Profile() {
         <Label>Email</Label>
         <TextValue>{user.email}</TextValue>
         <Label>Data de cadastro</Label>
-        <TextValue>{user.createdAt}</TextValue>
+        <TextValue>{formatedCreatedAt}</TextValue>
         <LogoutButton onPress={handleLogOut}>Logout</LogoutButton>
       </Card>
     </Container>

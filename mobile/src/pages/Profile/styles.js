@@ -28,3 +28,10 @@ export const LogoutButton = styled(Button)`
   background-color: ${colors.red};
   width: 100%;
 `;
+
+export const Avatar = styled.Image`
+  height: 150px;
+  width: 150px;
+  border-radius: 75px;
+  margin: 40px;
+`;

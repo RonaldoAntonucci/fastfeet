@@ -7,18 +7,12 @@ import { format } from 'date-fns';
 
 import api from '~/services/api';
 
-import Background from '~/components/Background';
+import Container from '~/components/PageContainer';
 
 import colors from '~/styles/colors';
 
 import {
-  Container,
-  Content,
-  TitleContainer,
-  TitleContent,
-  BackButton,
   Icon,
-  Title,
   Card,
   CardTitleContainer,
   CardTitle,
@@ -75,114 +69,112 @@ export default function Delivery({
   }, [DeliveryItem, user]);
 
   return (
-    <Background>
-      <Container>
-        <TitleContainer>
-          <BackButton
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <Icon name="keyboard-arrow-left" color={colors.bg} />
-          </BackButton>
-          <TitleContent>
-            <Title>Detalhes da encomenda</Title>
-          </TitleContent>
-        </TitleContainer>
-        <Content>
-          <Card>
-            <CardTitleContainer>
-              <Icon name="local-shipping" />
-              <CardTitle>Informações da entrega</CardTitle>
-            </CardTitleContainer>
-            {item.Recipient && (
-              <>
-                <CardRow>
-                  <View>
-                    <CardLabel>DESTINATÁRIO</CardLabel>
-                    <CardValue>{item.Recipient.name}</CardValue>
-                  </View>
-                </CardRow>
-                <CardRow>
-                  <View>
-                    <CardLabel>ENDEREÇO DE ENTREGA</CardLabel>
-                    <CardValue>{adress}</CardValue>
-                  </View>
-                </CardRow>
-              </>
-            )}
-
-            <CardRow>
-              <View>
-                <CardLabel>PRODUTO</CardLabel>
-                <CardValue>{DeliveryItem.product}</CardValue>
-              </View>
-            </CardRow>
-          </Card>
-          <Card>
-            <CardTitleContainer>
-              <Icon name="event" />
-              <CardTitle>Situação da entrega</CardTitle>
-            </CardTitleContainer>
-            <CardRow>
-              <View>
-                <CardLabel>STATUS</CardLabel>
-                <CardValue>{DeliveryItem.status}</CardValue>
-              </View>
-            </CardRow>
-            <CardRow>
-              <View style={{ width: '50%' }}>
-                <CardLabel>DATA DE RETIRADA</CardLabel>
-                <CardValue>{formatedStartedAt}</CardValue>
-              </View>
-              <View style={{ width: '50%', paddingLeft: 12 }}>
-                <CardLabel>DATA DE ENTREGA</CardLabel>
-                <CardValue>{formatedEndedAt}</CardValue>
-              </View>
-            </CardRow>
-          </Card>
-          {DeliveryItem.status !== 'ENTREGUE' && (
-            <CardActions>
+    <Container
+      handleBack={() => {
+        navigation.goBack();
+      }}
+      title="Detalhes da encomenda"
+      scroll
+    >
+      <>
+        <Card>
+          <CardTitleContainer>
+            <Icon name="local-shipping" />
+            <CardTitle>Informações da entrega</CardTitle>
+          </CardTitleContainer>
+          {item.Recipient && (
+            <>
               <CardRow>
-                {DeliveryItem.status !== 'PENDENTE' ? (
-                  <>
-                    <ButtonContent>
-                      <ActionButton>
-                        <Icon name="highlight-off" color={colors.red} />
-                        <ButtonText>Informar</ButtonText>
-                        <ButtonText>Problema</ButtonText>
-                      </ActionButton>
-                    </ButtonContent>
-                    <ButtonContent>
-                      <ActionButton>
-                        <Icon name="info-outline" color={colors.yellow} />
-                        <ButtonText>Visualizar</ButtonText>
-                        <ButtonText>Problemas</ButtonText>
-                      </ActionButton>
-                    </ButtonContent>
-                    <ButtonContent>
-                      <ActionButton>
-                        <Icon name="alarm-on" />
-                        <ButtonText>Confirmar</ButtonText>
-                        <ButtonText>Entrega</ButtonText>
-                      </ActionButton>
-                    </ButtonContent>
-                  </>
-                ) : (
+                <View>
+                  <CardLabel>DESTINATÁRIO</CardLabel>
+                  <CardValue>{item.Recipient.name}</CardValue>
+                </View>
+              </CardRow>
+              <CardRow>
+                <View>
+                  <CardLabel>ENDEREÇO DE ENTREGA</CardLabel>
+                  <CardValue>{adress}</CardValue>
+                </View>
+              </CardRow>
+            </>
+          )}
+
+          <CardRow>
+            <View>
+              <CardLabel>PRODUTO</CardLabel>
+              <CardValue>{DeliveryItem.product}</CardValue>
+            </View>
+          </CardRow>
+        </Card>
+        <Card>
+          <CardTitleContainer>
+            <Icon name="event" />
+            <CardTitle>Situação da entrega</CardTitle>
+          </CardTitleContainer>
+          <CardRow>
+            <View>
+              <CardLabel>STATUS</CardLabel>
+              <CardValue>{DeliveryItem.status}</CardValue>
+            </View>
+          </CardRow>
+          <CardRow>
+            <View style={{ width: '50%' }}>
+              <CardLabel>DATA DE RETIRADA</CardLabel>
+              <CardValue>{formatedStartedAt}</CardValue>
+            </View>
+            <View style={{ width: '50%', paddingLeft: 12 }}>
+              <CardLabel>DATA DE ENTREGA</CardLabel>
+              <CardValue>{formatedEndedAt}</CardValue>
+            </View>
+          </CardRow>
+        </Card>
+        {DeliveryItem.status !== 'ENTREGUE' && (
+          <CardActions>
+            <CardRow>
+              {DeliveryItem.status !== 'PENDENTE' ? (
+                <>
                   <ButtonContent>
-                    <ActionButton onPress={handleWithdraw}>
-                      <Icon name="assignment-return" />
-                      <ButtonText>Confirmar</ButtonText>
-                      <ButtonText>Retirada</ButtonText>
+                    <ActionButton
+                      onPress={() =>
+                        navigation.navigate('ProblemForm', {
+                          deliveryId: DeliveryItem.id,
+                        })
+                      }
+                    >
+                      <Icon name="highlight-off" color={colors.red} />
+                      <ButtonText>Informar</ButtonText>
+                      <ButtonText>Problema</ButtonText>
                     </ActionButton>
                   </ButtonContent>
-                )}
-              </CardRow>
-            </CardActions>
-          )}
-        </Content>
-      </Container>
-    </Background>
+                  <ButtonContent>
+                    <ActionButton>
+                      <Icon name="info-outline" color={colors.yellow} />
+                      <ButtonText>Visualizar</ButtonText>
+                      <ButtonText>Problemas</ButtonText>
+                    </ActionButton>
+                  </ButtonContent>
+                  <ButtonContent>
+                    <ActionButton>
+                      <Icon name="alarm-on" />
+                      <ButtonText>Confirmar</ButtonText>
+                      <ButtonText>Entrega</ButtonText>
+                    </ActionButton>
+                  </ButtonContent>
+                </>
+              ) : (
+                <ButtonContent>
+                  <ActionButton onPress={handleWithdraw}>
+                    <Icon name="assignment-return" />
+                    <ButtonText>Confirmar</ButtonText>
+                    <ButtonText>Retirada</ButtonText>
+                  </ActionButton>
+                </ButtonContent>
+              )}
+            </CardRow>
+          </CardActions>
+        )}
+      </>
+    </Container>
   );
 }
 
@@ -205,5 +197,8 @@ Delivery.propTypes = {
       }).isRequired,
     }).isRequired,
   }).isRequired,
-  navigation: PropTypes.shape({ goBack: PropTypes.func.isRequired }).isRequired,
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+    navigate: PropTypes.func,
+  }).isRequired,
 };

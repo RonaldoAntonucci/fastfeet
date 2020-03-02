@@ -13,6 +13,8 @@ import Profile from '~/pages/Profile';
 
 import Delivery from '~/pages/Delivery';
 
+import ProblemForm from '~/pages/Problems/ProblemForm';
+
 import colors from '~/styles/colors';
 
 const Stack = createStackNavigator();
@@ -30,6 +32,10 @@ function DeliveriesStackScreen() {
       <DeliveriesStack.Screen
         name="Delivery"
         component={Delivery}
+      ></DeliveriesStack.Screen>
+      <DeliveriesStack.Screen
+        name="ProblemForm"
+        component={ProblemForm}
       ></DeliveriesStack.Screen>
     </DeliveriesStack.Navigator>
   );

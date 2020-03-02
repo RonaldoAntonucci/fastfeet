@@ -14,6 +14,7 @@ import Profile from '~/pages/Profile';
 import Delivery from '~/pages/Delivery';
 
 import ProblemForm from '~/pages/Problems/ProblemForm';
+import ProblemsList from '~/pages/Problems/ProblemsList';
 
 import colors from '~/styles/colors';
 
@@ -36,6 +37,10 @@ function DeliveriesStackScreen() {
       <DeliveriesStack.Screen
         name="ProblemForm"
         component={ProblemForm}
+      ></DeliveriesStack.Screen>
+      <DeliveriesStack.Screen
+        name="ProblemsList"
+        component={ProblemsList}
       ></DeliveriesStack.Screen>
     </DeliveriesStack.Navigator>
   );

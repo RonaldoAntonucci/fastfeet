@@ -48,5 +48,4 @@ export const NoScroll = styled.View`
   flex: 1;
   height: ${`${Dimensions.get('window').height - 150}px`};
   align-self: stretch;
-  padding: 18px;
 `;

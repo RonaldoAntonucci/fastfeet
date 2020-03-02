@@ -75,6 +75,7 @@ class Delivery extends Model {
       foreignKey: 'signature_id',
       as: 'signature',
     });
+    this.hasMany(models.Problem);
 
     this.addScope('defaultScope', {
       include: [

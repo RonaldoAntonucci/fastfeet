@@ -8,6 +8,7 @@ export default {
   fontLight: '#999',
   font: '#666',
   fontDark: '#444',
+  fontTransparent: '#C1C1C1',
 
   white: '#fff',
   green: '#82BF18',

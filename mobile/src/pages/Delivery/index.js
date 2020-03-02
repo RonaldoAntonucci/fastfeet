@@ -147,7 +147,13 @@ export default function Delivery({
                     </ActionButton>
                   </ButtonContent>
                   <ButtonContent>
-                    <ActionButton>
+                    <ActionButton
+                      onPress={() =>
+                        navigation.navigate('ProblemsList', {
+                          deliveryId: DeliveryItem.id,
+                        })
+                      }
+                    >
                       <Icon name="info-outline" color={colors.yellow} />
                       <ButtonText>Visualizar</ButtonText>
                       <ButtonText>Problemas</ButtonText>

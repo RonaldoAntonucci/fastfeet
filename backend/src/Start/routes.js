@@ -84,6 +84,12 @@ routes.post(
   DeliveryController.update
 );
 
+routes.get(
+  '/deliverymen/:deliverymanId/deliveries/:deliveryId/problems',
+  RouteParamsIdValidator(['deliverymanId', 'deliveryId']),
+  ProblemController.index
+);
+
 routes.post(
   '/deliverymen/:deliverymanId/deliveries/:deliveryId/finish',
   RouteParamsIdValidator(['deliverymanId', 'deliveryId']),

@@ -92,6 +92,7 @@ export const CardActions = styled.View`
 export const ButtonContent = styled.View`
   flex: 1;
   border: 2px solid ${colors.border};
+  elevation: 6;
   background-color: ${colors.secondary};
   padding: 15px;
 `;

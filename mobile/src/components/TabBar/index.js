@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { Container, BarButton, Label, BarIcon } from './styles';
 
-export default function TabBar({ state, descriptors, navigation }) {
+function TabBar({ state, descriptors, navigation }) {
   return (
     <Container>
       {state.routes.map((route, index) => {
@@ -68,3 +68,5 @@ TabBar.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+export default memo(TabBar);

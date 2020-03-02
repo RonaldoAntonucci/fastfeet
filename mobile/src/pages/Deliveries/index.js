@@ -56,7 +56,12 @@ function Deliveries({ navigation }) {
       setDeliveries(data);
     };
     getData();
-  }, [delivered, user.id]);
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      getData();
+    });
+    return unsubscribe;
+  }, [delivered, navigation, user.id]);
 
   const handleLogOut = useCallback(() => {
     dispatch(signOut());

@@ -1,8 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import pt from 'date-fns/locale/pt';
 import { format } from 'date-fns';
+
+import api from '~/services/api';
 
 import Background from '~/components/Background';
 
@@ -34,33 +37,42 @@ export default function Delivery({
   },
   navigation,
 }) {
+  const user = useSelector(state => state.user.profile);
+  const [DeliveryItem, setDeliveryItem] = useState(item);
+
   const formatedStartedAt = useMemo(
     () =>
-      item.start_date
-        ? format(new Date(item.start_date), "dd'/'MM'/'y", {
+      DeliveryItem.start_date
+        ? format(new Date(DeliveryItem.start_date), "dd'/'MM'/'y", {
             locale: pt,
           })
         : '--/--/--',
-    [item.start_date]
+    [DeliveryItem.start_date]
   );
 
   const formatedEndedAt = useMemo(
     () =>
-      item.end_date
-        ? format(new Date(item.end_date), "dd'/'MM'/'y", {
+      DeliveryItem.end_date
+        ? format(new Date(DeliveryItem.end_date), "dd'/'MM'/'y", {
             locale: pt,
           })
         : '--/--/--',
-    [item.end_date]
+    [DeliveryItem.end_date]
   );
-
-  console.tron.log(item.Recipient);
 
   const adress = useMemo(
     () =>
       `${item.Recipient.street}, ${item.Recipient.number}, ${item.Recipient.city} - ${item.Recipient.state}, ${item.Recipient.zip}`,
     [item.Recipient]
   );
+
+  const handleWithdraw = useCallback(async () => {
+    const response = await api.post(
+      `/deliverymen/${user.id}/deliveries/${DeliveryItem.id}/withdraw`,
+      { start_date: new Date() }
+    );
+    setDeliveryItem(response.data);
+  }, [DeliveryItem, user]);
 
   return (
     <Background>
@@ -103,7 +115,7 @@ export default function Delivery({
             <CardRow>
               <View>
                 <CardLabel>PRODUTO</CardLabel>
-                <CardValue>{item.product}</CardValue>
+                <CardValue>{DeliveryItem.product}</CardValue>
               </View>
             </CardRow>
           </Card>
@@ -115,7 +127,7 @@ export default function Delivery({
             <CardRow>
               <View>
                 <CardLabel>STATUS</CardLabel>
-                <CardValue>{item.status}</CardValue>
+                <CardValue>{DeliveryItem.status}</CardValue>
               </View>
             </CardRow>
             <CardRow>
@@ -129,31 +141,45 @@ export default function Delivery({
               </View>
             </CardRow>
           </Card>
-          <CardActions>
-            <CardRow>
-              <ButtonContent>
-                <ActionButton>
-                  <Icon name="highlight-off" color={colors.red} />
-                  <ButtonText>Informar</ButtonText>
-                  <ButtonText>Problema</ButtonText>
-                </ActionButton>
-              </ButtonContent>
-              <ButtonContent>
-                <ActionButton>
-                  <Icon name="info-outline" color={colors.yellow} />
-                  <ButtonText>Visualizar</ButtonText>
-                  <ButtonText>Problemas</ButtonText>
-                </ActionButton>
-              </ButtonContent>
-              <ButtonContent>
-                <ActionButton>
-                  <Icon name="alarm-on" />
-                  <ButtonText>Confirmar</ButtonText>
-                  <ButtonText>Entrega</ButtonText>
-                </ActionButton>
-              </ButtonContent>
-            </CardRow>
-          </CardActions>
+          {DeliveryItem.status !== 'ENTREGUE' && (
+            <CardActions>
+              <CardRow>
+                {DeliveryItem.status !== 'PENDENTE' ? (
+                  <>
+                    <ButtonContent>
+                      <ActionButton>
+                        <Icon name="highlight-off" color={colors.red} />
+                        <ButtonText>Informar</ButtonText>
+                        <ButtonText>Problema</ButtonText>
+                      </ActionButton>
+                    </ButtonContent>
+                    <ButtonContent>
+                      <ActionButton>
+                        <Icon name="info-outline" color={colors.yellow} />
+                        <ButtonText>Visualizar</ButtonText>
+                        <ButtonText>Problemas</ButtonText>
+                      </ActionButton>
+                    </ButtonContent>
+                    <ButtonContent>
+                      <ActionButton>
+                        <Icon name="alarm-on" />
+                        <ButtonText>Confirmar</ButtonText>
+                        <ButtonText>Entrega</ButtonText>
+                      </ActionButton>
+                    </ButtonContent>
+                  </>
+                ) : (
+                  <ButtonContent>
+                    <ActionButton onPress={handleWithdraw}>
+                      <Icon name="assignment-return" />
+                      <ButtonText>Confirmar</ButtonText>
+                      <ButtonText>Retirada</ButtonText>
+                    </ActionButton>
+                  </ButtonContent>
+                )}
+              </CardRow>
+            </CardActions>
+          )}
         </Content>
       </Container>
     </Background>

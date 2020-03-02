@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState, useCallback, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View } from 'react-native';
@@ -25,7 +26,7 @@ import {
 import { signOut } from '~/store/modules/auth/actions';
 import colors from '~/styles/colors';
 
-function Deliveries() {
+function Deliveries({ navigation }) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.profile);
 
@@ -97,7 +98,12 @@ function Deliveries() {
       <DeliveriesList
         data={deliveries}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <Delivery data={item} />}
+        renderItem={({ item }) => (
+          <Delivery
+            data={item}
+            handleDetails={() => navigation.navigate('Delivery', { item })}
+          />
+        )}
       />
     </Container>
   );

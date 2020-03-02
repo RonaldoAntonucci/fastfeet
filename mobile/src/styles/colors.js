@@ -1,14 +1,17 @@
 export default {
-  primary: '#7159c1',
+  primary: '#7D40E7',
   secondary: '#F8F9FD',
-  bg: '#fff',
 
-  fontLight: '#666666',
+  bg: '#fff',
+  border: 'rgba(0, 0, 0, 0.06)',
+
+  fontLight: '#999',
+  font: '#666',
   fontDark: '#444',
-  border: '#ddd',
 
   white: '#fff',
   green: '#82BF18',
   red: '#E74040',
   grey: '#999',
+  yellow: '#E7BA40',
 };

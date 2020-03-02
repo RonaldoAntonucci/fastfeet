@@ -5,7 +5,7 @@ import { Container, BarButton, Label, BarIcon } from './styles';
 
 export default function TabBar({ state, descriptors, navigation }) {
   return (
-    <Container style={{ flexDirection: 'row' }}>
+    <Container>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =

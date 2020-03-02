@@ -17,7 +17,7 @@ export const Card = styled.View`
 
 export const Label = styled.Text`
   font-size: 16px;
-  color: ${colors.fontLight};
+  color: ${colors.font};
 `;
 
 export const TextValue = styled.Text`

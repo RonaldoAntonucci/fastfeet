@@ -11,6 +11,8 @@ import Sign from '~/pages/Sign';
 import Deliveries from '~/pages/Deliveries';
 import Profile from '~/pages/Profile';
 
+import Delivery from '~/pages/Delivery';
+
 import colors from '~/styles/colors';
 
 const Stack = createStackNavigator();
@@ -24,6 +26,10 @@ function DeliveriesStackScreen() {
       <DeliveriesStack.Screen
         name="Deliveries"
         component={Deliveries}
+      ></DeliveriesStack.Screen>
+      <DeliveriesStack.Screen
+        name="Delivery"
+        component={Delivery}
       ></DeliveriesStack.Screen>
     </DeliveriesStack.Navigator>
   );

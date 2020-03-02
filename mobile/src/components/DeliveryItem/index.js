@@ -19,7 +19,7 @@ import {
   FooterButtonTitle,
 } from './styles';
 
-function DeliveryItem({ data }) {
+function DeliveryItem({ data, handleDetails }) {
   const formatedCreatedAt = useMemo(
     () =>
       data.createdAt &&
@@ -62,7 +62,7 @@ function DeliveryItem({ data }) {
           <FooterLabel>Cidade</FooterLabel>
           <FooterInfo>{data.Recipient ? data.Recipient.city : ''}</FooterInfo>
         </FooterContent>
-        <FooterButton>
+        <FooterButton onPress={handleDetails}>
           <FooterContent>
             <FooterButtonTitle>Ver detalhes</FooterButtonTitle>
           </FooterContent>
@@ -79,6 +79,8 @@ DeliveryItem.propTypes = {
     createdAt: PropTypes.string.isRequired,
     Recipient: PropTypes.shape({ city: PropTypes.string }),
   }).isRequired,
+
+  handleDetails: PropTypes.func.isRequired,
 };
 
 export default memo(DeliveryItem);

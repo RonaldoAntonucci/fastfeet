@@ -80,7 +80,15 @@ class Delivery extends Model {
       include: [
         {
           model: models.Recipient,
-          attributes: ['id', 'name', 'city'],
+          attributes: [
+            'id',
+            'name',
+            'city',
+            'street',
+            'number',
+            'state',
+            'zip',
+          ],
           required: false,
         },
         { model: models.Deliveryman, attributes: ['id', 'name'] },

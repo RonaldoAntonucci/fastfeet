@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { Dimensions } from 'react-native';
 
 import colors from '~/styles/colors';
 
@@ -20,6 +19,7 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   flex: 1;
+  position: absolute;
 `;
 
 export const StatusBar = styled.StatusBar.attrs(() => ({

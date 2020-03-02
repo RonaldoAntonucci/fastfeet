@@ -41,9 +41,11 @@ export const Content = styled.ScrollView.attrs({
   contentContainerStyle: { padding: 18 },
 })`
   flex: 1;
+  height: ${`${Dimensions.get('window').height - 150}px`};
+  align-self: stretch;
 `;
 
-export const Card = styled.View.attrs()`
+export const Card = styled.View`
   background-color: ${colors.bg};
   margin-top: 10px;
   border-radius: 4px;
@@ -82,10 +84,28 @@ export const CardValue = styled.Text`
   color: ${colors.font};
 `;
 
-export const ButtonContent = styled.View`
-  flex: 1;
+export const CardActions = styled.View`
+  border-radius: 4px;
+  padding: 0px;
 `;
 
-export const ActionButton = styled(RectButton)``;
+export const ButtonContent = styled.View`
+  flex: 1;
+  border: 2px solid ${colors.border};
+  background-color: ${colors.secondary};
+  padding: 15px;
+`;
 
-export const ButtonText = styled.Text``;
+export const ActionButton = styled(RectButton)`
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  border: 2px solid black;
+`;
+
+export const ButtonText = styled.Text`
+  font-size: 12px;
+  font-weight: bold;
+  color: ${colors.fontLight};
+`;

@@ -32,22 +32,15 @@ export default {
     // }
 
     if (deliverymanId) {
-      const { rows: data, count } = await Delivery.scope([
-        {
-          method: ['deliverymanId', deliverymanId],
-        },
-        {
-          method: ['delivered', delivered],
-        },
-      ]).findAndCountAll({
+      const { rows: data, count } = await Delivery.findAndCountAll({
         limit: quantity,
         offset: (page - 1) * quantity,
-        where: {
-          product: {
-            [Op.like]: `%${product}%`,
-          },
-        },
         order: [['updated_at', 'DESC']],
+        where: {
+          deliveryman_id: deliverymanId,
+          end_date:
+            delivered && delivered !== 'false' ? { [Op.ne]: null } : null,
+        },
       });
 
       const result = { data, count, totalPages: Math.ceil(count / quantity) };

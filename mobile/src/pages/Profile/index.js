@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect, useState } from 'react';
+import React, { useCallback, useMemo, useEffect, useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import pt from 'date-fns/locale/pt';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ import {
 
 import { signOut } from '~/store/modules/auth/actions';
 
-export default function Profile() {
+function Profile() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.profile);
 
@@ -67,3 +67,5 @@ export default function Profile() {
     </Container>
   );
 }
+
+export default memo(Profile);

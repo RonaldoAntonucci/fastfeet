@@ -16,13 +16,25 @@ import colors from '~/styles/colors';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const DeliveriesStack = createStackNavigator();
+
+function DeliveriesStackScreen() {
+  return (
+    <DeliveriesStack.Navigator headerMode="none">
+      <DeliveriesStack.Screen
+        name="Deliveries"
+        component={Deliveries}
+      ></DeliveriesStack.Screen>
+    </DeliveriesStack.Navigator>
+  );
+}
+
 export default function Routes({ signed }) {
   return (
     <>
       <StatusBar
         barStyle={`${signed ? 'dark' : 'light'}-content`}
         backgroundColor={!signed ? colors.primary : colors.bg}
-        hidden
       />
       <NavigationContainer>
         {!signed ? (
@@ -37,7 +49,7 @@ export default function Routes({ signed }) {
           >
             <Tab.Screen
               name="deliveries"
-              component={Deliveries}
+              component={DeliveriesStackScreen}
               options={{
                 tabBarLabel: 'Entregas',
                 tabBarIcon: 'reorder',

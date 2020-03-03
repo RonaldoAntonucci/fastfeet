@@ -19,7 +19,7 @@ export default function ProblemsForm({
 
   const handleSubmit = useCallback(
     async ({ description }) => {
-      if (description.length > 400) {
+      if (description.length > 400 || description.length < 10) {
         Alert.alert('Máximo de 400 caracteres.');
         return;
       }

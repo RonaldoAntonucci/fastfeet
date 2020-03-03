@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState, useCallback, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
@@ -46,14 +46,18 @@ function Deliveries({ navigation }) {
 
   useEffect(() => {
     const getData = async () => {
-      const {
-        data: { data },
-      } = await api.get(`/deliverymen/${user.id}/deliveries`, {
-        params: {
-          delivered,
-        },
-      });
-      setDeliveries(data);
+      try {
+        const {
+          data: { data },
+        } = await api.get(`/deliverymen/${user.id}/deliveries`, {
+          params: {
+            delivered,
+          },
+        });
+        setDeliveries(data);
+      } catch (err) {
+        Alert.alert('Não foi possível carregar as entregas');
+      }
     };
     getData();
 

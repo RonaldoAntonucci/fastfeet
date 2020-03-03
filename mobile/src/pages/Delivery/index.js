@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import pt from 'date-fns/locale/pt';
 import { format } from 'date-fns';
 
@@ -61,11 +61,15 @@ export default function Delivery({
   );
 
   const handleWithdraw = useCallback(async () => {
-    const response = await api.post(
-      `/deliverymen/${user.id}/deliveries/${DeliveryItem.id}/withdraw`,
-      { start_date: new Date() }
-    );
-    setDeliveryItem(response.data);
+    try {
+      const response = await api.post(
+        `/deliverymen/${user.id}/deliveries/${DeliveryItem.id}/withdraw`,
+        { start_date: new Date() }
+      );
+      setDeliveryItem(response.data);
+    } catch (err) {
+      Alert.alert('Não foi possível confirmar a retirada');
+    }
   }, [DeliveryItem, user]);
 
   return (

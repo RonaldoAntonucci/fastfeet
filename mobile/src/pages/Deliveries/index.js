@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 
 import Delivery from '~/components/DeliveryItem';
+import Loading from '~/components/Loading';
 
 import {
   Container,
@@ -33,6 +34,7 @@ function Deliveries({ navigation }) {
   const [avatarImageUrl, setAvatarImageUrl] = useState();
   const [delivered, setDelivered] = useState(false);
   const [deliveries, setDeliveries] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (user.avatar_url) {
@@ -47,6 +49,7 @@ function Deliveries({ navigation }) {
   useEffect(() => {
     const getData = async () => {
       try {
+        setLoading(true);
         const {
           data: { data },
         } = await api.get(`/deliverymen/${user.id}/deliveries`, {
@@ -55,8 +58,10 @@ function Deliveries({ navigation }) {
           },
         });
         setDeliveries(data);
+        setLoading(false);
       } catch (err) {
         Alert.alert('Não foi possível carregar as entregas');
+        setLoading(false);
       }
     };
     getData();
@@ -90,7 +95,7 @@ function Deliveries({ navigation }) {
         <TableHeaderButton>
           <TableHeaderButtonText
             selected={!delivered}
-            onPress={() => setDelivered(false)}
+            onPress={!loading ? () => setDelivered(false) : () => {}}
           >
             Pendentes
           </TableHeaderButtonText>
@@ -98,22 +103,30 @@ function Deliveries({ navigation }) {
         <TableHeaderButton>
           <TableHeaderButtonText
             selected={delivered}
-            onPress={() => setDelivered(true)}
+            onPress={!loading ? () => setDelivered(true) : () => {}}
           >
             Entregues
           </TableHeaderButtonText>
         </TableHeaderButton>
       </TableHeader>
-      <DeliveriesList
-        data={deliveries}
-        keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => (
-          <Delivery
-            data={item}
-            handleDetails={() => navigation.navigate('Delivery', { item })}
-          />
-        )}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <DeliveriesList
+          data={deliveries}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => (
+            <Delivery
+              data={item}
+              handleDetails={
+                !loading
+                  ? () => navigation.navigate('Delivery', { item })
+                  : () => {}
+              }
+            />
+          )}
+        />
+      )}
     </Container>
   );
 }

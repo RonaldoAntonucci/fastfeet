@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ActivityIndicator } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -7,9 +7,15 @@ import { Container, Text } from './styles';
 
 import colors from '~/styles/colors';
 
-export default function Button({ children, loading, ...rest }) {
+export default function Button({ children, loading, onPress, ...rest }) {
+  const handleClick = useMemo(() => (loading ? () => {} : onPress), [
+    loading,
+    onPress,
+  ]);
+
   return (
-    <Container {...rest}>
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Container {...rest} onPress={handleClick}>
       {loading ? (
         <ActivityIndicator size="small" color={colors.white} />
       ) : (
@@ -21,8 +27,10 @@ export default function Button({ children, loading, ...rest }) {
 Button.propTypes = {
   children: PropTypes.string.isRequired,
   loading: PropTypes.bool,
+  onPress: PropTypes.func,
 };
 
 Button.defaultProps = {
   loading: false,
+  onPress: () => {},
 };

@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import api from '~/services/api';
 
 import Container from '~/components/PageContainer';
+import Loading from '~/components/Loading';
 
 import colors from '~/styles/colors';
 
@@ -33,6 +34,7 @@ export default function Delivery({
 }) {
   const user = useSelector(state => state.user.profile);
   const [DeliveryItem, setDeliveryItem] = useState(item);
+  const [loading, setLoading] = useState(false);
 
   const formatedStartedAt = useMemo(
     () =>
@@ -62,15 +64,23 @@ export default function Delivery({
 
   const handleWithdraw = useCallback(async () => {
     try {
+      setLoading(true);
       const response = await api.post(
         `/deliverymen/${user.id}/deliveries/${DeliveryItem.id}/withdraw`,
         { start_date: new Date() }
       );
       setDeliveryItem(response.data);
+      setLoading(false);
     } catch (err) {
-      Alert.alert('Não foi possível confirmar a retirada');
+      if (err.message === 'Request failed with status code 400') {
+        Alert.alert('Entregas só podem ser retiradas até as 18:00');
+      } else {
+        Alert.alert('Não foi possível confirmar a retirada');
+      }
+
+      setLoading(false);
     }
-  }, [DeliveryItem, user]);
+  }, [DeliveryItem.id, user.id]);
 
   return (
     <Container
@@ -138,46 +148,62 @@ export default function Delivery({
               {DeliveryItem.status !== 'PENDENTE' ? (
                 <>
                   <ButtonContent>
-                    <ActionButton
-                      onPress={() =>
-                        navigation.navigate('ProblemForm', {
-                          deliveryId: DeliveryItem.id,
-                        })
-                      }
-                    >
-                      <Icon name="highlight-off" color={colors.red} />
-                      <ButtonText>Informar</ButtonText>
-                      <ButtonText>Problema</ButtonText>
-                    </ActionButton>
+                    {loading ? (
+                      <Loading />
+                    ) : (
+                      <ActionButton
+                        onPress={() =>
+                          navigation.navigate('ProblemForm', {
+                            deliveryId: DeliveryItem.id,
+                          })
+                        }
+                      >
+                        <Icon name="highlight-off" color={colors.red} />
+                        <ButtonText>Informar</ButtonText>
+                        <ButtonText>Problema</ButtonText>
+                      </ActionButton>
+                    )}
                   </ButtonContent>
                   <ButtonContent>
-                    <ActionButton
-                      onPress={() =>
-                        navigation.navigate('ProblemsList', {
-                          deliveryId: DeliveryItem.id,
-                        })
-                      }
-                    >
-                      <Icon name="info-outline" color={colors.yellow} />
-                      <ButtonText>Visualizar</ButtonText>
-                      <ButtonText>Problemas</ButtonText>
-                    </ActionButton>
+                    {loading ? (
+                      <Loading />
+                    ) : (
+                      <ActionButton
+                        onPress={() =>
+                          navigation.navigate('ProblemsList', {
+                            deliveryId: DeliveryItem.id,
+                          })
+                        }
+                      >
+                        <Icon name="info-outline" color={colors.yellow} />
+                        <ButtonText>Visualizar</ButtonText>
+                        <ButtonText>Problemas</ButtonText>
+                      </ActionButton>
+                    )}
                   </ButtonContent>
                   <ButtonContent>
-                    <ActionButton>
-                      <Icon name="alarm-on" />
-                      <ButtonText>Confirmar</ButtonText>
-                      <ButtonText>Entrega</ButtonText>
-                    </ActionButton>
+                    {loading ? (
+                      <Loading />
+                    ) : (
+                      <ActionButton>
+                        <Icon name="alarm-on" />
+                        <ButtonText>Confirmar</ButtonText>
+                        <ButtonText>Entrega</ButtonText>
+                      </ActionButton>
+                    )}
                   </ButtonContent>
                 </>
               ) : (
                 <ButtonContent>
-                  <ActionButton onPress={handleWithdraw}>
-                    <Icon name="assignment-return" />
-                    <ButtonText>Confirmar</ButtonText>
-                    <ButtonText>Retirada</ButtonText>
-                  </ActionButton>
+                  {loading ? (
+                    <Loading />
+                  ) : (
+                    <ActionButton onPress={handleWithdraw}>
+                      <Icon name="assignment-return" />
+                      <ButtonText>Confirmar</ButtonText>
+                      <ButtonText>Retirada</ButtonText>
+                    </ActionButton>
+                  )}
                 </ButtonContent>
               )}
             </CardRow>

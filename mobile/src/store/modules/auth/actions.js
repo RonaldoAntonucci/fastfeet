@@ -23,3 +23,10 @@ export function signOut() {
     type: '@auth/SIGN_OUT',
   };
 }
+
+export function setLoading(loading) {
+  return {
+    type: '@auth/SET_LOADING',
+    payload: loading,
+  };
+}

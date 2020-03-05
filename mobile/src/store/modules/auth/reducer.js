@@ -26,6 +26,10 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.signed = false;
         break;
       }
+      case '@auth/SET_LOADING': {
+        draft.loading = action.payload;
+        break;
+      }
       default:
     }
   });

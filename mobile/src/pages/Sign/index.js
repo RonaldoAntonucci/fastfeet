@@ -1,10 +1,10 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Form } from '@unform/mobile';
 import Input from '~/components/Input';
 
-import { signInRequest } from '~/store/modules/auth/actions';
+import { signInRequest, setLoading } from '~/store/modules/auth/actions';
 
 import { Container, Logo, SignButton } from './styles';
 
@@ -19,6 +19,11 @@ export default function Sign() {
     },
     [dispatch]
   );
+
+  useEffect(() => {
+    dispatch(setLoading(false));
+    console.tron.log(loading);
+  });
 
   return (
     <Container>

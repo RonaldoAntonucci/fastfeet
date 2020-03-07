@@ -16,6 +16,8 @@ import Delivery from '~/pages/Delivery';
 import ProblemForm from '~/pages/Problems/ProblemForm';
 import ProblemsList from '~/pages/Problems/ProblemsList';
 
+import DeliverConfirm from '~/pages/DeliverConfirm';
+
 import colors from '~/styles/colors';
 
 const Stack = createStackNavigator();
@@ -41,6 +43,10 @@ function DeliveriesStackScreen() {
       <DeliveriesStack.Screen
         name="ProblemsList"
         component={ProblemsList}
+      ></DeliveriesStack.Screen>
+      <DeliveriesStack.Screen
+        name="DeliverConfirm"
+        component={DeliverConfirm}
       ></DeliveriesStack.Screen>
     </DeliveriesStack.Navigator>
   );

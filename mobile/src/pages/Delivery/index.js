@@ -185,7 +185,13 @@ export default function Delivery({
                     {loading ? (
                       <Loading />
                     ) : (
-                      <ActionButton>
+                      <ActionButton
+                        onPress={() =>
+                          navigation.navigate('DeliverConfirm', {
+                            deliveryId: DeliveryItem.id,
+                          })
+                        }
+                      >
                         <Icon name="alarm-on" />
                         <ButtonText>Confirmar</ButtonText>
                         <ButtonText>Entrega</ButtonText>

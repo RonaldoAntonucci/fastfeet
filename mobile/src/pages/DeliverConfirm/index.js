@@ -13,12 +13,15 @@ import {
   Content,
   CameraContent,
   Camera,
+  SnapButtonContent,
+  SnapButton,
+  SnapIcon,
   Preview,
   ButtonsPreviewContent,
   ButtonsPreview,
   ButtonsPreviewIcon,
-  ButtonContent,
-  Button,
+  // ButtonContent,
+  // Button,
 } from './styles';
 
 export default function DeliverConfirm({
@@ -80,29 +83,31 @@ export default function DeliverConfirm({
               pauseAfterCapture
               autoFocus={Camera.Constants.AutoFocus.on}
               flashMode={Camera.Constants.FlashMode.off}
-            />
+            >
+              <SnapButtonContent>
+                <SnapButton onPress={takePicture}>
+                  <SnapIcon />
+                </SnapButton>
+              </SnapButtonContent>
+            </Camera>
           </CameraContent>
 
-          <ButtonContent>
+          {/* <ButtonContent>
             <Button onPress={takePicture}>Confirmar</Button>
-          </ButtonContent>
+          </ButtonContent> */}
         </Content>
       ) : (
         <CameraContent>
-          {loading ? (
-            <Loading />
-          ) : (
-            <Preview source={{ uri: imageUri }}>
-              <ButtonsPreviewContent>
-                <ButtonsPreview onPress={() => setImageUri(null)}>
-                  <ButtonsPreviewIcon name="close" />
-                </ButtonsPreview>
-                <ButtonsPreview>
-                  <ButtonsPreviewIcon name="check" onPress={handleUploadImg} />
-                </ButtonsPreview>
-              </ButtonsPreviewContent>
-            </Preview>
-          )}
+          <Preview source={{ uri: imageUri }}>
+            <ButtonsPreviewContent>
+              <ButtonsPreview onPress={() => setImageUri(null)}>
+                <ButtonsPreviewIcon name="close" />
+              </ButtonsPreview>
+              <ButtonsPreview>
+                <ButtonsPreviewIcon name="check" onPress={handleUploadImg} />
+              </ButtonsPreview>
+            </ButtonsPreviewContent>
+          </Preview>
         </CameraContent>
       )}
     </Container>

@@ -23,6 +23,30 @@ export const Camera = styled(RNCamera)`
   border-radius: 8px;
 `;
 
+export const SnapButtonContent = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  padding-bottom: 22px;
+`;
+
+export const SnapButton = styled.TouchableOpacity`
+  height: 62px;
+  width: 62px;
+  border-radius: 31px;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.3);
+`;
+
+export const SnapIcon = styled(Icon).attrs(() => ({
+  name: 'camera-alt',
+  size: 26,
+  color: colors.bg,
+}))``;
+
 export const Preview = styled.ImageBackground`
   flex: 1;
   justify-content: flex-end;

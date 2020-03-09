@@ -9,9 +9,9 @@ describe('Deliveryman Show', () => {
     await truncate();
   });
 
-  onlyAuth({ path: '/deliverymen/naoImporta', method: 'get' });
+  // onlyAuth({ path: '/deliverymen/naoImporta', method: 'get' });
 
-  onlyAdmin({ path: '/deliverymen/naoImporta', method: 'get' });
+  // onlyAdmin({ path: '/deliverymen/naoImporta', method: 'get' });
 
   it('Should can be Show a Deliveryman', async () => {
     const [token, deliveryman] = await Promise.all([

@@ -1,14 +1,14 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Form } from '@unform/mobile';
 import Input from '~/components/Input';
 
-import { signInRequest, setLoading } from '~/store/modules/auth/actions';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 import { Container, Logo, SignButton } from './styles';
 
-export default function Sign() {
+const SignIn = () => {
   const formRef = useRef(null);
   const loading = useSelector(state => state.auth.loading);
   const dispatch = useDispatch();
@@ -19,11 +19,6 @@ export default function Sign() {
     },
     [dispatch]
   );
-
-  useEffect(() => {
-    dispatch(setLoading(false));
-    console.tron.log(loading);
-  });
 
   return (
     <Container>
@@ -47,4 +42,6 @@ export default function Sign() {
       </Form>
     </Container>
   );
-}
+};
+
+export default SignIn;

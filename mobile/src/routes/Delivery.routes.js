@@ -3,15 +3,14 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Deliveries from '~/pages/Deliveries';
-// import DeliveryConfirmPhoto from '~/pages/DeliveryConfirmPhoto';
-// import DeliveryDetails from '~/pages/DeliveryDetails';
-
 import Delivery from '~/pages/Delivery';
 
 import ProblemForm from '~/pages/Problems/ProblemForm';
 import ProblemsList from '~/pages/Problems/ProblemsList';
 
 import DeliverConfirm from '~/pages/DeliverConfirm';
+
+import colors from '~/styles/colors';
 
 const Stack = createStackNavigator();
 
@@ -24,7 +23,7 @@ export default function DeliveryRoutes() {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-        headerTintColor: '#fff',
+        headerTintColor: colors.bg,
         headerTransparent: true,
       }}
       initialRouteName="Deliveries"

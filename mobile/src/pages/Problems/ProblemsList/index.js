@@ -1,14 +1,15 @@
 import React, { memo, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import pt from 'date-fns/locale/pt';
 import { format } from 'date-fns';
-import { View, Text } from 'react-native';
 
 import api from '~/services/api';
 
-import Container from '~/components/PageContainer';
+import Background from '~/components/Background';
 
 import {
+  Container,
   TitleContainer,
   ListTitle,
   Content,
@@ -18,12 +19,11 @@ import {
   CardDate,
 } from './styles';
 
-function ProblemsList({
-  navigation,
+const ProblemsList = ({
   route: {
     params: { deliveryId },
   },
-}) {
+}) => {
   const [problems, setProblems] = useState([]);
   const deliverymanId = useSelector(state => state.user.profile.id);
 
@@ -42,13 +42,8 @@ function ProblemsList({
   }, [deliveryId, deliverymanId]);
 
   return (
-    <Container
-      title="Visualizar Problemas"
-      handleBack={() => {
-        navigation.goBack();
-      }}
-    >
-      <>
+    <Background>
+      <Container>
         <TitleContainer>
           <ListTitle>Encomenda {deliveryId}</ListTitle>
         </TitleContainer>
@@ -70,9 +65,15 @@ function ProblemsList({
             )}
           />
         </Content>
-      </>
-    </Container>
+      </Container>
+    </Background>
   );
-}
+};
+
+ProblemsList.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({ deliveryId: PropTypes.number }).isRequired,
+  }).isRequired,
+};
 
 export default memo(ProblemsList);

@@ -4,6 +4,11 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import colors from '~/styles/colors';
 
+export const Container = styled.ScrollView.attrs(() => ({
+  showsVerticalIndicator: false,
+  contentContainerStyle: { padding: 20 },
+}))``;
+
 export const Icon = styled(StyledIcon).attrs(({ color }) => ({
   size: 24,
   color: color || colors.primary,

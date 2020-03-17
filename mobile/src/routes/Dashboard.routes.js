@@ -1,9 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { StatusBar } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import PropTypes from 'prop-types';
+import TabBar from '~/components/TabBar';
 
 import Profile from '~/pages/Profile';
 import DeliveryRoutes from '~/routes/Delivery.routes';
@@ -14,30 +14,21 @@ const Tab = createBottomTabNavigator();
 export default function Dashboard() {
   return (
     <>
-      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-      <Tab.Navigator
-        tabBarOptions={{
-          activeTintColor: colors.primary,
-        }}
-      >
+      <StatusBar backgroundColor={colors.bg} barStyle="dark-content" />
+      <Tab.Navigator tabBar={props => <TabBar {...props} />}>
         <Tab.Screen
           name="Entregas"
           options={{
-            // eslint-disable-next-line react/prop-types
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="reorder" size={size} color={color} />
-            ),
+            tabBarLabel: 'Entregas',
+            tabBarIcon: 'reorder',
           }}
           component={DeliveryRoutes}
         />
         <Tab.Screen
           name="Profile"
           options={{
-            tabBarLabel: 'Meu Perfil',
-            // eslint-disable-next-line react/prop-types
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="account-circle" size={size} color={color} />
-            ),
+            tabBarLabel: 'Meu perfil',
+            tabBarIcon: 'account-circle',
           }}
           component={Profile}
         />

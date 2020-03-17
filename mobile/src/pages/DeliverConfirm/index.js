@@ -6,7 +6,7 @@ import { Alert } from 'react-native';
 
 import api from '~/services/api';
 
-import Container from '~/components/PageContainer';
+import Background from '~/components/Background';
 import Loading from '~/components/Loading';
 
 import {
@@ -71,7 +71,7 @@ export default function DeliverConfirm({
   }, [deliveryId, imageUri, navigation, user.id]);
 
   return (
-    <Container title="Confirmar Entrega" handleBack={() => navigation.goBack()}>
+    <Background>
       {loading ? (
         <Loading />
       ) : !imageUri ? (
@@ -110,7 +110,7 @@ export default function DeliverConfirm({
           </Preview>
         </CameraContent>
       )}
-    </Container>
+    </Background>
   );
 }
 

@@ -7,12 +7,13 @@ import { format } from 'date-fns';
 
 import api from '~/services/api';
 
-import Container from '~/components/PageContainer';
+import Background from '~/components/Background';
 import Loading from '~/components/Loading';
 
 import colors from '~/styles/colors';
 
 import {
+  Container,
   Icon,
   Card,
   CardTitleContainer,
@@ -83,14 +84,8 @@ export default function Delivery({
   }, [DeliveryItem.id, user.id]);
 
   return (
-    <Container
-      handleBack={() => {
-        navigation.goBack();
-      }}
-      title="Detalhes da encomenda"
-      scroll
-    >
-      <>
+    <Background>
+      <Container>
         <Card>
           <CardTitleContainer>
             <Icon name="local-shipping" />
@@ -215,8 +210,8 @@ export default function Delivery({
             </CardRow>
           </CardActions>
         )}
-      </>
-    </Container>
+      </Container>
+    </Background>
   );
 }
 

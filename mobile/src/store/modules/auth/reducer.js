@@ -1,4 +1,6 @@
 import produce from 'immer';
+import AsyncStorage from '@react-native-community/async-storage';
+import { persistReducer } from 'redux-persist';
 
 const INITIAL_STATE = {
   id: null,
@@ -6,7 +8,7 @@ const INITIAL_STATE = {
   loading: false,
 };
 
-export default function auth(state = INITIAL_STATE, action) {
+const auth = (state = INITIAL_STATE, action) => {
   return produce(state, draft => {
     switch (action.type) {
       case '@auth/SIGN_IN_REQUEST': {
@@ -35,4 +37,12 @@ export default function auth(state = INITIAL_STATE, action) {
       default:
     }
   });
-}
+};
+
+const persistConfig = {
+  key: 'auth',
+  storage: AsyncStorage,
+  blacklist: ['loading'],
+};
+
+export default persistReducer(persistConfig, auth);

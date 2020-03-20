@@ -1,12 +1,13 @@
 import styled from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
+import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
 import colors from '~/styles/colors';
 
 export const Container = styled.View`
   flex: 1;
   align-items: center;
-  padding: 20px;
+  padding: 18px;
 
   background-color: ${colors.bg};
 `;
@@ -71,9 +72,9 @@ export const TableHeaderButtonText = styled.Text`
   text-decoration: ${props => (props.selected ? 'underline' : 'none')};
 `;
 
-export const List = styled.FlatList.attrs({
+export const List = styled(OptimizedFlatList).attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { padding: 20 },
+  // contentContainerStyle: { padding: 20 },
   removeClippedSubviews: true,
   initialNumToRender: 10,
   onEndReachedThreshold: 0.5,

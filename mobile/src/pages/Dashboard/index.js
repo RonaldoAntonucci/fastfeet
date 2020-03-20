@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import pt from 'date-fns/locale/pt';
+import { format } from 'date-fns';
 import { View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -26,7 +29,7 @@ import {
 
 import { signOut } from '~/store/modules/auth/actions';
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state?.user?.profile);
   const auth = useSelector(state => state.auth);
@@ -54,48 +57,35 @@ const Dashboard = () => {
     }
   }, [loading]);
 
-  // eslint-disable-next-line react/prop-types
-  const renderItem = ({ item }) => <DeliveryCard data={item} />;
-
   const loadMoreDeliveries = useCallback(async () => {
     if (loading || page + 1 > totalPages) {
       return;
     }
     try {
       setLoading(true);
-      const newPage = page + 1;
-      setPage(newPage);
+
       const { data } = await api.get(`/deliverymen/${auth.id}/deliveries`, {
         params: {
           delivered,
-          page: newPage,
+          page: page + 1,
+          quantity: 10,
         },
       });
 
-      const { data: data2 } = await api.get(
-        `/deliverymen/${auth.id}/deliveries`,
-        {
-          params: {
-            delivered,
-            page: newPage + 1,
-          },
-        }
-      );
-
-      // // teste
-      const d1Ids = data.data.map(d => d.id);
-      const d2Ids = data2.data.map(d => d.id);
-
-      console.tron.log(d1Ids.filter(x => d2Ids.includes(x)));
-
-      // teste
-
       const newData = [
         ...deliveries,
-        ...data.data.map(d => ({ ...d, id: String(d.id) })),
+        ...data.data.map(d => ({
+          ...d,
+          id: String(d.id),
+          createdAt: format(new Date(d.createdAt), "dd'/'MM'/'y", {
+            locale: pt,
+          }),
+        })),
       ];
+
       setDeliveries(newData);
       setTotalPages(data.totalPages);
+      setPage(page + 1);
       setLoading(false);
     } catch (err) {
       Alert.alert('Não foi possível carregar as entregas');
@@ -118,11 +108,20 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getItemLayout = (data, index) => ({
-    length: 170,
-    offset: 170 * index,
-    index,
-  });
+  const handleDetails = useCallback(
+    item => {
+      if (loading) {
+        return () => {};
+      }
+      return navigation.navigate('Delivery', { item });
+    },
+    [loading, navigation]
+  );
+
+  // eslint-disable-next-line react/prop-types
+  const renderItem = ({ item }) => (
+    <DeliveryCard data={item} handleDetails={handleDetails} />
+  );
 
   return (
     <Container>
@@ -155,13 +154,19 @@ const Dashboard = () => {
 
       <List
         data={deliveries}
+        // eslint-disable-next-line react/prop-types
         keyExtractor={item => item.id}
         renderItem={renderItem}
-        getItemLayout={getItemLayout}
         onEndReached={loadMoreDeliveries}
       />
     </Container>
   );
+};
+
+Dashboard.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Dashboard;

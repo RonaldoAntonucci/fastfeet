@@ -2,6 +2,8 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Dashboard from '~/pages/Dashboard';
+
 import Deliveries from '~/pages/Deliveries';
 import Delivery from '~/pages/Delivery';
 
@@ -26,7 +28,7 @@ export default function DeliveryRoutes() {
         headerTintColor: colors.bg,
         headerTransparent: true,
       }}
-      initialRouteName="Deliveries"
+      initialRouteName="Dashboard"
     >
       <Stack.Screen
         options={{ headerShown: false }}
@@ -60,6 +62,11 @@ export default function DeliveryRoutes() {
           title: 'Confirmar entrega',
         }}
         component={DeliverConfirm}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Dashboard"
+        component={Dashboard}
       />
     </Stack.Navigator>
   );

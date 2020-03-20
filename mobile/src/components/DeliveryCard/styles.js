@@ -4,7 +4,7 @@ import colors from '~/styles/colors';
 
 export const Container = styled.View`
   width: 100%;
-  background-color: ${colors.secondary};
+  background-color: ${colors.primary};
   padding: 1px;
   border-radius: 4px;
   margin-bottom: 28px;

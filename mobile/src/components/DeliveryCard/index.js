@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 
 import { Container } from './styles';
 
-export default function DeliveryCard() {
+const DeliveryCard = ({ data }) => {
   return (
     <Container>
-      <Text>DELIVERY</Text>
+      <Text>DELIVERY {data.id}</Text>
     </Container>
   );
-}
+};
+
+export default memo(DeliveryCard);

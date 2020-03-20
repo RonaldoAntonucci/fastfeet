@@ -34,7 +34,8 @@ const Dashboard = () => {
   const [avatarImageUrl, setAvatarImageUrl] = useState();
   const [delivered, setDelivered] = useState(false);
   const [deliveries, setDeliveries] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
   const handleLogOut = useCallback(() => {
@@ -57,24 +58,50 @@ const Dashboard = () => {
   const renderItem = ({ item }) => <DeliveryCard data={item} />;
 
   const loadMoreDeliveries = useCallback(async () => {
-    if (loading) {
+    if (loading || page + 1 > totalPages) {
       return;
     }
     try {
       setLoading(true);
+      const newPage = page + 1;
+      setPage(newPage);
       const { data } = await api.get(`/deliverymen/${auth.id}/deliveries`, {
         params: {
           delivered,
-          page,
+          page: newPage,
         },
       });
-      setDeliveries([...deliveries, ...data.data]);
+
+      const { data: data2 } = await api.get(
+        `/deliverymen/${auth.id}/deliveries`,
+        {
+          params: {
+            delivered,
+            page: newPage + 1,
+          },
+        }
+      );
+
+      // // teste
+      const d1Ids = data.data.map(d => d.id);
+      const d2Ids = data2.data.map(d => d.id);
+
+      console.tron.log(d1Ids.filter(x => d2Ids.includes(x)));
+
+      // teste
+
+      const newData = [
+        ...deliveries,
+        ...data.data.map(d => ({ ...d, id: String(d.id) })),
+      ];
+      setDeliveries(newData);
+      setTotalPages(data.totalPages);
       setLoading(false);
     } catch (err) {
       Alert.alert('Não foi possível carregar as entregas');
       setLoading(false);
     }
-  }, [auth.id, delivered, deliveries, loading, page]);
+  }, [auth.id, delivered, deliveries, loading, page, totalPages]);
 
   useEffect(() => {
     if (user?.avatar_url) {
@@ -90,6 +117,12 @@ const Dashboard = () => {
     loadMoreDeliveries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getItemLayout = (data, index) => ({
+    length: 170,
+    offset: 170 * index,
+    index,
+  });
 
   return (
     <Container>
@@ -122,8 +155,10 @@ const Dashboard = () => {
 
       <List
         data={deliveries}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={item => item.id}
         renderItem={renderItem}
+        getItemLayout={getItemLayout}
+        onEndReached={loadMoreDeliveries}
       />
     </Container>
   );

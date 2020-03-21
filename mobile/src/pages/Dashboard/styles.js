@@ -75,7 +75,7 @@ export const TableHeaderButtonText = styled.Text`
 export const List = styled(OptimizedFlatList).attrs({
   showsVerticalScrollIndicator: false,
   // contentContainerStyle: { padding: 20 },
-  removeClippedSubviews: true,
+  // removeClippedSubviews: true,
   initialNumToRender: 10,
   onEndReachedThreshold: 0.5,
 })`

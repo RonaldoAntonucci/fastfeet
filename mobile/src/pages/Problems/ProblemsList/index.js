@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import pt from 'date-fns/locale/pt';
 import { format } from 'date-fns';
+import { Alert } from 'react-native';
 
 import api from '~/services/api';
 
@@ -37,7 +38,7 @@ const ProblemsList = ({
     try {
       getData();
     } catch (err) {
-      console.tron.log(err);
+      Alert.alert('Não foi possível carregar os problemas.');
     }
   }, [deliveryId, deliverymanId]);
 

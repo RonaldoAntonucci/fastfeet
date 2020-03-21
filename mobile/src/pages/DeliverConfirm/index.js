@@ -61,7 +61,7 @@ export default function DeliverConfirm({
         imgData
       );
       setLoading(false);
-      navigation.navigate('Deliveries');
+      navigation.navigate('Dashboard');
     } catch (err) {
       setLoading(false);
       Alert.alert(
@@ -116,7 +116,7 @@ export default function DeliverConfirm({
 
 DeliverConfirm.propTypes = {
   route: PropTypes.shape({
-    params: PropTypes.shape({ deliveryId: PropTypes.number.isRequired })
+    params: PropTypes.shape({ deliveryId: PropTypes.string.isRequired })
       .isRequired,
   }).isRequired,
   navigation: PropTypes.shape({

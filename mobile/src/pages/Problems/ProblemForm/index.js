@@ -63,7 +63,7 @@ export default function ProblemsForm({
 
 ProblemsForm.propTypes = {
   route: PropTypes.shape({
-    params: PropTypes.shape({ deliveryId: PropTypes.number.isRequired })
+    params: PropTypes.shape({ deliveryId: PropTypes.string.isRequired })
       .isRequired,
   }).isRequired,
 };

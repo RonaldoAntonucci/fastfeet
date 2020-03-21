@@ -6,7 +6,6 @@ import { Container, BarButton, Label, BarIcon } from './styles';
 function TabBar({ state, descriptors, navigation }) {
   return (
     <Container>
-      {console.tron.log('teste')}
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =

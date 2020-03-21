@@ -11,6 +11,7 @@ import colors from '~/styles/colors';
 import api from '~/services/api';
 
 import DeliveryCard from '~/components/DeliveryCard';
+import Loading from '~/components/Loading';
 
 import {
   Container,
@@ -40,6 +41,7 @@ const Dashboard = ({ navigation }) => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [firstLoading, setFirstLoading] = useState(true);
 
   const handleLogOut = useCallback(() => {
     dispatch(signOut());
@@ -87,11 +89,14 @@ const Dashboard = ({ navigation }) => {
       setTotalPages(data.totalPages);
       setPage(page + 1);
       setLoading(false);
+      if (firstLoading) {
+        setFirstLoading(false);
+      }
     } catch (err) {
       Alert.alert('Não foi possível carregar as entregas');
       setLoading(false);
     }
-  }, [auth.id, delivered, deliveries, loading, page, totalPages]);
+  }, [auth.id, delivered, deliveries, firstLoading, loading, page, totalPages]);
 
   useEffect(() => {
     if (user?.avatar_url) {
@@ -108,6 +113,10 @@ const Dashboard = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    console.tron.log('teste');
+  }, []);
+
   const handleDetails = useCallback(
     item => {
       if (loading) {
@@ -120,8 +129,15 @@ const Dashboard = ({ navigation }) => {
 
   // eslint-disable-next-line react/prop-types
   const renderItem = ({ item }) => (
-    <DeliveryCard data={item} handleDetails={handleDetails} />
+    <DeliveryCard data={item} handleDetails={() => handleDetails(item)} />
   );
+
+  const renderFooter = useCallback(() => {
+    if (loading) {
+      return null;
+    }
+    return <Loading />;
+  }, [loading]);
 
   return (
     <Container>
@@ -152,13 +168,18 @@ const Dashboard = ({ navigation }) => {
         </TableHeaderButton>
       </TableHeader>
 
-      <List
-        data={deliveries}
-        // eslint-disable-next-line react/prop-types
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-        onEndReached={loadMoreDeliveries}
-      />
+      {firstLoading ? (
+        <Loading />
+      ) : (
+        <List
+          data={deliveries}
+          // eslint-disable-next-line react/prop-types
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+          onEndReached={loadMoreDeliveries}
+          ListFooterComponent={renderFooter}
+        />
+      )}
     </Container>
   );
 };

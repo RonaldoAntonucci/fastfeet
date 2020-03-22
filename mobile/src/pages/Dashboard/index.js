@@ -1,17 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import pt from 'date-fns/locale/pt';
-import { format } from 'date-fns';
-import { View, Alert } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import colors from '~/styles/colors';
 
-import api from '~/services/api';
-
-import DeliveryCard from '~/components/DeliveryCard';
-import Loading from '~/components/Loading';
+import List from './List';
 
 import {
   Container,
@@ -21,82 +16,20 @@ import {
   Welcome,
   UserName,
   SignOutButton,
-  TableHeader,
-  TableHeaderTitle,
-  TableHeaderButton,
-  TableHeaderButtonText,
-  List,
 } from './styles';
 
 import { signOut } from '~/store/modules/auth/actions';
+import { loadMoreRequest } from '~/store/modules/deliveries/actions';
 
 const Dashboard = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state?.user?.profile);
-  const auth = useSelector(state => state.auth);
 
   const [avatarImageUrl, setAvatarImageUrl] = useState();
-  const [delivered, setDelivered] = useState(false);
-  const [deliveries, setDeliveries] = useState([]);
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [firstLoading, setFirstLoading] = useState(true);
 
   const handleLogOut = useCallback(() => {
     dispatch(signOut());
   }, [dispatch]);
-
-  const handleDelivered = useCallback(() => {
-    if (!loading) {
-      setDelivered(true);
-    }
-  }, [loading]);
-
-  const handlePeding = useCallback(() => {
-    if (!loading) {
-      setDelivered(false);
-    }
-  }, [loading]);
-
-  const loadMoreDeliveries = useCallback(async () => {
-    if (loading || page + 1 > totalPages) {
-      return;
-    }
-    try {
-      setLoading(true);
-
-      const { data } = await api.get(`/deliverymen/${auth.id}/deliveries`, {
-        params: {
-          delivered,
-          page: page + 1,
-          quantity: 10,
-        },
-      });
-
-      const newData = [
-        ...deliveries,
-        ...data.data.map(d => ({
-          ...d,
-          id: String(d.id),
-          createdAt: format(new Date(d.createdAt), "dd'/'MM'/'y", {
-            locale: pt,
-          }),
-        })),
-      ];
-
-      setDeliveries(newData);
-      setTotalPages(data.totalPages);
-      setPage(page + 1);
-      setLoading(false);
-      if (firstLoading) {
-        setFirstLoading(false);
-      }
-    } catch (err) {
-      Alert.alert('Não foi possível carregar as entregas');
-      setLoading(false);
-    }
-  }, [auth.id, delivered, deliveries, firstLoading, loading, page, totalPages]);
 
   useEffect(() => {
     if (user?.avatar_url) {
@@ -109,35 +42,9 @@ const Dashboard = ({ navigation }) => {
   }, [user]);
 
   useEffect(() => {
-    loadMoreDeliveries();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    console.tron.log('teste');
-  }, []);
-
-  const handleDetails = useCallback(
-    item => {
-      if (loading) {
-        return () => {};
-      }
-      return navigation.navigate('Delivery', { item });
-    },
-    [loading, navigation]
-  );
-
-  // eslint-disable-next-line react/prop-types
-  const renderItem = ({ item }) => (
-    <DeliveryCard data={item} handleDetails={() => handleDetails(item)} />
-  );
-
-  const renderFooter = useCallback(() => {
-    if (loading) {
-      return null;
-    }
-    return <Loading />;
-  }, [loading]);
+    dispatch(loadMoreRequest({ reset: true }));
+    dispatch(loadMoreRequest({ reset: true, delivered: true }));
+  }, [dispatch]);
 
   return (
     <Container>
@@ -154,32 +61,7 @@ const Dashboard = ({ navigation }) => {
         </SignOutButton>
       </ProfileContainer>
 
-      <TableHeader>
-        <TableHeaderTitle>Entregas</TableHeaderTitle>
-        <TableHeaderButton>
-          <TableHeaderButtonText selected={!delivered} onPress={handlePeding}>
-            Pendentes
-          </TableHeaderButtonText>
-        </TableHeaderButton>
-        <TableHeaderButton>
-          <TableHeaderButtonText selected={delivered} onPress={handleDelivered}>
-            Entregues
-          </TableHeaderButtonText>
-        </TableHeaderButton>
-      </TableHeader>
-
-      {firstLoading ? (
-        <Loading />
-      ) : (
-        <List
-          data={deliveries}
-          // eslint-disable-next-line react/prop-types
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-          onEndReached={loadMoreDeliveries}
-          ListFooterComponent={renderFooter}
-        />
-      )}
+      <List navigation={navigation} />
     </Container>
   );
 };

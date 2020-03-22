@@ -1,4 +1,4 @@
-import React, { useCallback, useState, memo, useMemo } from 'react';
+import React, { useCallback, useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { OptimizedFlatList } from 'react-native-optimized-flatlist';
@@ -15,7 +15,6 @@ const List = ({ navigation }) => {
   const {
     deliveries,
     loading,
-    initialized,
     deliveredDeliveries,
     deliveredLoading,
   } = useSelector(state => state.deliveries);
@@ -28,9 +27,12 @@ const List = ({ navigation }) => {
   );
 
   // eslint-disable-next-line react/prop-types
-  const renderItem = useCallback(({ item }) => (
-    <DeliveryCard data={item} handleDetails={() => handleDetails(item)} />
-  ));
+  const renderItem = useCallback(
+    ({ item }) => (
+      <DeliveryCard data={item} handleDetails={() => handleDetails(item)} />
+    ),
+    [handleDetails]
+  );
 
   const loadMoreDeliveries = useCallback(() => {
     if ((!delivered && loading) || (delivered && deliveredLoading)) {
@@ -46,13 +48,11 @@ const List = ({ navigation }) => {
     return <Loading />;
   }, [delivered, deliveredLoading, loading]);
 
-  const DeliveriesList = useMemo(() => {
-    if (delivered) {
-      return (
+  return (
+    <>
+      <Header delivered={delivered} setDelivered={setDelivered} />
+      {delivered ? (
         <OptimizedFlatList
-          ListHeaderComponent={() => (
-            <Header delivered={delivered} setDelivered={setDelivered} />
-          )}
           data={deliveredDeliveries}
           // eslint-disable-next-line react/prop-types
           keyExtractor={item => item.id}
@@ -66,38 +66,24 @@ const List = ({ navigation }) => {
           initialNumToRender={10}
           style={{ width: '100%' }}
         />
-      );
-    }
-
-    return (
-      <OptimizedFlatList
-        ListHeaderComponent={() => (
-          <Header delivered={delivered} setDelivered={setDelivered} />
-        )}
-        data={deliveries}
-        // eslint-disable-next-line react/prop-types
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-        onEndReached={loadMoreDeliveries}
-        onEndReachedThreshold={0.1}
-        ListFooterComponent={renderFooter}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews
-        initialNumToRender={10}
-        style={{ width: '100%' }}
-        stickyHeaderIndices={[0, 6, 13]}
-      />
-    );
-  }, [
-    delivered,
-    deliveredDeliveries,
-    deliveries,
-    loadMoreDeliveries,
-    renderFooter,
-    renderItem,
-  ]);
-
-  return initialized ? DeliveriesList : <Loading />;
+      ) : (
+        <OptimizedFlatList
+          data={deliveries}
+          // eslint-disable-next-line react/prop-types
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+          onEndReached={loadMoreDeliveries}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={renderFooter}
+          showsVerticalScrollIndicator={false}
+          // contentContainerStyle={{ padding: 20 }}
+          removeClippedSubviews
+          initialNumToRender={10}
+          style={{ width: '100%' }}
+        />
+      )}
+    </>
+  );
 };
 
 List.propTypes = {

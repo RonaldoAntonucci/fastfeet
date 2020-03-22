@@ -30,4 +30,34 @@ export function* loadMore({ payload }) {
   }
 }
 
-export default all([takeLatest('@deliveries/LOAD_MORE_REQUEST', loadMore)]);
+export function* deliveredLoadMore({ payload }) {
+  try {
+    const { reset = false } = payload;
+    const currentState = yield select(state => state.deliveries);
+    const deliverymanId = yield select(state => state.auth.id);
+
+    const page = currentState.deliveredPage + 1;
+    if (page > currentState.deliveredTotalPages) {
+      return;
+    }
+
+    const {
+      data: { data, totalPages },
+    } = yield call(
+      api.get,
+      `/deliverymen/${deliverymanId}/deliveries?quantity=10&page=${page}&delivered=true`
+    );
+
+    yield put(
+      loadMoreSuccess({ deliveries: data, totalPages, reset, delivered: true })
+    );
+  } catch (err) {
+    Alert.alert('Erro ao carregar as entregas', 'Verifique sua conexão.');
+    yield put(loadMoreFailure());
+  }
+}
+
+export default all([
+  takeLatest('@deliveries/LOAD_MORE_REQUEST', loadMore),
+  takeLatest('@deliveries/DELIVERED_LOAD_MORE_REQUEST', deliveredLoadMore),
+]);

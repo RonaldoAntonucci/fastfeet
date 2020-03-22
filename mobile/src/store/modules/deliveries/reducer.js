@@ -69,11 +69,11 @@ const deliveries = (state = INITIAL_STATE, action) => {
         break;
       }
       case '@deliveries/LOAD_MORE_REQUEST': {
-        if (action.payload.delivered) {
-          draft.deliveredLoading = true;
-        } else {
-          draft.loading = true;
-        }
+        draft.loading = true;
+        break;
+      }
+      case '@deliveries/DELIVERED_LOAD_MORE_REQUEST': {
+        draft.deliveredLoading = true;
         break;
       }
       case '@deliveries/LOAD_MORE_FAILURE': {

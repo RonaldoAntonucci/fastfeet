@@ -1,8 +1,13 @@
 export function loadMoreRequest({ reset = false, delivered = false } = {}) {
-  return {
-    type: '@deliveries/LOAD_MORE_REQUEST',
-    payload: { reset, delivered },
-  };
+  return delivered
+    ? {
+        type: '@deliveries/DELIVERED_LOAD_MORE_REQUEST',
+        payload: { reset },
+      }
+    : {
+        type: '@deliveries/LOAD_MORE_REQUEST',
+        payload: { reset },
+      };
 }
 
 export function loadMoreFailure({ delivered = false } = {}) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { View } from 'react-native';
@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import colors from '~/styles/colors';
 
+import Loading from '~/components/Loading';
 import List from './List';
 
 import {
@@ -24,6 +25,7 @@ import { loadMoreRequest } from '~/store/modules/deliveries/actions';
 const Dashboard = ({ navigation }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state?.user?.profile);
+  const loading = !useSelector(state => state.deliveries.initialized);
 
   const [avatarImageUrl, setAvatarImageUrl] = useState();
 
@@ -61,7 +63,7 @@ const Dashboard = ({ navigation }) => {
         </SignOutButton>
       </ProfileContainer>
 
-      <List navigation={navigation} />
+      {loading ? <Loading /> : <List navigation={navigation} />}
     </Container>
   );
 };
@@ -72,4 +74,4 @@ Dashboard.propTypes = {
   }).isRequired,
 };
 
-export default Dashboard;
+export default memo(Dashboard);

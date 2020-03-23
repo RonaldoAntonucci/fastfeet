@@ -6,11 +6,11 @@ import StyledButton from '~/components/Button';
 import colors from '~/styles/colors';
 
 export const Content = styled.View`
-  flex: 1;
+  height: 100%;
 `;
 
 export const CameraContent = styled.View`
-  flex: 1;
+  height: 100%;
   padding: 20px;
   border-radius: 4px;
   overflow: hidden;
@@ -62,8 +62,8 @@ export const Preview = styled.ImageBackground`
 export const ButtonsPreviewContent = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  padding: 5px;
   width: 100%;
+  height: 40px;
 `;
 
 export const ButtonsPreviewIcon = styled(Icon).attrs(() => ({
@@ -72,7 +72,7 @@ export const ButtonsPreviewIcon = styled(Icon).attrs(() => ({
 }))``;
 
 export const ButtonsPreview = styled.TouchableOpacity`
-  width: 100%;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;

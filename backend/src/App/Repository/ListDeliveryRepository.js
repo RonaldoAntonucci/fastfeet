@@ -32,10 +32,11 @@ export default {
     // }
 
     if (deliverymanId) {
+      const offset = (page - 1) * quantity;
       const { rows: data, count } = await Delivery.findAndCountAll({
         limit: quantity,
-        offset: (page - 1) * quantity,
-        order: [['updated_at', 'DESC']],
+        offset,
+        order: [['id', 'DESC']],
         where: {
           deliveryman_id: deliverymanId,
           end_date:
@@ -58,7 +59,7 @@ export default {
       paranoid: false,
       limit: quantity,
       offset: (page - 1) * quantity,
-      order: [['updated_at', 'DESC']],
+      order: [['id', 'DESC']],
       where: {
         product: {
           [Op.like]: `%${product}%`,

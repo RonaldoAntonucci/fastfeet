@@ -1,12 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
 
 import api from '~/services/api';
 
-import Container from '~/components/PageContainer';
+import Background from '~/components/Background';
 import Loading from '~/components/Loading';
 
 import {
@@ -24,12 +24,15 @@ import {
   // Button,
 } from './styles';
 
+import { refresh } from '~/store/modules/deliveries/actions';
+
 export default function DeliverConfirm({
   route: {
     params: { deliveryId },
   },
   navigation,
 }) {
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user.profile);
   const [camera, setCamera] = useState();
   const [imageUri, setImageUri] = useState(null);
@@ -61,17 +64,18 @@ export default function DeliverConfirm({
         imgData
       );
       setLoading(false);
-      navigation.navigate('Deliveries');
+      navigation.navigate('Dashboard');
+      dispatch(refresh());
     } catch (err) {
       setLoading(false);
       Alert.alert(
         'Não foi possível confirmar a entrega, verifique sua conexão.'
       );
     }
-  }, [deliveryId, imageUri, navigation, user.id]);
+  }, [deliveryId, dispatch, imageUri, navigation, user.id]);
 
   return (
-    <Container title="Confirmar Entrega" handleBack={() => navigation.goBack()}>
+    <Background>
       {loading ? (
         <Loading />
       ) : !imageUri ? (
@@ -110,13 +114,13 @@ export default function DeliverConfirm({
           </Preview>
         </CameraContent>
       )}
-    </Container>
+    </Background>
   );
 }
 
 DeliverConfirm.propTypes = {
   route: PropTypes.shape({
-    params: PropTypes.shape({ deliveryId: PropTypes.number.isRequired })
+    params: PropTypes.shape({ deliveryId: PropTypes.string.isRequired })
       .isRequired,
   }).isRequired,
   navigation: PropTypes.shape({

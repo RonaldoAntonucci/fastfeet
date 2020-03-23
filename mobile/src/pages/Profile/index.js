@@ -22,15 +22,15 @@ function Profile() {
 
   const formatedCreatedAt = useMemo(
     () =>
-      user.createdAt &&
+      user &&
       format(new Date(user.createdAt), "dd'/'MM'/'y", {
         locale: pt,
       }),
-    [user.createdAt]
+    [user]
   );
 
   useEffect(() => {
-    if (user.avatar_url) {
+    if (user && user.avatar_url) {
       setAvatarImageUrl(user.avatar_url);
     } else {
       setAvatarImageUrl(
@@ -57,9 +57,9 @@ function Profile() {
       />
       <Card>
         <Label>Nome</Label>
-        <TextValue>{user.name}</TextValue>
+        <TextValue>{user && user.name}</TextValue>
         <Label>Email</Label>
-        <TextValue>{user.email}</TextValue>
+        <TextValue>{user && user.email}</TextValue>
         <Label>Data de cadastro</Label>
         <TextValue>{formatedCreatedAt}</TextValue>
         <LogoutButton onPress={handleLogOut}>Logout</LogoutButton>

@@ -21,7 +21,7 @@ export default {
       where: {
         [Op.or]: [{ name: { [Op.like]: `%${name}%` } }],
       },
-      order: [['updated_at', 'DESC']],
+      order: [['id', 'DESC']],
     });
 
     const result = { data, count, totalPages: Math.ceil(count / quantity) };

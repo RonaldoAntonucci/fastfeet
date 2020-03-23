@@ -19,7 +19,7 @@ export function* signIn({ payload }) {
       return;
     }
 
-    yield put(signInSuccess(user));
+    yield put(signInSuccess(id, user));
 
     // history.push('/dashboard');
   } catch (err) {

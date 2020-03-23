@@ -2,6 +2,8 @@ import styled from 'styled-components/native';
 
 import colors from '~/styles/colors';
 
+export const Container = styled.View``;
+
 export const TitleContainer = styled.View`
   width: 100%;
   align-items: center;
@@ -16,25 +18,14 @@ export const ListTitle = styled.Text`
 `;
 
 export const Content = styled.View`
-  flex: 1;
-  background-color: ${colors.bg};
   border-radius: 4px;
-  padding: 0;
-  margin-horizontal: 18px;
-`;
-
-export const List = styled.FlatList.attrs({
-  showsVerticalScrollIndicator: false,
-})`
-  width: 100%;
-
-  padding: 18px;
+  margin-horizontal: 20px;
 `;
 
 export const Card = styled.View`
   border: 1px solid ${colors.border};
   border-radius: 4px;
-  elevation: 1;
+  elevation: 3;
   padding: 16px;
 
   margin-bottom: 16px;
@@ -50,4 +41,19 @@ export const CardProblem = styled.Text`
 
 export const CardDate = styled.Text`
   color: ${colors.fontTransparent};
+`;
+
+export const List = styled.FlatList.attrs({
+  keyExtractor: item => item.id.toString(),
+  onEndReachedThreshold: 0.5,
+  showsVerticalScrollIndicator: true,
+  removeClippedSubviews: true,
+  initialNumToRender: 10,
+  maxToRenderPerBatch: 100,
+})`
+  border-width: 3px;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-color: ${colors.border};
 `;

@@ -1,5 +1,8 @@
+import 'react-native-gesture-handler';
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react';
+import { NavigationContainer } from '@react-navigation/native';
 
 import { Provider } from 'react-redux';
 
@@ -8,14 +11,20 @@ import './config/reactotronConfig';
 import { store, persistor } from './store';
 import App from './App';
 
-import 'react-native-gesture-handler';
+import colors from '~/styles/colors';
 
 export default function Index() {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
+    <NavigationContainer>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <StatusBar
+            backgroundColor={colors.primary}
+            barStyle="light-content"
+          />
+          <App />
+        </PersistGate>
+      </Provider>
+    </NavigationContainer>
   );
 }

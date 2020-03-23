@@ -15,7 +15,7 @@ export default {
       const { rows: data, count } = await Problem.findAndCountAll({
         limit: quantity,
         offset: (page - 1) * quantity,
-        order: [['updated_at', 'DESC']],
+        order: [['id', 'DESC']],
         where: {
           delivery_id: deliveryId,
         },

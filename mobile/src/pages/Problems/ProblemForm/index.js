@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 
 import api from '~/services/api';
 
-import Container from '~/components/PageContainer';
+import Background from '~/components/Background';
 
 import { FormContent, Form, Input, SubmitButton } from './styles';
 
@@ -12,7 +12,6 @@ export default function ProblemsForm({
   route: {
     params: { deliveryId },
   },
-  navigation,
 }) {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -38,11 +37,7 @@ export default function ProblemsForm({
   );
 
   return (
-    <Container
-      scroll
-      title="Informar Problema"
-      handleBack={() => navigation.goBack()}
-    >
+    <Background>
       <FormContent>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input
@@ -62,16 +57,13 @@ export default function ProblemsForm({
           </SubmitButton>
         </Form>
       </FormContent>
-    </Container>
+    </Background>
   );
 }
 
 ProblemsForm.propTypes = {
   route: PropTypes.shape({
-    params: PropTypes.shape({ deliveryId: PropTypes.number.isRequired })
+    params: PropTypes.shape({ deliveryId: PropTypes.string.isRequired })
       .isRequired,
-  }).isRequired,
-  navigation: PropTypes.shape({
-    goBack: PropTypes.func.isRequired,
   }).isRequired,
 };

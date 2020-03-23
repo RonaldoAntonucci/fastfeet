@@ -29,7 +29,8 @@ import colors from '~/styles/colors';
 
 function Deliveries({ navigation }) {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user.profile);
+  const user = useSelector(state => state?.user?.profile);
+  const auth = useSelector(state => state.auth);
 
   const [avatarImageUrl, setAvatarImageUrl] = useState();
   const [delivered, setDelivered] = useState(false);
@@ -37,7 +38,7 @@ function Deliveries({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user.avatar_url) {
+    if (user?.avatar_url) {
       setAvatarImageUrl(user.avatar_url);
     } else {
       setAvatarImageUrl(
@@ -52,7 +53,7 @@ function Deliveries({ navigation }) {
         setLoading(true);
         const {
           data: { data },
-        } = await api.get(`/deliverymen/${user.id}/deliveries`, {
+        } = await api.get(`/deliverymen/${auth.id}/deliveries`, {
           params: {
             delivered,
           },
@@ -66,11 +67,12 @@ function Deliveries({ navigation }) {
     };
     getData();
 
-    const unsubscribe = navigation.addListener('focus', () => {
-      getData();
-    });
-    return unsubscribe;
-  }, [delivered, navigation, user.id]);
+    // const unsubscribe = navigation.addListener('focus', () => {
+    //   getData();
+    // });
+    // return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [delivered]);
 
   const handleLogOut = useCallback(() => {
     dispatch(signOut());
@@ -83,7 +85,7 @@ function Deliveries({ navigation }) {
           <Avatar source={{ uri: avatarImageUrl }} />
           <View>
             <Welcome>Bem vindo de volta,</Welcome>
-            <UserName>{user.name}</UserName>
+            <UserName>{user?.name}</UserName>
           </View>
         </ProfileContent>
         <SignOutButton onPress={handleLogOut}>

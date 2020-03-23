@@ -6,7 +6,7 @@ import colors from '~/styles/colors';
 export const Container = styled.View`
   flex: 1;
   align-items: center;
-  padding: 36px;
+  padding-horizontal: 36px;
 
   background-color: ${colors.bg};
 `;

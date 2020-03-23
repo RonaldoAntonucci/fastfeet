@@ -20,7 +20,7 @@ import {
 } from './styles';
 
 import { signOut } from '~/store/modules/auth/actions';
-import { loadMoreRequest } from '~/store/modules/deliveries/actions';
+import { refresh } from '~/store/modules/deliveries/actions';
 
 const Dashboard = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -44,8 +44,7 @@ const Dashboard = ({ navigation }) => {
   }, [user]);
 
   useEffect(() => {
-    dispatch(loadMoreRequest({ reset: true }));
-    dispatch(loadMoreRequest({ reset: true, delivered: true }));
+    dispatch(refresh());
   }, [dispatch]);
 
   return (

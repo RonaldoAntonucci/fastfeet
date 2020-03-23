@@ -1,7 +1,6 @@
-import React, { useCallback, useState, memo } from 'react';
+import React, { useCallback, useState, useMemo, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
 import DeliveryCard from '~/components/DeliveryCard';
 import Loading from '~/components/Loading';
@@ -9,6 +8,7 @@ import Loading from '~/components/Loading';
 import { loadMoreRequest } from '~/store/modules/deliveries/actions';
 
 import Header from './Header';
+import { FlatList } from './styles';
 
 const List = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -27,61 +27,65 @@ const List = ({ navigation }) => {
   );
 
   // eslint-disable-next-line react/prop-types
-  const renderItem = useCallback(
-    ({ item }) => (
-      <DeliveryCard data={item} handleDetails={() => handleDetails(item)} />
-    ),
-    [handleDetails]
+  const renderItem = ({ item }) => (
+    <DeliveryCard data={item} handleDetails={() => handleDetails(item)} />
   );
 
   const loadMoreDeliveries = useCallback(() => {
-    if ((!delivered && loading) || (delivered && deliveredLoading)) {
-      return;
+    if (loading) {
+      return () => {};
     }
-    dispatch(loadMoreRequest({ delivered }));
-  }, [delivered, deliveredLoading, dispatch, loading]);
+    return dispatch(loadMoreRequest());
+  }, [dispatch, loading]);
 
-  const renderFooter = useCallback(() => {
-    if ((!delivered && loading) || (delivered && deliveredLoading)) {
-      return null;
+  const loadMoreDeliveredDeliveries = useCallback(() => {
+    if (deliveredLoading) {
+      return () => {};
     }
-    return <Loading />;
+    return dispatch(loadMoreRequest({ delivered: true }));
+  }, [deliveredLoading, dispatch]);
+
+  const data = useMemo(() => (delivered ? deliveredDeliveries : deliveries), [
+    delivered,
+    deliveredDeliveries,
+    deliveries,
+  ]);
+
+  const loadMore = useMemo(
+    () => (delivered ? loadMoreDeliveredDeliveries : loadMoreDeliveries),
+    [delivered, loadMoreDeliveredDeliveries, loadMoreDeliveries]
+  );
+
+  const moreLoading = useMemo(() => {
+    if ((delivered && deliveredLoading) || (!delivered && loading)) {
+      return <Loading />;
+    }
+    return null;
+  }, [delivered, deliveredLoading, loading]);
+
+  const onRefresh = useCallback(
+    () => dispatch(loadMoreRequest({ delivered, reset: true })),
+    [delivered, dispatch]
+  );
+
+  const refreshing = useMemo(() => {
+    if ((delivered && deliveredLoading) || loading) {
+      return true;
+    }
+    return false;
   }, [delivered, deliveredLoading, loading]);
 
   return (
     <>
       <Header delivered={delivered} setDelivered={setDelivered} />
-      {delivered ? (
-        <OptimizedFlatList
-          data={deliveredDeliveries}
-          // eslint-disable-next-line react/prop-types
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-          onEndReached={loadMoreDeliveries}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          showsVerticalScrollIndicator={false}
-          // contentContainerStyle={{ padding: 20 }}
-          removeClippedSubviews
-          initialNumToRender={10}
-          style={{ width: '100%' }}
-        />
-      ) : (
-        <OptimizedFlatList
-          data={deliveries}
-          // eslint-disable-next-line react/prop-types
-          keyExtractor={item => item.id}
-          renderItem={renderItem}
-          onEndReached={loadMoreDeliveries}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          showsVerticalScrollIndicator={false}
-          // contentContainerStyle={{ padding: 20 }}
-          removeClippedSubviews
-          initialNumToRender={10}
-          style={{ width: '100%' }}
-        />
-      )}
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        onEndReached={loadMore}
+        ListFooterComponent={moreLoading}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+      />
     </>
   );
 };

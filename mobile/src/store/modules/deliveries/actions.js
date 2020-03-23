@@ -33,3 +33,14 @@ export function loadMoreSuccess({
         payload: { deliveries, totalPages, delivered },
       };
 }
+
+// export function replaceDelivery({ delivery }) {
+//   return {
+//     type: '@deliveries/REPLACE_DELIVERY',
+//     payload: { delivery },
+//   };
+// }
+
+export function refresh() {
+  return { type: '@deliveries/REFRESH', payload: { reset: true } };
+}

@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
 
 import api from '~/services/api';
@@ -24,12 +24,15 @@ import {
   // Button,
 } from './styles';
 
+import { refresh } from '~/store/modules/deliveries/actions';
+
 export default function DeliverConfirm({
   route: {
     params: { deliveryId },
   },
   navigation,
 }) {
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user.profile);
   const [camera, setCamera] = useState();
   const [imageUri, setImageUri] = useState(null);
@@ -62,13 +65,14 @@ export default function DeliverConfirm({
       );
       setLoading(false);
       navigation.navigate('Dashboard');
+      dispatch(refresh());
     } catch (err) {
       setLoading(false);
       Alert.alert(
         'Não foi possível confirmar a entrega, verifique sua conexão.'
       );
     }
-  }, [deliveryId, imageUri, navigation, user.id]);
+  }, [deliveryId, dispatch, imageUri, navigation, user.id]);
 
   return (
     <Background>

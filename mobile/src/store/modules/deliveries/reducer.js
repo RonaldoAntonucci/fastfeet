@@ -16,28 +16,43 @@ const INITIAL_STATE = {
   deliveredLoading: false,
 };
 
-const formatDeliveries = data =>
-  data.map(delivery => ({
-    ...delivery,
-    id: String(delivery.id),
-    createdAt: format(new Date(delivery.createdAt), "dd'/'MM'/'y", {
-      locale: pt,
-    }),
-  }));
+const formatDelivery = delivery => ({
+  ...delivery,
+  id: String(delivery.id),
+  createdAt: format(new Date(delivery.createdAt), "dd'/'MM'/'y", {
+    locale: pt,
+  }),
+});
+
+const concatByKey = (prevArray, newArray) => {
+  const data = prevArray;
+  const newData = [];
+  newArray.forEach(delivery => {
+    const formattedDelivery = formatDelivery(delivery);
+    const index = data.findIndex(d => d.id === formattedDelivery.id);
+    if (index !== '-1') {
+      newData.push(formattedDelivery);
+    } else {
+      data[index] = formattedDelivery;
+    }
+  });
+  return [...data, ...newData];
+};
 
 const deliveries = (state = INITIAL_STATE, action) => {
   return produce(state, draft => {
     switch (action.type) {
       case '@deliveries/SET_DELIVERIES': {
         if (action.payload.delivered) {
-          draft.deliveredDeliveries = formatDeliveries(
+          draft.deliveredDeliveries = concatByKey(
+            [],
             action.payload.deliveries
           );
           draft.deliveredPage += 1;
           draft.deliveredTotalPages = action.payload.totalPages;
           draft.deliveredLoading = false;
         } else {
-          draft.deliveries = formatDeliveries(action.payload.deliveries);
+          draft.deliveries = concatByKey([], action.payload.deliveries);
           draft.page += 1;
           draft.totalPages = action.payload.totalPages;
           draft.loading = false;
@@ -48,18 +63,19 @@ const deliveries = (state = INITIAL_STATE, action) => {
       }
       case '@deliveries/ADD_DELIVERIES': {
         if (action.payload.delivered) {
-          draft.deliveredDeliveries = [
-            ...draft.deliveredDeliveries,
-            ...formatDeliveries(action.payload.deliveries),
-          ];
+          draft.deliveredDeliveries = concatByKey(
+            draft.deliveredDeliveries,
+            action.payload.deliveries
+          );
+
           draft.deliveredPage += 1;
           draft.deliveredTotalPages = action.payload.totalPages;
           draft.deliveredLoading = false;
         } else {
-          draft.deliveries = [
-            ...draft.deliveries,
-            ...formatDeliveries(action.payload.deliveries),
-          ];
+          draft.deliveries = concatByKey(
+            draft.deliveries,
+            action.payload.deliveries
+          );
           draft.page += 1;
           draft.totalPages = action.payload.totalPages;
           draft.loading = false;
@@ -69,11 +85,15 @@ const deliveries = (state = INITIAL_STATE, action) => {
         break;
       }
       case '@deliveries/LOAD_MORE_REQUEST': {
-        draft.loading = true;
+        if (draft.page + 1 <= draft.totalPages) {
+          draft.loading = true;
+        }
         break;
       }
       case '@deliveries/DELIVERED_LOAD_MORE_REQUEST': {
-        draft.deliveredLoading = true;
+        if (draft.deliveredPage + 1 <= draft.deliveredTotalPages) {
+          draft.deliveredLoading = true;
+        }
         break;
       }
       case '@deliveries/LOAD_MORE_FAILURE': {
@@ -82,6 +102,20 @@ const deliveries = (state = INITIAL_STATE, action) => {
         } else {
           draft.loading = false;
         }
+        break;
+      }
+      case '@deliveries/REFRESH': {
+        draft.deliveries = [];
+        draft.page = 0;
+        draft.totalPages = 1;
+        draft.loading = true;
+
+        draft.initialized = false;
+
+        draft.deliveredDeliveries = [];
+        draft.deliveredPage = 0;
+        draft.deliveredTotalPages = 1;
+        draft.deliveredLoading = true;
         break;
       }
       default:

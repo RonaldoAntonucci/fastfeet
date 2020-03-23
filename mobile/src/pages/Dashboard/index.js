@@ -73,4 +73,4 @@ Dashboard.propTypes = {
   }).isRequired,
 };
 
-export default memo(Dashboard);
+export default Dashboard;

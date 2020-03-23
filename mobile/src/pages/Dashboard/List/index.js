@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo, memo } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -96,4 +96,4 @@ List.propTypes = {
   }).isRequired,
 };
 
-export default memo(List);
+export default List;
